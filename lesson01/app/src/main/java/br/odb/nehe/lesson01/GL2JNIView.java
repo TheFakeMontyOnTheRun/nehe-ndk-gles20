@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.gl2jni;
+package br.odb.nehe.lesson01;
 /*
  * Copyright (C) 2008 The Android Open Source Project
  *
@@ -35,10 +35,7 @@ package com.android.gl2jni;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -65,7 +62,7 @@ import javax.microedition.khronos.opengles.GL10;
  *   bit depths). Failure to do so would result in an EGL_BAD_MATCH error.
  */
 class GL2JNIView extends GLSurfaceView {
-    private static String TAG = "GL2JNIView";
+    private static String TAG = "Lesson01_GLES2_View";
     private static final boolean DEBUG = false;
 
     public GL2JNIView(Context context) {

@@ -6,7 +6,7 @@ model {
         buildToolsVersion = "23.0.0"
 
         defaultConfig.with {
-            applicationId    = "com.android.gl2jni"
+            applicationId    = "br.odb.nehe.lesson01"
             minSdkVersion.apiLevel    = 5
             targetSdkVersion.apiLevel = 23
         }
