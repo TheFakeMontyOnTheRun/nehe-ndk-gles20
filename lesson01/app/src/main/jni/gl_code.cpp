@@ -18,10 +18,12 @@
 
 #include <jni.h>
 #include <android/log.h>
-
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-
+#include <string>
+#include <vector>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -42,17 +44,59 @@ static void checkGlError(const char* op) {
     }
 }
 
-static const char gVertexShader[] = 
-    "attribute vec4 vPosition;\n"
-    "void main() {\n"
-    "  gl_Position = vPosition;\n"
-    "}\n";
+static std::string gVertexShader;
+static std::string gFragmentShader;
 
-static const char gFragmentShader[] = 
-    "precision mediump float;\n"
-    "void main() {\n"
-    "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
-    "}\n";
+static int android_read(void* cookie, char* buf, int size) {
+    return AAsset_read((AAsset*)cookie, buf, size);
+}
+
+static int android_write(void* cookie, const char* buf, int size) {
+    return EACCES; // can't provide write access to the apk
+}
+
+static fpos_t android_seek(void* cookie, fpos_t offset, int whence) {
+    return AAsset_seek((AAsset*)cookie, offset, whence);
+}
+
+static int android_close(void* cookie) {
+    AAsset_close((AAsset*)cookie);
+    return 0;
+}
+
+
+FILE* android_fopen(const char* fname, const char* mode, AAssetManager *assetManager) {
+    if(mode[0] == 'w') return NULL;
+
+    AAsset* asset = AAssetManager_open( assetManager, fname, 0);
+    if(!asset) return NULL;
+
+    return funopen(asset, android_read, android_write, android_seek, android_close);
+}
+
+
+std::string readShaderToString( FILE* fileDescriptor ) {
+    const unsigned N=1024;
+    std::string total;
+    while (true) {
+        char buffer[ N ];
+        size_t read = fread((void *)&buffer[0], 1, N, fileDescriptor);
+        if (read) {
+            for ( int c = 0; c <  read; ++c ) {
+                total.push_back( buffer[ c ] );
+            }
+        }
+        if (read < N) { break; }
+    }
+
+    return total;
+}
+
+void loadShaders( JNIEnv* env, jobject& obj ) {
+    AAssetManager *asset_manager = AAssetManager_fromJava( env, obj );
+    gVertexShader = readShaderToString( android_fopen( "vertex.glsl", "r", asset_manager ) );
+    gFragmentShader = readShaderToString( android_fopen( "fragment.glsl", "r", asset_manager ) );
+}
 
 GLuint loadShader(GLenum shaderType, const char* pSource) {
     GLuint shader = glCreateShader(shaderType);
@@ -122,13 +166,14 @@ GLuint gProgram;
 GLuint gvPositionHandle;
 
 bool setupGraphics(int w, int h) {
+
     printGLString("Version", GL_VERSION);
     printGLString("Vendor", GL_VENDOR);
     printGLString("Renderer", GL_RENDERER);
     printGLString("Extensions", GL_EXTENSIONS);
 
     LOGI("setupGraphics(%d, %d)", w, h);
-    gProgram = createProgram(gVertexShader, gFragmentShader);
+    gProgram = createProgram(gVertexShader.c_str(), gFragmentShader.c_str());
     if (!gProgram) {
         LOGE("Could not create program.");
         return false;
@@ -164,9 +209,14 @@ void renderFrame() {
 }
 
 extern "C" {
+    JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_onCreate(JNIEnv * env, void* reserved, jobject assetManager );
     JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height);
     JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_step(JNIEnv * env, jobject obj);
 };
+
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_onCreate(JNIEnv * env, void* reserved, jobject assetManager ) {
+    loadShaders( env, assetManager );
+}
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height)
 {

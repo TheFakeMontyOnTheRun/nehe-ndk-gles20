@@ -20,7 +20,8 @@ model {
     android.ndk {
         moduleName = "gl2jni"
         cppFlags  += "-Werror"
-        ldLibs    += ["log", "GLESv2"]
+        ldLibs    += ["log", "GLESv2", "android"]
+        stl = "stlport_static"
     }
 
     android.buildTypes {
