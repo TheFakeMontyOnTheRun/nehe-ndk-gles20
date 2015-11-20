@@ -86,7 +86,9 @@ std::string readShaderToString( FILE* fileDescriptor ) {
                 total.push_back( buffer[ c ] );
             }
         }
-        if (read < N) { break; }
+        if (read < N) {
+            break;
+        }
     }
 
     return total;
@@ -168,7 +170,6 @@ GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
 }
 
 GLuint gProgram;
-GLuint gvPositionHandle;
 
 bool setupGraphics(int w, int h) {
 
@@ -183,34 +184,19 @@ bool setupGraphics(int w, int h) {
         LOGE("Could not create program.");
         return false;
     }
-    gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
-    checkGlError("glGetAttribLocation");
-    LOGI("glGetAttribLocation(\"vPosition\") = %d\n",
-            gvPositionHandle);
-
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
     return true;
 }
 
-const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f };
-
 void renderFrame() {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     checkGlError("glClearColor");
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGlError("glClear");
 
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
-
-    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
-    checkGlError("glVertexAttribPointer");
-    glEnableVertexAttribArray(gvPositionHandle);
-    checkGlError("glEnableVertexAttribArray");
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    checkGlError("glDrawArrays");
 }
 
 extern "C" {
