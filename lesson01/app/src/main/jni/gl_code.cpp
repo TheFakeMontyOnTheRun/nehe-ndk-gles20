@@ -94,8 +94,13 @@ std::string readShaderToString( FILE* fileDescriptor ) {
 
 void loadShaders( JNIEnv* env, jobject& obj ) {
     AAssetManager *asset_manager = AAssetManager_fromJava( env, obj );
-    gVertexShader = readShaderToString( android_fopen( "vertex.glsl", "r", asset_manager ) );
-    gFragmentShader = readShaderToString( android_fopen( "fragment.glsl", "r", asset_manager ) );
+    FILE* fd;
+    fd = android_fopen( "vertex.glsl", "r", asset_manager );
+    gVertexShader = readShaderToString( fd );
+    fclose( fd );
+    fd = android_fopen( "fragment.glsl", "r", asset_manager );
+    gFragmentShader = readShaderToString( fd );
+    fclose( fd );
 }
 
 GLuint loadShader(GLenum shaderType, const char* pSource) {
