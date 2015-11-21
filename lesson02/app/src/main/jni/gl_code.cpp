@@ -273,8 +273,9 @@ bool setupGraphics(int w, int h) {
         return false;
     }
 
-    vertexAttributePosition = glGetAttribLocation( gProgram, "aPosition" );
-    matrixAttributePosition = glGetUniformLocation( gProgram, "uMVP" );
+    vertexAttributePosition = glGetAttribLocation(gProgram, "aPosition");
+    modelMatrixAttributePosition = glGetUniformLocation(gProgram, "uModel");
+    projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
 
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
