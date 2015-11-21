@@ -119,18 +119,21 @@ float cotangent(float angle) {
     return 1.0f / tan( radians(angle));
 }
 
-float[] perspective(float fovy, float aspect, float zNear, float zFar) {
-    float ret[16];
+void perspective(float fovy, float aspect, float zNear, float zFar ) {
 
     float A;
     float B;
     float d;
 
-    A = (2 * zNear * zFar) / (zFar - zNear);
+    A = (2.0f * zNear * zFar) / (zFar - zNear);
     B = (zFar + zNear) / (zFar - zNear);
-    d = cotangent(fovy / 2);
+    d = cotangent(fovy / 2.0f );
 
-    return { d / aspect, 0, 0, 0, 0, d, 0, 0, 0, 0, -B, -1, 0, 0, -A, 0 };
+    projectionMatrix[0] = d / aspect;
+    projectionMatrix[5] = d;
+    projectionMatrix[10] = -B;
+    projectionMatrix[11] = -1.0f;
+    projectionMatrix[14] = -A;
 }
 
 
