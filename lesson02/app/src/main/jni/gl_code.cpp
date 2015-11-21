@@ -66,7 +66,7 @@ float squareVertices[] = {
         -1.0f, -1.0f, 0.0f
 };
 
-//column major!
+//Column major! Transpose it if you want it to agree with your books.
 
 //glTranslatef( -1.5f, 0.0f, -6.0f);
 float triangleTransformMatrix[] = {
@@ -78,10 +78,12 @@ float triangleTransformMatrix[] = {
 
 //glTranslatef( -1.5f, 0.0f, -6.0f);
 //glTranslatef(3.0f, 0.0f, 0.0f );
+//= glTranslate( 1.5f, 0.0, -6.0f );
 float squareTransformMatrix[] = {
         1.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f, 0.0f,
+//We start off with a identity and later will fill in for the projection space transform..
         0.0f, 0.0f, 0.0f, 1.0f
 };
 
