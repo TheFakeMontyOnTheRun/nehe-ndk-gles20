@@ -35,6 +35,43 @@
 
 static std::string gVertexShader;
 static std::string gFragmentShader;
+
+float triangleVertices[] = {
+        0.0f, 1.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f
+};
+
+float squareVertices[] = {
+        1.0f, 1.0f, 0.0f,
+        -1.0f, 1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f
+};
+
+//column major!
+
+//glTranslatef( -1.5f, 0.0f, -6.0f);
+float triangleTransformMatrix[] = {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        1.5f, 0.0f, 6.0f, 1.0f
+};
+
+//glTranslatef( -1.5f, 0.0f, -6.0f);
+//glTranslatef(3.0f, 0.0f, 0.0f );
+float squareTransformMatrix[] = {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+};
+
+GLuint vertexAttributePosition;
+GLuint matrixAttributePosition;
+GLuint gProgram;
+
 static void printGLString(const char *name, GLenum s) {
     const char *v = (const char *) glGetString(s);
     LOGI("GL %s = %s\n", name, v);
@@ -45,6 +82,28 @@ static void checkGlError(const char* op) {
             = glGetError()) {
         LOGI("after %s() glError (0x%x)\n", op, error);
     }
+}
+
+float radians( float degrees ) {
+    return degrees * ( 3.14159f / 180.0f );
+}
+
+float cotangent(float angle) {
+    return 1.0f / tan( radians(angle));
+}
+
+float[] perspective(float fovy, float aspect, float zNear, float zFar) {
+    float ret[16];
+
+    float A;
+    float B;
+    float d;
+
+    A = (2 * zNear * zFar) / (zFar - zNear);
+    B = (zFar + zNear) / (zFar - zNear);
+    d = cotangent(fovy / 2);
+
+    return { d / aspect, 0, 0, 0, 0, d, 0, 0, 0, 0, -B, -1, 0, 0, -A, 0 };
 }
 
 
@@ -170,8 +229,6 @@ GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
     return program;
 }
 
-GLuint gProgram;
-
 bool setupGraphics(int w, int h) {
 
     printGLString("Version", GL_VERSION);
@@ -185,19 +242,32 @@ bool setupGraphics(int w, int h) {
         LOGE("Could not create program.");
         return false;
     }
+
+    vertexAttributePosition = glGetAttribLocation( gProgram, "aPosition" );
+    matrixAttributePosition = glGetUniformLocation( gProgram, "uMVP" );
+
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
     return true;
 }
 
 void renderFrame() {
-    glClearColor(1.0f, 0.5f, 0.5f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     checkGlError("glClearColor");
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGlError("glClear");
 
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
+
+    glVertexAttribPointer ( vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0, triangleVertices );
+    glEnableVertexAttribArray ( vertexAttributePosition );
+
+    glUniformMatrix4fv( matrixAttributePosition, false, 1, triangleTransformMatrix );
+
+    glDrawArrays ( GL_TRIANGLES, 0, 3 );
+
+
 }
 
 extern "C" {
