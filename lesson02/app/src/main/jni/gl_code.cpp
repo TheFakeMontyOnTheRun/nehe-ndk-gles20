@@ -95,7 +95,8 @@ float projectionMatrix[] = {
 };
 
 GLuint vertexAttributePosition;
-GLuint matrixAttributePosition;
+GLuint modelMatrixAttributePosition;
+GLuint projectionMatrixAttributePosition;
 GLuint gProgram;
 
 static void printGLString(const char *name, GLenum s) {
