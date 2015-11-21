@@ -104,19 +104,19 @@ static void printGLString(const char *name, GLenum s) {
     LOGI("GL %s = %s\n", name, v);
 }
 
-static void checkGlError(const char* op) {
+static void checkGlError(const char *op) {
     for (GLint error = glGetError(); error; error
-            = glGetError()) {
+                                                    = glGetError()) {
         LOGI("after %s() glError (0x%x)\n", op, error);
     }
 }
 
-float radians( float degrees ) {
-    return degrees * ( 3.14159f / 180.0f );
+float radians(float degrees) {
+    return degrees * (3.14159f / 180.0f);
 }
 
 float cotangent(float angle) {
-    return 1.0f / tan( radians(angle));
+    return 1.0f / tan(radians(angle));
 }
 
 void perspective(float fovy, float aspect, float zNear, float zFar ) {
@@ -137,43 +137,43 @@ void perspective(float fovy, float aspect, float zNear, float zFar ) {
 }
 
 
-static int android_read(void* cookie, char* buf, int size) {
-    return AAsset_read((AAsset*)cookie, buf, size);
+static int android_read(void *cookie, char *buf, int size) {
+    return AAsset_read((AAsset *) cookie, buf, size);
 }
 
-static int android_write(void* cookie, const char* buf, int size) {
+static int android_write(void *cookie, const char *buf, int size) {
     return EACCES; // can't provide write access to the apk
 }
 
-static fpos_t android_seek(void* cookie, fpos_t offset, int whence) {
-    return AAsset_seek((AAsset*)cookie, offset, whence);
+static fpos_t android_seek(void *cookie, fpos_t offset, int whence) {
+    return AAsset_seek((AAsset *) cookie, offset, whence);
 }
 
-static int android_close(void* cookie) {
-    AAsset_close((AAsset*)cookie);
+static int android_close(void *cookie) {
+    AAsset_close((AAsset *) cookie);
     return 0;
 }
 
 
-FILE* android_fopen(const char* fname, const char* mode, AAssetManager *assetManager) {
-    if(mode[0] == 'w') return NULL;
+FILE *android_fopen(const char *fname, const char *mode, AAssetManager *assetManager) {
+    if (mode[0] == 'w') return NULL;
 
-    AAsset* asset = AAssetManager_open( assetManager, fname, 0);
-    if(!asset) return NULL;
+    AAsset *asset = AAssetManager_open(assetManager, fname, 0);
+    if (!asset) return NULL;
 
     return funopen(asset, android_read, android_write, android_seek, android_close);
 }
 
 
-std::string readShaderToString( FILE* fileDescriptor ) {
-    const unsigned N=1024;
+std::string readShaderToString(FILE *fileDescriptor) {
+    const unsigned N = 1024;
     std::string total;
     while (true) {
-        char buffer[ N ];
-        size_t read = fread((void *)&buffer[0], 1, N, fileDescriptor);
+        char buffer[N];
+        size_t read = fread((void *) &buffer[0], 1, N, fileDescriptor);
         if (read) {
-            for ( int c = 0; c <  read; ++c ) {
-                total.push_back( buffer[ c ] );
+            for (int c = 0; c < read; ++c) {
+                total.push_back(buffer[c]);
             }
         }
         if (read < N) {
@@ -184,18 +184,18 @@ std::string readShaderToString( FILE* fileDescriptor ) {
     return total;
 }
 
-void loadShaders( JNIEnv* env, jobject& obj ) {
-    AAssetManager *asset_manager = AAssetManager_fromJava( env, obj );
-    FILE* fd;
-    fd = android_fopen( "vertex.glsl", "r", asset_manager );
-    gVertexShader = readShaderToString( fd );
-    fclose( fd );
-    fd = android_fopen( "fragment.glsl", "r", asset_manager );
-    gFragmentShader = readShaderToString( fd );
-    fclose( fd );
+void loadShaders(JNIEnv *env, jobject &obj) {
+    AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
+    FILE *fd;
+    fd = android_fopen("vertex.glsl", "r", asset_manager);
+    gVertexShader = readShaderToString(fd);
+    fclose(fd);
+    fd = android_fopen("fragment.glsl", "r", asset_manager);
+    gFragmentShader = readShaderToString(fd);
+    fclose(fd);
 }
 
-GLuint loadShader(GLenum shaderType, const char* pSource) {
+GLuint loadShader(GLenum shaderType, const char *pSource) {
     GLuint shader = glCreateShader(shaderType);
     if (shader) {
         glShaderSource(shader, 1, &pSource, NULL);
@@ -206,11 +206,11 @@ GLuint loadShader(GLenum shaderType, const char* pSource) {
             GLint infoLen = 0;
             glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
             if (infoLen) {
-                char* buf = (char*) malloc(infoLen);
+                char *buf = (char *) malloc(infoLen);
                 if (buf) {
                     glGetShaderInfoLog(shader, infoLen, NULL, buf);
                     LOGE("Could not compile shader %d:\n%s\n",
-                            shaderType, buf);
+                         shaderType, buf);
                     free(buf);
                 }
                 glDeleteShader(shader);
@@ -221,7 +221,7 @@ GLuint loadShader(GLenum shaderType, const char* pSource) {
     return shader;
 }
 
-GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
+GLuint createProgram(const char *pVertexSource, const char *pFragmentSource) {
     GLuint vertexShader = loadShader(GL_VERTEX_SHADER, pVertexSource);
     if (!vertexShader) {
         return 0;
@@ -245,7 +245,7 @@ GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
             GLint bufLength = 0;
             glGetProgramiv(program, GL_INFO_LOG_LENGTH, &bufLength);
             if (bufLength) {
-                char* buf = (char*) malloc(bufLength);
+                char *buf = (char *) malloc(bufLength);
                 if (buf) {
                     glGetProgramInfoLog(program, bufLength, NULL, buf);
                     LOGE("Could not link program:\n%s\n", buf);
@@ -288,7 +288,7 @@ bool setupGraphics(int w, int h) {
 void renderFrame() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     checkGlError("glClearColor");
-    glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGlError("glClear");
 
     glUseProgram(gProgram);
@@ -311,21 +311,23 @@ void renderFrame() {
 }
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_onCreate(JNIEnv * env, void* reserved, jobject assetManager );
-    JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height);
-    JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_step(JNIEnv * env, jobject obj);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
+                                                                    jobject assetManager);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_init(JNIEnv *env, jobject obj,
+                                                                jint width, jint height);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_step(JNIEnv *env, jobject obj);
 };
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_onCreate(JNIEnv * env, void* reserved, jobject assetManager ) {
-    loadShaders( env, assetManager );
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
+                                                                    jobject assetManager) {
+    loadShaders(env, assetManager);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height)
-{
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_init(JNIEnv *env, jobject obj,
+                                                                jint width, jint height) {
     setupGraphics(width, height);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_step(JNIEnv * env, jobject obj)
-{
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_step(JNIEnv *env, jobject obj) {
     renderFrame();
 }
