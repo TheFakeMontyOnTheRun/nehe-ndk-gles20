@@ -32,6 +32,9 @@
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
+
+static std::string gVertexShader;
+static std::string gFragmentShader;
 static void printGLString(const char *name, GLenum s) {
     const char *v = (const char *) glGetString(s);
     LOGI("GL %s = %s\n", name, v);
@@ -44,8 +47,6 @@ static void checkGlError(const char* op) {
     }
 }
 
-static std::string gVertexShader;
-static std::string gFragmentShader;
 
 static int android_read(void* cookie, char* buf, int size) {
     return AAsset_read((AAsset*)cookie, buf, size);
