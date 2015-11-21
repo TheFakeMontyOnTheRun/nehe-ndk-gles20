@@ -36,16 +36,31 @@
 static std::string gVertexShader;
 static std::string gFragmentShader;
 
+//Counter Clockwise
+
 float triangleVertices[] = {
+//     1
+//    / \
+//   /   \
+// 2/____ \3
+
         0.0f, 1.0f, 0.0f,
         -1.0f, -1.0f, 0.0f,
         1.0f, -1.0f, 0.0f
 };
 
 float squareVertices[] = {
+//  2___1
+//  |   |
+//  |   |
+//  |___3
         1.0f, 1.0f, 0.0f,
         -1.0f, 1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
+//  2____
+//  |   |
+//  |   |
+//  3___1
         -1.0f, -1.0f, 0.0f
 };
 
