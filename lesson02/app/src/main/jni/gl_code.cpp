@@ -290,12 +290,18 @@ void renderFrame() {
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
 
-    glVertexAttribPointer ( vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0, triangleVertices );
-    glEnableVertexAttribArray ( vertexAttributePosition );
+    glUniformMatrix4fv(projectionMatrixAttributePosition, false, 1, projectionMatrix);
 
-    glUniformMatrix4fv( matrixAttributePosition, false, 1, triangleTransformMatrix );
+    glUniformMatrix4fv(modelMatrixAttributePosition, false, 1, triangleTransformMatrix);
+    glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0, triangleVertices);
+    glEnableVertexAttribArray(vertexAttributePosition);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glDrawArrays ( GL_TRIANGLES, 0, 3 );
+    glUniformMatrix4fv(modelMatrixAttributePosition, false, 1, squareTransformMatrix);
+    glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0, squareVertices);
+    glEnableVertexAttribArray(vertexAttributePosition);
+
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
 
 }
