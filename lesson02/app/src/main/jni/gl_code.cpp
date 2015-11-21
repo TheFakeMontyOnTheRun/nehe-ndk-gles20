@@ -73,7 +73,7 @@ float triangleTransformMatrix[] = {
         1.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f, 0.0f,
-        1.5f, 0.0f, 6.0f, 1.0f
+        -1.5f, 0.0f, -6.0f, 1.0f
 };
 
 //glTranslatef( -1.5f, 0.0f, -6.0f);
@@ -83,7 +83,14 @@ float squareTransformMatrix[] = {
         1.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f, 0.0f,
+        1.5f, 0.0f, -6.0f, 1.0f
+};
+
 //We start off with a identity and later will fill in for the projection space transform..
+float projectionMatrix[] = {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f
 };
 
