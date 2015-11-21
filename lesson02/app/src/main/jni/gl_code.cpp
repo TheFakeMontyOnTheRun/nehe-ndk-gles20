@@ -279,6 +279,9 @@ bool setupGraphics(int w, int h) {
 
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
+
+    perspective(45.0f, ((float)w) / ((float)h), 0.1f, 100.0f);
+
     return true;
 }
 
