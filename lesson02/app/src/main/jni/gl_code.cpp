@@ -66,24 +66,22 @@ float squareVertices[] = {
         -1.0f, -1.0f, 0.0f
 };
 
-//Column major! Transpose it if you want it to agree with your books.
-
 //glTranslatef( -1.5f, 0.0f, -6.0f);
 float triangleTransformMatrix[] = {
-        1.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f, -1.5f,
         0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        -1.5f, 0.0f, -6.0f, 1.0f
+        0.0f, 0.0f, 1.0f, -6.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
 };
 
 //glTranslatef( -1.5f, 0.0f, -6.0f);
 //glTranslatef(3.0f, 0.0f, 0.0f );
 //= glTranslate( 1.5f, 0.0, -6.0f );
 float squareTransformMatrix[] = {
-        1.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f, 1.5f,
         0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        1.5f, 0.0f, -6.0f, 1.0f
+        0.0f, 0.0f, 1.0f, -6.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
 };
 
 //We start off with a identity and later will fill in for the projection space transform..
@@ -132,8 +130,8 @@ void perspective(float fovy, float aspect, float zNear, float zFar ) {
     projectionMatrix[0] = d / aspect;
     projectionMatrix[5] = d;
     projectionMatrix[10] = -B;
-    projectionMatrix[11] = -1.0f;
-    projectionMatrix[14] = -A;
+    projectionMatrix[14] = -1.0f;
+    projectionMatrix[11] = -A;
 }
 
 
