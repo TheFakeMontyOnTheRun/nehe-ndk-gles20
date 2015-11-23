@@ -68,20 +68,20 @@ float squareVertices[] = {
 
 //glTranslatef( -1.5f, 0.0f, -6.0f);
 float triangleTransformMatrix[] = {
-        1.0f, 0.0f, 0.0f, -1.5f,
+        1.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, -6.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
+        0.0f, 0.0f, 1.0f, 0.0f,
+        -1.5f, 0.0f, -6.0f, 1.0f
 };
 
 //glTranslatef( -1.5f, 0.0f, -6.0f);
 //glTranslatef(3.0f, 0.0f, 0.0f );
 //= glTranslate( 1.5f, 0.0, -6.0f );
 float squareTransformMatrix[] = {
-        1.0f, 0.0f, 0.0f, 1.5f,
+        1.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, -6.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
+        0.0f, 0.0f, 1.0f, 0.0f,
+        1.5f, 0.0f, -6.0f, 1.0f
 };
 
 //We start off with a identity and later will fill in for the projection space transform..
@@ -130,8 +130,8 @@ void perspective(float fovy, float aspect, float zNear, float zFar ) {
     projectionMatrix[0] = d / aspect;
     projectionMatrix[5] = d;
     projectionMatrix[10] = -B;
-    projectionMatrix[14] = -1.0f;
-    projectionMatrix[11] = -A;
+    projectionMatrix[11] = -1.0f;
+    projectionMatrix[14] = -A;
 }
 
 
@@ -270,7 +270,6 @@ bool setupGraphics(int w, int h) {
         LOGE("Could not create program.");
         return false;
     }
-
     vertexAttributePosition = glGetAttribLocation(gProgram, "aPosition");
     modelMatrixAttributePosition = glGetUniformLocation(gProgram, "uModel");
     projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
@@ -292,14 +291,14 @@ void renderFrame() {
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
 
-    glUniformMatrix4fv(projectionMatrixAttributePosition, false, 1, projectionMatrix);
+    glUniformMatrix4fv(projectionMatrixAttributePosition, 1, false, projectionMatrix);
 
-    glUniformMatrix4fv(modelMatrixAttributePosition, false, 1, triangleTransformMatrix);
+    glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, triangleTransformMatrix);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0, triangleVertices);
     glEnableVertexAttribArray(vertexAttributePosition);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glUniformMatrix4fv(modelMatrixAttributePosition, false, 1, squareTransformMatrix);
+    glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, squareTransformMatrix);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0, squareVertices);
     glEnableVertexAttribArray(vertexAttributePosition);
 
