@@ -189,6 +189,7 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
                                                                      "uModel");
     GLES2Lesson::projectionMatrixAttributePosition = glGetUniformLocation(GLES2Lesson::gProgram,
                                                                           "uProjection");
+    glEnableVertexAttribArray(vertexAttributePosition);
 
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
@@ -213,13 +214,12 @@ void GLES2Lesson::render() {
                        GLES2Lesson::triangleTransformMatrix);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0,
                           GLES2Lesson::triangleVertices);
-    glEnableVertexAttribArray(vertexAttributePosition);
+
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
     glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, GLES2Lesson::squareTransformMatrix);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0,
                           GLES2Lesson::squareVertices);
-    glEnableVertexAttribArray(vertexAttributePosition);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
