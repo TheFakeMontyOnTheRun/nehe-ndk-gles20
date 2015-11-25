@@ -11,9 +11,9 @@ public:
 
     static float triangleVertices[ 9 ];
     static float squareVertices[ 18 ];
-    static float triangleTransformMatrix[ 16 ];
-    static float squareTransformMatrix[ 16 ];
-    static float projectionMatrix[ 16 ];
+    static glm::mat4 triangleTransformMatrix;
+    static glm::mat4 squareTransformMatrix;
+    static glm::mat4 projectionMatrix;
 
     static GLuint vertexAttributePosition;
     static GLuint modelMatrixAttributePosition;

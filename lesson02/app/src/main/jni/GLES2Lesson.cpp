@@ -47,31 +47,10 @@ float GLES2Lesson::squareVertices[]{
         -1.0f, -1.0f, 0.0f
 };
 
-//glTranslatef( -1.5f, 0.0f, -6.0f);
-float GLES2Lesson::triangleTransformMatrix[]{
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        -1.5f, 0.0f, -6.0f, 1.0f
-};
-
-//glTranslatef( -1.5f, 0.0f, -6.0f);
-//glTranslatef(3.0f, 0.0f, 0.0f );
-//= glTranslate( 1.5f, 0.0, -6.0f );
-float GLES2Lesson::squareTransformMatrix[]{
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        1.5f, 0.0f, -6.0f, 1.0f
-};
-
-//We start off with a identity and later will fill in for the projection space transform..
-float GLES2Lesson::projectionMatrix[]{
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
-};
+//start off as identity - late we will init it with proper values.
+glm::mat4 GLES2Lesson::triangleTransformMatrix = glm::mat4( 1.0f );
+glm::mat4 GLES2Lesson::squareTransformMatrix = glm::mat4( 1.0f );
+glm::mat4 GLES2Lesson::projectionMatrix = glm::mat4( 1.0f );
 
 float radians(float degrees) {
     return degrees * (3.14159f / 180.0f);
@@ -90,24 +69,6 @@ extern void checkGlError(const char *op) {
     for (GLint error = glGetError(); error; error = glGetError()) {
         LOGI("after %s() glError (0x%x)\n", op, error);
     }
-}
-
-
-void perspective(float fovy, float aspect, float zNear, float zFar) {
-
-    float A;
-    float B;
-    float d;
-
-    A = (2.0f * zNear * zFar) / (zFar - zNear);
-    B = (zFar + zNear) / (zFar - zNear);
-    d = cotangent(fovy / 2.0f);
-
-    GLES2Lesson::projectionMatrix[0] = d / aspect;
-    GLES2Lesson::projectionMatrix[5] = d;
-    GLES2Lesson::projectionMatrix[10] = -B;
-    GLES2Lesson::projectionMatrix[11] = -1.0f;
-    GLES2Lesson::projectionMatrix[14] = -A;
 }
 
 GLuint loadShader(GLenum shaderType, const char *pSource) {
@@ -197,7 +158,14 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
 
-    perspective(45.0f, ((float) w) / ((float) h), 0.1f, 100.0f);
+    //glTranslatef( -1.5f, 0.0f, -6.0f);
+    GLES2Lesson::triangleTransformMatrix = glm::translate( GLES2Lesson::triangleTransformMatrix, glm::vec3( -1.5f, 0.0f, -6.0f ) );
+
+    //glTranslatef( -1.5f, 0.0f, -6.0f);
+    //glTranslatef(3.0f, 0.0f, 0.0f );
+    //= glTranslate( 1.5f, 0.0, -6.0f );
+    GLES2Lesson::squareTransformMatrix = glm::translate( GLES2Lesson::squareTransformMatrix, glm::vec3( 1.5f, 0.0f, -6.0f ) );
+    GLES2Lesson::projectionMatrix = glm::perspective(45.0f, ((float) w) / ((float) h), 0.1f, 100.0f );
 
     return true;
 }
@@ -211,16 +179,16 @@ void GLES2Lesson::render() {
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
 
-    glUniformMatrix4fv(projectionMatrixAttributePosition, 1, false, GLES2Lesson::projectionMatrix);
+    glUniformMatrix4fv(projectionMatrixAttributePosition, 1, false, &GLES2Lesson::projectionMatrix[ 0 ][ 0 ]);
 
     glUniformMatrix4fv(modelMatrixAttributePosition, 1, false,
-                       GLES2Lesson::triangleTransformMatrix);
+                       &GLES2Lesson::triangleTransformMatrix[ 0 ][ 0 ]);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0,
                           GLES2Lesson::triangleVertices);
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, GLES2Lesson::squareTransformMatrix);
+    glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &GLES2Lesson::squareTransformMatrix[ 0 ][ 0 ]);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0,
                           GLES2Lesson::squareVertices);
 
