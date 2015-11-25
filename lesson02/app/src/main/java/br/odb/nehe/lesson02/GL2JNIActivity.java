@@ -47,4 +47,12 @@ public class GL2JNIActivity extends Activity {
         super.onResume();
         mView.onResume();
     }
+
+    @Override
+    protected void onDestroy() {
+
+        GL2JNILib.onDestroy();
+
+        super.onDestroy();
+    }
 }

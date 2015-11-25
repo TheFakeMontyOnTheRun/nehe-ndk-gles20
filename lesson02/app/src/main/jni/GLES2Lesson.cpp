@@ -226,4 +226,5 @@ void GLES2Lesson::render() {
 
 void GLES2Lesson::shutdown() {
 
+    LOGI("Shutdown!\n");
 }

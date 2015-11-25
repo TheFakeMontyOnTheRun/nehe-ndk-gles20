@@ -96,9 +96,15 @@ void renderFrame() {
     GLES2Lesson::render();
 }
 
+void shutdown() {
+    GLES2Lesson::shutdown();
+}
+
 extern "C" {
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
                                                                     jobject assetManager);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
+
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_init(JNIEnv *env, jobject obj,
                                                                 jint width, jint height);
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_step(JNIEnv *env, jobject obj);
@@ -117,3 +123,8 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_init(JNIEnv *env, job
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_step(JNIEnv *env, jobject obj) {
     renderFrame();
 }
+
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson02_GL2JNILib_onDestroy(JNIEnv *env, jobject obj) {
+    shutdown();
+}
+
