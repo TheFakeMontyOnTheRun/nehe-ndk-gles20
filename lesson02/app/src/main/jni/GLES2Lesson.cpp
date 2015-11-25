@@ -5,6 +5,9 @@
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 #include <string>
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
@@ -225,6 +228,5 @@ void GLES2Lesson::render() {
 }
 
 void GLES2Lesson::shutdown() {
-
     LOGI("Shutdown!\n");
 }
