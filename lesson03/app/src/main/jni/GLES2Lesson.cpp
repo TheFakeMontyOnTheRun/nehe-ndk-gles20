@@ -67,14 +67,6 @@ glm::mat4 GLES2Lesson::triangleTransformMatrix = glm::mat4( 1.0f );
 glm::mat4 GLES2Lesson::squareTransformMatrix = glm::mat4( 1.0f );
 glm::mat4 GLES2Lesson::projectionMatrix = glm::mat4( 1.0f );
 
-float radians(float degrees) {
-    return degrees * (3.14159f / 180.0f);
-}
-
-float cotangent(float angle) {
-    return 1.0f / tan(radians(angle));
-}
-
 extern void printGLString(const char *name, GLenum s) {
     const char *v = (const char *) glGetString(s);
     LOGI("GL %s = %s\n", name, v);
