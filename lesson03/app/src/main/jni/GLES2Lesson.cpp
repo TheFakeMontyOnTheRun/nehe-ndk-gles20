@@ -62,6 +62,8 @@ unsigned short squareIndices[] {
   1, 3, 0, 2
 };
 
+int colourAttributePosition;
+
 //start off as identity - late we will init it with proper values.
 glm::mat4 GLES2Lesson::triangleTransformMatrix = glm::mat4( 1.0f );
 glm::mat4 GLES2Lesson::squareTransformMatrix = glm::mat4( 1.0f );
@@ -156,11 +158,14 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
         return false;
     }
     GLES2Lesson::vertexAttributePosition = glGetAttribLocation(GLES2Lesson::gProgram, "aPosition");
+    colourAttributePosition = glGetAttribLocation(GLES2Lesson::gProgram, "aColour");
+
     GLES2Lesson::modelMatrixAttributePosition = glGetUniformLocation(GLES2Lesson::gProgram,
                                                                      "uModel");
     GLES2Lesson::projectionMatrixAttributePosition = glGetUniformLocation(GLES2Lesson::gProgram,
                                                                           "uProjection");
     glEnableVertexAttribArray(vertexAttributePosition);
+    glEnableVertexAttribArray(colourAttributePosition);
 
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
@@ -192,12 +197,18 @@ void GLES2Lesson::render() {
                        &GLES2Lesson::triangleTransformMatrix[ 0 ][ 0 ]);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0,
                           GLES2Lesson::triangleVertices);
+    glVertexAttribPointer(colourAttributePosition, 3, GL_FLOAT, GL_TRUE, 0,
+                          triangleColours);
+
 
     glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, triangleIndices );
 
     glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &GLES2Lesson::squareTransformMatrix[ 0 ][ 0 ]);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0,
                           GLES2Lesson::squareVertices);
+
+    glVertexAttribPointer(colourAttributePosition, 3, GL_FLOAT, GL_TRUE, 0,
+                          squareColours);
 
     glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, squareIndices);
 }
