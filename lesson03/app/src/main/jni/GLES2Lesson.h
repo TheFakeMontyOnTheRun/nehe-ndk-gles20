@@ -7,6 +7,14 @@
 
 
 class GLES2Lesson {
+
+    static void fetchShaderLocations();
+    static void setPerspective();
+    static void prepareShaderProgram();
+    static void clearBuffers();
+    static void resetTransformMatrices( float w, float h );
+    static void printVerboseDriverInformation();
+
 public:
 
     static float triangleVertices[ 9 ];
@@ -23,6 +31,7 @@ public:
     static bool init( float w, float h, const std::string& vertexShader, const std::string& fragmentShader );
     static void render();
     static void shutdown();
+    static void drawGeometry( const float* vertexData, const float* colorData, const unsigned short* indexData, int vertexCount, const glm::mat4& transform );
 };
 
 

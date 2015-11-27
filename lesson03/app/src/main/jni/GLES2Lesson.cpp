@@ -143,33 +143,38 @@ GLuint createProgram(const char *pVertexSource, const char *pFragmentSource) {
     return program;
 }
 
-
-bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
-                       const std::string &fragmentShader) {
+void GLES2Lesson::printVerboseDriverInformation() {
     printGLString("Version", GL_VERSION);
     printGLString("Vendor", GL_VENDOR);
     printGLString("Renderer", GL_RENDERER);
     printGLString("Extensions", GL_EXTENSIONS);
+}
+
+bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
+                       const std::string &fragmentShader) {
+
+    GLES2Lesson::printVerboseDriverInformation();
 
     LOGI("setupGraphics(%d, %d)", w, h);
+
     GLES2Lesson::gProgram = createProgram(vertexShader.c_str(), fragmentShader.c_str());
+
     if (!GLES2Lesson::gProgram) {
         LOGE("Could not create program.");
         return false;
     }
-    GLES2Lesson::vertexAttributePosition = glGetAttribLocation(GLES2Lesson::gProgram, "aPosition");
-    colourAttributePosition = glGetAttribLocation(GLES2Lesson::gProgram, "aColour");
 
-    GLES2Lesson::modelMatrixAttributePosition = glGetUniformLocation(GLES2Lesson::gProgram,
-                                                                     "uModel");
-    GLES2Lesson::projectionMatrixAttributePosition = glGetUniformLocation(GLES2Lesson::gProgram,
-                                                                          "uProjection");
-    glEnableVertexAttribArray(vertexAttributePosition);
-    glEnableVertexAttribArray(colourAttributePosition);
+    GLES2Lesson::fetchShaderLocations();
 
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
 
+    GLES2Lesson::resetTransformMatrices( w, h );
+
+    return true;
+}
+
+void GLES2Lesson::resetTransformMatrices( float w, float h ) {
     //glTranslatef( -1.5f, 0.0f, -6.0f);
     GLES2Lesson::triangleTransformMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( -1.5f, 0.0f, -6.0f ) );
 
@@ -177,40 +182,63 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
     //glTranslatef(3.0f, 0.0f, 0.0f );
     //= glTranslate( 1.5f, 0.0, -6.0f );
     GLES2Lesson::squareTransformMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( 1.5f, 0.0f, -6.0f ) );
-    GLES2Lesson::projectionMatrix = glm::perspective(45.0f, ((float) w) / ((float) h), 0.1f, 100.0f );
-
-    return true;
+    GLES2Lesson::projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f );
 }
 
-void GLES2Lesson::render() {
+void GLES2Lesson::fetchShaderLocations() {
+
+    GLES2Lesson::vertexAttributePosition = glGetAttribLocation(GLES2Lesson::gProgram, "aPosition");
+    colourAttributePosition = glGetAttribLocation(GLES2Lesson::gProgram, "aColour");
+    GLES2Lesson::modelMatrixAttributePosition = glGetUniformLocation(GLES2Lesson::gProgram, "uModel");
+    GLES2Lesson::projectionMatrixAttributePosition = glGetUniformLocation(GLES2Lesson::gProgram, "uProjection");
+
+    glEnableVertexAttribArray(vertexAttributePosition);
+    glEnableVertexAttribArray(colourAttributePosition);
+}
+
+void GLES2Lesson::drawGeometry( const float* vertexData, const float* colorData, const unsigned short* indexData, int vertexCount, const glm::mat4& transform ) {
+
+    glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[ 0 ][ 0 ]);
+    glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0, vertexData );
+    glVertexAttribPointer(colourAttributePosition, 3, GL_FLOAT, GL_TRUE, 0,  colorData );
+    glDrawElements( GL_TRIANGLE_STRIP, vertexCount, GL_UNSIGNED_SHORT, indexData );
+}
+
+void GLES2Lesson::clearBuffers() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     checkGlError("glClearColor");
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGlError("glClear");
+}
 
+void GLES2Lesson::setPerspective() {
+    glUniformMatrix4fv(projectionMatrixAttributePosition, 1, false, &GLES2Lesson::projectionMatrix[ 0 ][ 0 ]);
+}
+
+void GLES2Lesson::prepareShaderProgram() {
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
+}
 
-    glUniformMatrix4fv(projectionMatrixAttributePosition, 1, false, &GLES2Lesson::projectionMatrix[ 0 ][ 0 ]);
+void GLES2Lesson::render() {
 
-    glUniformMatrix4fv(modelMatrixAttributePosition, 1, false,
-                       &GLES2Lesson::triangleTransformMatrix[ 0 ][ 0 ]);
-    glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0,
-                          GLES2Lesson::triangleVertices);
-    glVertexAttribPointer(colourAttributePosition, 3, GL_FLOAT, GL_TRUE, 0,
-                          triangleColours);
+    GLES2Lesson::clearBuffers();
+    GLES2Lesson::prepareShaderProgram();
+    GLES2Lesson::setPerspective();
 
+    GLES2Lesson::drawGeometry( GLES2Lesson::triangleVertices,
+                               triangleColours,
+                               triangleIndices,
+                               3,
+                               GLES2Lesson::triangleTransformMatrix
+    );
 
-    glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, triangleIndices );
-
-    glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &GLES2Lesson::squareTransformMatrix[ 0 ][ 0 ]);
-    glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0,
-                          GLES2Lesson::squareVertices);
-
-    glVertexAttribPointer(colourAttributePosition, 3, GL_FLOAT, GL_TRUE, 0,
-                          squareColours);
-
-    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, squareIndices);
+    GLES2Lesson::drawGeometry( GLES2Lesson::squareVertices,
+                               squareColours,
+                               squareIndices,
+                               4,
+                               GLES2Lesson::squareTransformMatrix
+    );
 }
 
 void GLES2Lesson::shutdown() {
