@@ -7,4 +7,8 @@ Then, we must add a new vertex attribute into the shaders, by plugging in the pr
 
 Since we want to slowly learn new stuff, there is a new element here as well: the quad is now drawn as a triangle strip - thus requiring only one extra index, beyond the original triangle.
 
-Next up: indexed geometry and atributes.
+From the C++ side of things, I've extracted a lot of functionality into separated methods and cleared a lot of scope resolution.
+
+BTW, you might have noticed I changed the colours from the original demo quite a bit. This was done in favour of better illustrating what was done.
+
+Next up: Rotations & VBOs.
