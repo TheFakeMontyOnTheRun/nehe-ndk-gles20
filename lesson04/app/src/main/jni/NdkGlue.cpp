@@ -30,8 +30,9 @@
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
-static std::string gVertexShader;
-static std::string gFragmentShader;
+std::string gVertexShader;
+std::string gFragmentShader;
+GLES2Lesson* gles2Lesson;
 
 static int android_read(void *cookie, char *buf, int size) {
     return AAsset_read((AAsset *) cookie, buf, size);
@@ -92,19 +93,22 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 }
 
 bool setupGraphics(int w, int h) {
-    return GLES2Lesson::init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
+    gles2Lesson = new GLES2Lesson();
+    return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
 
 void renderFrame() {
-    GLES2Lesson::render();
+    gles2Lesson->render();
 }
 
 void shutdown() {
-    GLES2Lesson::shutdown();
+    gles2Lesson->shutdown();
+    delete gles2Lesson;
+    gles2Lesson = nullptr;
 }
 
 void tick() {
-    GLES2Lesson::tick();
+    gles2Lesson->tick();
 }
 
 extern "C" {

@@ -22,7 +22,7 @@ float GLES2Lesson::triangleRotationAngle = 0.0f;
 float GLES2Lesson::squareRotationAngle = 0.0f;
 
 //Counter Clockwise
-float GLES2Lesson::triangleVertices[] = {
+const float GLES2Lesson::triangleVertices[] {
 //     0
 //    / \
 //   /   \
@@ -33,24 +33,24 @@ float GLES2Lesson::triangleVertices[] = {
         1.0f, -1.0f, 0.0f
 };
 
-float GLES2Lesson::triangleColours[] {
+const float GLES2Lesson::triangleColours[] {
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 1.0f
 };
 
-unsigned short GLES2Lesson::triangleIndices[] {
+const unsigned short GLES2Lesson::triangleIndices[] {
     0, 1, 2
 };
 
-float GLES2Lesson::squareColours[] {
+const float GLES2Lesson::squareColours[] {
      1.0f, 1.0f, 0.0f,
      1.0f, 1.0f, 0.0f,
      1.0f, 1.0f, 0.0f,
      1.0f, 0.0f, 0.0f
 };
 
-float GLES2Lesson::squareVertices[]{
+const float GLES2Lesson::squareVertices[]{
 //  1___0
 //  |   |
 //  |   |
@@ -61,7 +61,7 @@ float GLES2Lesson::squareVertices[]{
         -1.0f, -1.0f, 0.0f
 };
 
-unsigned short GLES2Lesson::squareIndices[] {
+const unsigned short GLES2Lesson::squareIndices[] {
   1, 3, 0, 2
 };
 
@@ -151,6 +151,14 @@ void GLES2Lesson::printVerboseDriverInformation() {
     printGLString("Extensions", GL_EXTENSIONS);
 }
 
+GLES2Lesson::GLES2Lesson() {
+
+}
+
+GLES2Lesson::~GLES2Lesson() {
+
+}
+
 bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
                        const std::string &fragmentShader) {
 
@@ -182,7 +190,7 @@ void GLES2Lesson::resetTransformMatrices() {
     //glTranslatef( -1.5f, 0.0f, -6.0f);
     //glTranslatef(3.0f, 0.0f, 0.0f );
     //= glTranslate( 1.5f, 0.0, -6.0f );
-    squareTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( 1.5f, 0.0f, -6.0f ) ), squareRotationAngle, glm::vec3( 0.0f, 0.0f, 1.0f ) );
+    squareTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( 1.5f, 0.0f, -6.0f ) ), squareRotationAngle, glm::vec3( 1.0f, 0.0f, 0.0f ) );
 }
 
 void GLES2Lesson::fetchShaderLocations() {
