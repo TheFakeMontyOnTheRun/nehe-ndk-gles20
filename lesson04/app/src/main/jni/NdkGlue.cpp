@@ -98,17 +98,22 @@ bool setupGraphics(int w, int h) {
 }
 
 void renderFrame() {
-    gles2Lesson->render();
+    if ( gles2Lesson != nullptr ) {
+        gles2Lesson->render();
+    }
 }
 
 void shutdown() {
-    gles2Lesson->shutdown();
-    delete gles2Lesson;
+    GLES2Lesson *local = gles2Lesson;
     gles2Lesson = nullptr;
+    local->shutdown();
+    delete local;
 }
 
 void tick() {
-    gles2Lesson->tick();
+    if ( gles2Lesson != nullptr ) {
+        gles2Lesson->tick();
+    }
 }
 
 extern "C" {
