@@ -34,9 +34,14 @@ class GLES2Lesson {
     static GLuint modelMatrixAttributePosition;
     static GLuint projectionMatrixAttributePosition;
     static GLuint gProgram;
+    GLuint vertexAttributePosition;
+    GLuint colourAttributePosition;
+    GLuint modelMatrixAttributePosition;
+    GLuint projectionMatrixAttributePosition;
+    GLuint gProgram;
 
-    static float triangleRotationAngle;
-    static float squareRotationAngle;
+    float triangleRotationAngle;
+    float squareRotationAngle;
 public:
     GLES2Lesson();
     ~GLES2Lesson();

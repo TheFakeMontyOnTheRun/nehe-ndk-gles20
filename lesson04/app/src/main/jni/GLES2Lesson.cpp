@@ -12,15 +12,6 @@
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
-GLuint GLES2Lesson::vertexAttributePosition = 0;
-GLuint GLES2Lesson::colourAttributePosition = 0;
-GLuint GLES2Lesson::modelMatrixAttributePosition = 0;
-GLuint GLES2Lesson::projectionMatrixAttributePosition = 0;
-GLuint GLES2Lesson::gProgram = 0;
-
-float GLES2Lesson::triangleRotationAngle = 0.0f;
-float GLES2Lesson::squareRotationAngle = 0.0f;
-
 //Counter Clockwise
 const float GLES2Lesson::triangleVertices[] {
 //     0
@@ -153,6 +144,14 @@ void GLES2Lesson::printVerboseDriverInformation() {
 
 GLES2Lesson::GLES2Lesson() {
 
+//start off as identity - late we will init it with proper values.
+    GLES2Lesson::vertexAttributePosition = 0;
+    GLES2Lesson::colourAttributePosition = 0;
+    GLES2Lesson::modelMatrixAttributePosition = 0;
+    GLES2Lesson::projectionMatrixAttributePosition = 0;
+    GLES2Lesson::gProgram = 0;
+    GLES2Lesson::triangleRotationAngle = 0.0f;
+    GLES2Lesson::squareRotationAngle = 0.0f;
 }
 
 GLES2Lesson::~GLES2Lesson() {
