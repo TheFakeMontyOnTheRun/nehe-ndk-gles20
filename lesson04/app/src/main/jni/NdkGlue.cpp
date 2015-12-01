@@ -32,7 +32,7 @@
 
 std::string gVertexShader;
 std::string gFragmentShader;
-GLES2Lesson* gles2Lesson;
+GLES2Lesson* gles2Lesson = nullptr;
 
 static int android_read(void *cookie, char *buf, int size) {
     return AAsset_read((AAsset *) cookie, buf, size);
