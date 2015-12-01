@@ -28,6 +28,7 @@ import java.io.File;
 public class GL2JNIActivity extends Activity {
 
     GL2JNIView mView;
+    boolean running = false;
     static AssetManager assets;
     @Override protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -40,6 +41,8 @@ public class GL2JNIActivity extends Activity {
 
     @Override protected void onPause() {
         super.onPause();
+
+        running = false;
         mView.onPause();
     }
 
@@ -50,7 +53,8 @@ public class GL2JNIActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while( true ) {
+                running = true;
+                while( running ) {
                     try {
                         Thread.sleep( 20 );
                     } catch (InterruptedException e) {
