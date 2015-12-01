@@ -14,8 +14,8 @@ class GLES2Lesson {
     void resetTransformMatrices();
     void printVerboseDriverInformation();
 
-    static GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
-    static GLuint loadShader(GLenum shaderType, const char *pSource);
+    GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
+    GLuint loadShader(GLenum shaderType, const char *pSource);
 
     const static float triangleVertices[ 9 ];
     const static float triangleColours[ 9 ];
@@ -25,15 +25,10 @@ class GLES2Lesson {
     const static float squareColours[ 12 ];
     const static unsigned short squareIndices[ 4 ];
 
-    static glm::mat4 triangleTransformMatrix;
-    static glm::mat4 squareTransformMatrix;
-    static glm::mat4 projectionMatrix;
+    glm::mat4 triangleTransformMatrix;
+    glm::mat4 squareTransformMatrix;
+    glm::mat4 projectionMatrix;
 
-    static GLuint vertexAttributePosition;
-    static GLuint colourAttributePosition;
-    static GLuint modelMatrixAttributePosition;
-    static GLuint projectionMatrixAttributePosition;
-    static GLuint gProgram;
     GLuint vertexAttributePosition;
     GLuint colourAttributePosition;
     GLuint modelMatrixAttributePosition;

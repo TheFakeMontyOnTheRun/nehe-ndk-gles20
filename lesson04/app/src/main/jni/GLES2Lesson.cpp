@@ -56,11 +56,6 @@ const unsigned short GLES2Lesson::squareIndices[] {
   1, 3, 0, 2
 };
 
-//start off as identity - late we will init it with proper values.
-glm::mat4 GLES2Lesson::triangleTransformMatrix = glm::mat4( 1.0f );
-glm::mat4 GLES2Lesson::squareTransformMatrix = glm::mat4( 1.0f );
-glm::mat4 GLES2Lesson::projectionMatrix = glm::mat4( 1.0f );
-
 extern void printGLString(const char *name, GLenum s) {
     const char *v = (const char *) glGetString(s);
     LOGI("GL %s = %s\n", name, v);
@@ -143,15 +138,19 @@ void GLES2Lesson::printVerboseDriverInformation() {
 }
 
 GLES2Lesson::GLES2Lesson() {
-
 //start off as identity - late we will init it with proper values.
-    GLES2Lesson::vertexAttributePosition = 0;
-    GLES2Lesson::colourAttributePosition = 0;
-    GLES2Lesson::modelMatrixAttributePosition = 0;
-    GLES2Lesson::projectionMatrixAttributePosition = 0;
-    GLES2Lesson::gProgram = 0;
-    GLES2Lesson::triangleRotationAngle = 0.0f;
-    GLES2Lesson::squareRotationAngle = 0.0f;
+    triangleTransformMatrix = glm::mat4( 1.0f );
+    squareTransformMatrix = glm::mat4( 1.0f );
+    projectionMatrix = glm::mat4( 1.0f );
+
+
+    vertexAttributePosition = 0;
+    colourAttributePosition = 0;
+    modelMatrixAttributePosition = 0;
+    projectionMatrixAttributePosition = 0;
+    gProgram = 0;
+    triangleRotationAngle = 0.0f;
+    squareRotationAngle = 0.0f;
 }
 
 GLES2Lesson::~GLES2Lesson() {
