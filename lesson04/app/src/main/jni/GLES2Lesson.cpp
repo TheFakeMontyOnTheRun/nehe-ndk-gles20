@@ -18,27 +18,14 @@ const float GLES2Lesson::triangleVertices[] {
 //    / \
 //   /   \
 // 1/____ \2
-
-        0.0f, 1.0f, 0.0f,
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f
-};
-
-const float GLES2Lesson::triangleColours[] {
-        1.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 1.0f
+//x, y, z, r, g, b
+        0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f,0.0f, 1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f
 };
 
 const unsigned short GLES2Lesson::triangleIndices[] {
     0, 1, 2
-};
-
-const float GLES2Lesson::squareColours[] {
-     1.0f, 1.0f, 0.0f,
-     1.0f, 1.0f, 0.0f,
-     1.0f, 1.0f, 0.0f,
-     1.0f, 0.0f, 0.0f
 };
 
 const float GLES2Lesson::squareVertices[]{
@@ -46,10 +33,11 @@ const float GLES2Lesson::squareVertices[]{
 //  |   |
 //  |   |
 //  3___2
-        1.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        -1.0f, -1.0f, 0.0f
+//x, y, z, r, g, b
+        1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+        -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 };
 
 const unsigned short GLES2Lesson::squareIndices[] {
@@ -143,7 +131,6 @@ GLES2Lesson::GLES2Lesson() {
     squareTransformMatrix = glm::mat4( 1.0f );
     projectionMatrix = glm::mat4( 1.0f );
 
-
     vertexAttributePosition = 0;
     colourAttributePosition = 0;
     modelMatrixAttributePosition = 0;
@@ -154,7 +141,7 @@ GLES2Lesson::GLES2Lesson() {
 }
 
 GLES2Lesson::~GLES2Lesson() {
-
+    deleteVBOs();
 }
 
 bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
@@ -176,13 +163,13 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
 
     projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f );
 
+    createVBOs();
+
     return true;
 }
 
 void GLES2Lesson::resetTransformMatrices() {
     //glTranslatef( -1.5f, 0.0f, -6.0f);
-
-
     triangleTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( -1.5f, 0.0f, -6.0f ) ), triangleRotationAngle, glm::vec3( 0.0f, 1.0f, 0.0f ) );
 
     //glTranslatef( -1.5f, 0.0f, -6.0f);
@@ -197,17 +184,57 @@ void GLES2Lesson::fetchShaderLocations() {
     colourAttributePosition = glGetAttribLocation( gProgram, "aColour");
     modelMatrixAttributePosition = glGetUniformLocation( gProgram, "uModel");
     projectionMatrixAttributePosition = glGetUniformLocation( gProgram, "uProjection");
+}
+
+void GLES2Lesson::drawGeometry( const int vertexVbo, const int indexVbo, int vertexCount, const glm::mat4& transform ) {
+
+    glBindBuffer( GL_ARRAY_BUFFER, vertexVbo );
 
     glEnableVertexAttribArray(vertexAttributePosition);
     glEnableVertexAttribArray(colourAttributePosition);
-}
-
-void GLES2Lesson::drawGeometry( const float* vertexData, const float* colorData, const unsigned short* indexData, int vertexCount, const glm::mat4& transform ) {
 
     glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[ 0 ][ 0 ]);
-    glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, 0, vertexData );
-    glVertexAttribPointer(colourAttributePosition, 3, GL_FLOAT, GL_TRUE, 0,  colorData );
-    glDrawElements( GL_TRIANGLE_STRIP, vertexCount, GL_UNSIGNED_SHORT, indexData );
+    glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof( float ) * 6, 0 );
+    glVertexAttribPointer(colourAttributePosition, 3, GL_FLOAT, GL_TRUE, sizeof( float ) * 6, (void*)(sizeof(float ) * 3) );
+
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexVbo );
+    glDrawElements( GL_TRIANGLE_STRIP, vertexCount, GL_UNSIGNED_SHORT, 0 );
+
+    glDisableVertexAttribArray(vertexAttributePosition);
+    glDisableVertexAttribArray(colourAttributePosition);
+
+    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+}
+
+void GLES2Lesson::deleteVBOs() {
+    glDeleteBuffers( 1, &vboTriangleVertexDataIndex );
+    glDeleteBuffers( 1, &vboTriangleVertexIndicesIndex );
+    glDeleteBuffers( 1, &vboSquareVertexDataIndex );
+    glDeleteBuffers( 1, &vboSquareVertexIndicesIndex );
+}
+
+void GLES2Lesson::createVBOs() {
+    glGenBuffers( 1, &vboTriangleVertexDataIndex );
+    glBindBuffer( GL_ARRAY_BUFFER, vboTriangleVertexDataIndex );
+    glBufferData( GL_ARRAY_BUFFER, 3 * sizeof( float ) * 6, triangleVertices, GL_STATIC_DRAW );
+    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+
+    glGenBuffers( 1, &vboTriangleVertexIndicesIndex );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, vboTriangleVertexIndicesIndex );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof( GLushort ), triangleIndices, GL_STATIC_DRAW );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+
+    glGenBuffers( 1, &vboSquareVertexDataIndex );
+    glBindBuffer( GL_ARRAY_BUFFER, vboSquareVertexDataIndex );
+    glBufferData( GL_ARRAY_BUFFER, 4 * sizeof( float ) * 6, squareVertices, GL_STATIC_DRAW );
+    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+
+    glGenBuffers( 1, &vboSquareVertexIndicesIndex );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, vboSquareVertexIndicesIndex );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof( GLushort ), squareIndices, GL_STATIC_DRAW );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 }
 
 void GLES2Lesson::clearBuffers() {
@@ -233,19 +260,18 @@ void GLES2Lesson::render() {
     setPerspective();
     resetTransformMatrices();
 
-    drawGeometry( triangleVertices,
-                               triangleColours,
-                               triangleIndices,
-                               3,
-                               triangleTransformMatrix
+    drawGeometry( vboTriangleVertexDataIndex,
+                  vboTriangleVertexIndicesIndex,
+                  3,
+                  triangleTransformMatrix
     );
 
-    drawGeometry( squareVertices,
-                               squareColours,
-                               squareIndices,
-                               4,
-                               squareTransformMatrix
+    drawGeometry( vboSquareVertexDataIndex,
+                  vboSquareVertexIndicesIndex,
+                  4,
+                  squareTransformMatrix
     );
+
 }
 
 void GLES2Lesson::tick() {

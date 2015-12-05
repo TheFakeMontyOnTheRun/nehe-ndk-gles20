@@ -13,16 +13,17 @@ class GLES2Lesson {
     void clearBuffers();
     void resetTransformMatrices();
     void printVerboseDriverInformation();
+    void createVBOs();
+    void deleteVBOs();
+    void drawGeometry( const int vertexVbo, const int indexVbo, int vertexCount, const glm::mat4& transform );
 
     GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
     GLuint loadShader(GLenum shaderType, const char *pSource);
 
-    const static float triangleVertices[ 9 ];
-    const static float triangleColours[ 9 ];
+    const static float triangleVertices[ 18 ];
     const static unsigned short triangleIndices[ 3 ];
 
-    const static float squareVertices[ 12 ];
-    const static float squareColours[ 12 ];
+    const static float squareVertices[ 24 ];
     const static unsigned short squareIndices[ 4 ];
 
     glm::mat4 triangleTransformMatrix;
@@ -35,6 +36,12 @@ class GLES2Lesson {
     GLuint projectionMatrixAttributePosition;
     GLuint gProgram;
 
+    //VBO stuff
+    GLuint vboTriangleVertexDataIndex;
+    GLuint vboSquareVertexDataIndex;
+    GLuint vboTriangleVertexIndicesIndex;
+    GLuint vboSquareVertexIndicesIndex;
+
     float triangleRotationAngle;
     float squareRotationAngle;
 public:
@@ -44,7 +51,6 @@ public:
     void render();
     void shutdown();
     void tick();
-    void drawGeometry( const float* vertexData, const float* colorData, const unsigned short* indexData, int vertexCount, const glm::mat4& transform );
 };
 
 #endif //LESSON02_GLES2LESSON_H
