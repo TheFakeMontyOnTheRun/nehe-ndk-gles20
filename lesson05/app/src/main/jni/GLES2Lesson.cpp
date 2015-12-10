@@ -41,7 +41,7 @@ const float GLES2Lesson::cubeVertices[]{
 };
 
 const unsigned short GLES2Lesson::cubeIndices[] {
-  1, 3, 0, 2
+  1, 3, 0, 3, 0, 2
 };
 
 extern void printGLString(const char *name, GLenum s) {
@@ -198,7 +198,7 @@ void GLES2Lesson::drawGeometry( const int vertexVbo, const int indexVbo, int ver
     glVertexAttribPointer(colourAttributePosition, 3, GL_FLOAT, GL_TRUE, sizeof( float ) * 6, (void*)(sizeof(float ) * 3) );
 
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexVbo );
-    glDrawElements( GL_TRIANGLE_STRIP, vertexCount, GL_UNSIGNED_SHORT, 0 );
+    glDrawElements( GL_TRIANGLES, vertexCount, GL_UNSIGNED_SHORT, 0 );
 
     glDisableVertexAttribArray(vertexAttributePosition);
     glDisableVertexAttribArray(colourAttributePosition);
@@ -228,12 +228,12 @@ void GLES2Lesson::createVBOs() {
 
     glGenBuffers( 1, &vboCubeVertexDataIndex );
     glBindBuffer( GL_ARRAY_BUFFER, vboCubeVertexDataIndex );
-    glBufferData( GL_ARRAY_BUFFER, 4 * sizeof( float ) * 6, cubeVertices, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, 6 * sizeof( float ) * 6, cubeVertices, GL_STATIC_DRAW );
     glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
     glGenBuffers( 1, &vboCubeVertexIndicesIndex );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof( GLushort ), cubeIndices, GL_STATIC_DRAW );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof( GLushort ), cubeIndices, GL_STATIC_DRAW );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 }
 
@@ -268,7 +268,7 @@ void GLES2Lesson::render() {
 
     drawGeometry( vboCubeVertexDataIndex,
                   vboCubeVertexIndicesIndex,
-                  4,
+                  6,
                   cubeTransformMatrix
     );
 

@@ -24,7 +24,7 @@ class GLES2Lesson {
     const static unsigned short pyramidIndices[ 3 ];
 
     const static float cubeVertices[ 24 ];
-    const static unsigned short cubeIndices[ 4 ];
+    const static unsigned short cubeIndices[ 6 ];
 
     glm::mat4 pyramidTransformMatrix;
     glm::mat4 cubeTransformMatrix;
