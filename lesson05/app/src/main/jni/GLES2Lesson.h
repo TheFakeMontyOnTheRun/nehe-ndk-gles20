@@ -19,12 +19,11 @@ class GLES2Lesson {
 
     GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
     GLuint loadShader(GLenum shaderType, const char *pSource);
+    const static float pyramidVertices[ 5 * 6 ];
+    const static unsigned short pyramidIndices[ 6 * 3 ];
 
-    const static float pyramidVertices[ 18 ];
-    const static unsigned short pyramidIndices[ 3 ];
-
-    const static float cubeVertices[ 24 ];
-    const static unsigned short cubeIndices[ 6 ];
+    const static float cubeVertices[ 8 * 6 ];
+    const static unsigned short cubeIndices[ 6 * 6 ];
 
     glm::mat4 pyramidTransformMatrix;
     glm::mat4 cubeTransformMatrix;

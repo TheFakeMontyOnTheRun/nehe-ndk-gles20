@@ -18,30 +18,64 @@ const float GLES2Lesson::pyramidVertices[] {
 //    / \
 //   /   \
 // 1/____ \2
+// 3______4
 //x, y, z, r, g, b
         0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-        -1.0f, -1.0f, 0.0f,0.0f, 1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f
+        -1.0f, -1.0f, -1.0f,0.0f, 1.0f, 0.0f,
+        1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+        -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        1.0f, -1.0f, 1.0f,0.0f, 1.0f, 1.0f
 };
 
 const unsigned short GLES2Lesson::pyramidIndices[] {
-    0, 1, 2
+    0, 1, 2,
+    0, 4, 3,
+    0, 2, 4,
+    0, 3, 1,
+    1, 2, 3,
+    2, 4, 3
 };
 
 const float GLES2Lesson::cubeVertices[]{
-//  1___0
-//  |   |
-//  |   |
-//  3___2
+//    4________5
+//    /|       /|
+//   / |      / |
+// 0/__|___1_/  |
+//  | 7|____|___|6
+//  |  /    |  /
+//  | /     | /
+// 3|/______|/2
 //x, y, z, r, g, b
-        1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-        -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+        1.0f,  -1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        -1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 0.0f,
+        1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f,
+        -1.0f, -1.0f, -1.0f, 0.5f, 0.5f, 0.5f,
+
 };
 
 const unsigned short GLES2Lesson::cubeIndices[] {
-  1, 3, 0, 3, 0, 2
+  0, 1, 2,
+  0, 2, 3,
+
+  5, 4, 7,
+  5, 7, 6,
+
+  1, 5, 6,
+  1, 6, 2,
+
+  4, 0, 7,
+  0, 3, 7,
+
+  4, 5, 1,
+  4, 1, 0,
+
+  6, 7, 2,
+  2, 7, 3
+
 };
 
 extern void printGLString(const char *name, GLenum s) {
@@ -217,23 +251,23 @@ void GLES2Lesson::deleteVBOs() {
 void GLES2Lesson::createVBOs() {
     glGenBuffers( 1, &vboPyramidVertexDataIndex );
     glBindBuffer( GL_ARRAY_BUFFER, vboPyramidVertexDataIndex );
-    glBufferData( GL_ARRAY_BUFFER, 3 * sizeof( float ) * 6, pyramidVertices, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, 5 * sizeof( float ) * 6, pyramidVertices, GL_STATIC_DRAW );
     glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
     glGenBuffers( 1, &vboPyramidVertexIndicesIndex );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, vboPyramidVertexIndicesIndex );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof( GLushort ), pyramidIndices, GL_STATIC_DRAW );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 15 * sizeof( GLushort ), pyramidIndices, GL_STATIC_DRAW );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
 
     glGenBuffers( 1, &vboCubeVertexDataIndex );
     glBindBuffer( GL_ARRAY_BUFFER, vboCubeVertexDataIndex );
-    glBufferData( GL_ARRAY_BUFFER, 6 * sizeof( float ) * 6, cubeVertices, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, 8 * sizeof( float ) * 6, cubeVertices, GL_STATIC_DRAW );
     glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
     glGenBuffers( 1, &vboCubeVertexIndicesIndex );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof( GLushort ), cubeIndices, GL_STATIC_DRAW );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof( GLushort ), cubeIndices, GL_STATIC_DRAW );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 }
 
@@ -262,13 +296,13 @@ void GLES2Lesson::render() {
 
     drawGeometry( vboPyramidVertexDataIndex,
                   vboPyramidVertexIndicesIndex,
-                  3,
+                  15,
                   pyramidTransformMatrix
     );
 
     drawGeometry( vboCubeVertexDataIndex,
                   vboCubeVertexIndicesIndex,
-                  6,
+                  36,
                   cubeTransformMatrix
     );
 
