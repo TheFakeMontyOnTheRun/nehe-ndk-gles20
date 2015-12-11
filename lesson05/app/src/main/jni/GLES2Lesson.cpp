@@ -198,7 +198,10 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
     projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f );
 
     createVBOs();
-
+    glEnable( GL_DEPTH_TEST );
+    glDepthFunc( GL_LEQUAL );
+    glFrontFace( GL_CW );
+    glDepthMask( true );
     return true;
 }
 
@@ -273,6 +276,7 @@ void GLES2Lesson::createVBOs() {
 
 void GLES2Lesson::clearBuffers() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearDepthf( 1.0f );
     checkGlError("glClearColor");
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGlError("glClear");
