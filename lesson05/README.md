@@ -10,4 +10,4 @@ eg: faces that normally will appear only behind other things, opposite to you, h
 
 This concludes the first batch of NeHe lessons. Now, I must go back and review all lessons, to make sure it's not buggy or misbehaving.
 
-Next up: Texture mapping and god knows what else.
+Next up: Texture mapping, flow control routing into native code and two-way communication between Java and native code.
