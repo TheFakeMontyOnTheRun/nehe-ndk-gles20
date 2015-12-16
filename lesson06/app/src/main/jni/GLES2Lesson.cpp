@@ -13,29 +13,6 @@
 #include "NdkGlue.h"
 
 //Counter Clockwise
-const float GLES2Lesson::pyramidVertices[] {
-//     0
-//    / \
-//   /   \
-// 1/____ \2
-// 3______4
-//x, y, z, r, g, b
-        0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-        -1.0f, -1.0f, -1.0f,0.0f, 1.0f, 0.0f,
-        1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-        1.0f, -1.0f, 1.0f,0.0f, 1.0f, 1.0f
-};
-
-const unsigned short GLES2Lesson::pyramidIndices[] {
-    0, 1, 2,
-    0, 4, 3,
-    0, 2, 4,
-    0, 3, 1,
-    1, 2, 3,
-    2, 4, 3
-};
-
 const float GLES2Lesson::cubeVertices[]{
 //    4________5
 //    /|       /|
@@ -161,7 +138,6 @@ void GLES2Lesson::printVerboseDriverInformation() {
 
 GLES2Lesson::GLES2Lesson() {
 //start off as identity - late we will init it with proper values.
-    pyramidTransformMatrix = glm::mat4( 1.0f );
     cubeTransformMatrix = glm::mat4( 1.0f );
     projectionMatrix = glm::mat4( 1.0f );
 
@@ -170,7 +146,6 @@ GLES2Lesson::GLES2Lesson() {
     modelMatrixAttributePosition = 0;
     projectionMatrixAttributePosition = 0;
     gProgram = 0;
-    pyramidRotationAngle = 0.0f;
     cubeRotationAngle = 0.0f;
 }
 
@@ -207,9 +182,6 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
 
 void GLES2Lesson::resetTransformMatrices() {
     //glTranslatef( -1.5f, 0.0f, -6.0f);
-    pyramidTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( -1.5f, 0.0f, -6.0f ) ), pyramidRotationAngle, glm::vec3( 0.0f, 1.0f, 0.0f ) );
-
-    //glTranslatef( -1.5f, 0.0f, -6.0f);
     //glTranslatef(3.0f, 0.0f, 0.0f );
     //= glTranslate( 1.5f, 0.0, -6.0f );
     cubeTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( 1.5f, 0.0f, -6.0f ) ), cubeRotationAngle, glm::vec3( 1.0f, 0.0f, 0.0f ) );
@@ -245,24 +217,11 @@ void GLES2Lesson::drawGeometry( const int vertexVbo, const int indexVbo, int ver
 }
 
 void GLES2Lesson::deleteVBOs() {
-    glDeleteBuffers( 1, &vboPyramidVertexDataIndex );
-    glDeleteBuffers( 1, &vboPyramidVertexIndicesIndex );
     glDeleteBuffers( 1, &vboCubeVertexDataIndex );
     glDeleteBuffers( 1, &vboCubeVertexIndicesIndex );
 }
 
 void GLES2Lesson::createVBOs() {
-    glGenBuffers( 1, &vboPyramidVertexDataIndex );
-    glBindBuffer( GL_ARRAY_BUFFER, vboPyramidVertexDataIndex );
-    glBufferData( GL_ARRAY_BUFFER, 5 * sizeof( float ) * 6, pyramidVertices, GL_STATIC_DRAW );
-    glBindBuffer( GL_ARRAY_BUFFER, 0 );
-
-    glGenBuffers( 1, &vboPyramidVertexIndicesIndex );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, vboPyramidVertexIndicesIndex );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 15 * sizeof( GLushort ), pyramidIndices, GL_STATIC_DRAW );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-
-
     glGenBuffers( 1, &vboCubeVertexDataIndex );
     glBindBuffer( GL_ARRAY_BUFFER, vboCubeVertexDataIndex );
     glBufferData( GL_ARRAY_BUFFER, 8 * sizeof( float ) * 6, cubeVertices, GL_STATIC_DRAW );
@@ -298,22 +257,14 @@ void GLES2Lesson::render() {
     setPerspective();
     resetTransformMatrices();
 
-    drawGeometry( vboPyramidVertexDataIndex,
-                  vboPyramidVertexIndicesIndex,
-                  15,
-                  pyramidTransformMatrix
-    );
-
     drawGeometry( vboCubeVertexDataIndex,
                   vboCubeVertexIndicesIndex,
                   36,
                   cubeTransformMatrix
     );
-
 }
 
 void GLES2Lesson::tick() {
-    pyramidRotationAngle += 1.0f;
     cubeRotationAngle += 1.0f;
 }
 
