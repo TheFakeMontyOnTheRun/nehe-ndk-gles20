@@ -181,10 +181,7 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
 }
 
 void GLES2Lesson::resetTransformMatrices() {
-    //glTranslatef( -1.5f, 0.0f, -6.0f);
-    //glTranslatef(3.0f, 0.0f, 0.0f );
-    //= glTranslate( 1.5f, 0.0, -6.0f );
-    cubeTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( 1.5f, 0.0f, -6.0f ) ), cubeRotationAngle, glm::vec3( 1.0f, 0.0f, 0.0f ) );
+    cubeTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 0.0f, -6.0f ) ), cubeRotationAngle, glm::vec3( 1.0f, 0.0f, 0.0f ) );
 }
 
 void GLES2Lesson::fetchShaderLocations() {
