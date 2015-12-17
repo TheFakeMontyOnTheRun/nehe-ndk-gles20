@@ -19,6 +19,7 @@ package br.odb.nehe.lesson06;
 // Wrapper for native library
 
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 
 public class GL2JNILib {
 
@@ -37,4 +38,5 @@ public class GL2JNILib {
     public static native void tick();
     public static native void onDestroy();
     public static native void onCreate( AssetManager assetManager );
+    public static native void setTexture( Bitmap bitmap );
 }
