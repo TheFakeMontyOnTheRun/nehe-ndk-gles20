@@ -20,7 +20,7 @@ model {
     android.ndk {
         moduleName = "gl2jni"
         cppFlags  += ["-Werror",  "-std=gnu++14" ]
-        ldLibs    += ["log", "GLESv2", "android"]
+        ldLibs    += ["log", "GLESv2", "android", "jnigraphics" ]
         stl = "stlport_static"
     }
 
