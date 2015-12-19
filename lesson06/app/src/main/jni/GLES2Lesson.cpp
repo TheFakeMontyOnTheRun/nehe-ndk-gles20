@@ -146,7 +146,8 @@ GLES2Lesson::GLES2Lesson() {
     modelMatrixAttributePosition = 0;
     projectionMatrixAttributePosition = 0;
     gProgram = 0;
-    cubeRotationAngle = 0.0f;
+    cubeRotationAngleYZ = 0.0f;
+    cubeRotationAngleXZ = 0.0f;
 }
 
 GLES2Lesson::~GLES2Lesson() {
@@ -181,7 +182,14 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
 }
 
 void GLES2Lesson::resetTransformMatrices() {
-    cubeTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 0.0f, -6.0f ) ), cubeRotationAngle, glm::vec3( 1.0f, 0.0f, 0.0f ) );
+    glm::mat4 identity = glm::mat4( 1.0f );
+    glm::vec3 translate = glm::vec3( 0.0f, 0.0f, -6.0f );
+    glm::vec3 xAxis = glm::vec3( 1.0f, 0.0f, 0.0f );
+    glm::vec3 yAxis = glm::vec3( 0.0f, 1.0f, 0.0f );
+    glm::mat4 translated = glm::translate( identity, translate );
+    glm::mat4 rotatedAroundXAxis = glm::rotate( translated, cubeRotationAngleYZ, xAxis );
+    glm::mat4 rotatedAroundYAxis = glm::rotate( rotatedAroundXAxis, cubeRotationAngleXZ, yAxis );
+    cubeTransformMatrix = rotatedAroundYAxis;
 }
 
 void GLES2Lesson::fetchShaderLocations() {
@@ -262,7 +270,8 @@ void GLES2Lesson::render() {
 }
 
 void GLES2Lesson::tick() {
-    cubeRotationAngle += 1.0f;
+    cubeRotationAngleYZ += 0.0f;
+    cubeRotationAngleXZ += 1.0f;
 }
 
 void GLES2Lesson::shutdown() {

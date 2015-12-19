@@ -36,7 +36,8 @@ class GLES2Lesson {
     GLuint vboCubeVertexDataIndex;
     GLuint vboCubeVertexIndicesIndex;
 
-    float cubeRotationAngle;
+    float cubeRotationAngleYZ;
+    float cubeRotationAngleXZ;
 public:
     GLES2Lesson();
     ~GLES2Lesson();
