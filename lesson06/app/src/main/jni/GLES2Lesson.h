@@ -20,17 +20,20 @@ class GLES2Lesson {
     GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
     GLuint loadShader(GLenum shaderType, const char *pSource);
 
-    const static float cubeVertices[ 8 * 8 ];
+    const static float cubeVertices[ 8 * 5 ];
     const static unsigned short cubeIndices[ 6 * 6 ];
 
     glm::mat4 cubeTransformMatrix;
     glm::mat4 projectionMatrix;
 
     GLuint vertexAttributePosition;
-    GLuint colourAttributePosition;
     GLuint modelMatrixAttributePosition;
+    GLuint samplerUniformPosition;
+    GLuint textureCoordinatesAttributePosition;
     GLuint projectionMatrixAttributePosition;
     GLuint gProgram;
+
+    GLuint textureId;
 
     //VBO stuff
     GLuint vboCubeVertexDataIndex;
@@ -42,6 +45,7 @@ public:
     GLES2Lesson();
     ~GLES2Lesson();
     bool init( float w, float h, const std::string& vertexShader, const std::string& fragmentShader );
+    void setTexture( void **bitmapData, int size );
     void render();
     void shutdown();
     void tick();

@@ -15,7 +15,9 @@
  */
 
 // OpenGL ES 2.0 code
-
+#include <stdint.h>
+#include <jni.h>
+#include <android/bitmap.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #include <string>
@@ -155,4 +157,11 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onDestroy(JNIEnv *env
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, void *reserved, jobject bitmap) {
+//    void** addr;
+//    AndroidBitmapInfo info;
+//
+//    AndroidBitmap_lockPixels( env, bitmap, addr );
+//    AndroidBitmap_getInfo( env, bitmap, &info );
+//    gles2Lesson->setTexture( addr, info.width * info.height * 4 );
+//    AndroidBitmap_unlockPixels( env, bitmap );
 }
