@@ -25,68 +25,68 @@ const float GLES2Lesson::cubeVertices[]{
 //x, y, z, r, g, b, u, v
         -1.0f, 1.0f, 1.0f, 0.0f, 1.0f,    //0
         1.0f, 1.0f, 1.0f, 1.0f, 1.0f,     //1
-        1.0f,  -1.0f, 1.0f, 1.0f, 0.0f,   //2
+        1.0f, -1.0f, 1.0f, 1.0f, 0.0f,   //2
         -1.0f, -1.0f, 1.0f, 0.0f, 0.0f,   //3
         -1.0f, 1.0f, -1.0f, 0.0f, 0.0f,   //4
         1.0f, 1.0f, -1.0f, 1.0f, 0.0f,    //5
         1.0f, -1.0f, -1.0f, 1.0f, 1.0f,   //6
-        -1.0f, -1.0f, -1.0f, 0.0f, 1.0f   //
+        -1.0f, -1.0f, -1.0f, 0.0f, 1.0f   //7
 };
 
-const unsigned short GLES2Lesson::cubeIndices[] {
-  0, 1, 2,
-  0, 2, 3,
+const unsigned short GLES2Lesson::cubeIndices[]{
+        0, 1, 2,
+        0, 2, 3,
 
-  5, 4, 7,
-  5, 7, 6,
+        5, 4, 7,
+        5, 7, 6,
 
-  1, 5, 6,
-  1, 6, 2,
+        1, 5, 6,
+        1, 6, 2,
 
-  4, 0, 7,
-  0, 3, 7,
+        4, 0, 7,
+        0, 3, 7,
 
-  4, 5, 1,
-  0, 4, 1,
+        4, 5, 1,
+        0, 4, 1,
 
-  6, 7, 2,
-  2, 7, 3
+        6, 7, 2,
+        2, 7, 3
 
 };
 
-GLuint CreateSimpleTexture2D( )
-{
+GLuint CreateSimpleTexture2D() {
     // Texture object handle
     GLuint textureId = 0;
 
     // 2x2 Image, 3 bytes per pixel (R, G, B)
     GLubyte pixels[4 * 3] =
             {
-                    255,   0,   0, // Red
-                    0, 255,   0, // Green
-                    0,   0, 255, // Blue
-                    255, 255,   0  // Yellow
+                    255, 0, 0, // Red
+                    0, 255, 0, // Green
+                    0, 0, 255, // Blue
+                    255, 255, 0  // Yellow
             };
 
     // Use tightly packed data
-    glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
     // Generate a texture object
-    glGenTextures ( 1, &textureId );
+    glGenTextures(1, &textureId);
 
     // Bind the texture object
-    glBindTexture ( GL_TEXTURE_2D, textureId );
+    glBindTexture(GL_TEXTURE_2D, textureId);
 
     // Load the texture
-    glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels );
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 
     // Set the filtering mode
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     return textureId;
 
 }
+
 
 extern void printGLString(const char *name, GLenum s) {
     const char *v = (const char *) glGetString(s);
@@ -171,8 +171,8 @@ void GLES2Lesson::printVerboseDriverInformation() {
 
 GLES2Lesson::GLES2Lesson() {
 //start off as identity - late we will init it with proper values.
-    cubeTransformMatrix = glm::mat4( 1.0f );
-    projectionMatrix = glm::mat4( 1.0f );
+    cubeTransformMatrix = glm::mat4(1.0f);
+    projectionMatrix = glm::mat4(1.0f);
 
     vertexAttributePosition = 0;
     modelMatrixAttributePosition = 0;
@@ -203,87 +203,89 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
 
-    projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f );
+    projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f);
 
     createVBOs();
-    glEnable( GL_DEPTH_TEST );
-    glDepthFunc( GL_LEQUAL );
-    glFrontFace( GL_CW );
-    glDepthMask( true );
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glFrontFace(GL_CW);
+    glDepthMask(true);
     return true;
 }
 
 void GLES2Lesson::resetTransformMatrices() {
-    glm::mat4 identity = glm::mat4( 1.0f );
-    glm::vec3 translate = glm::vec3( 0.0f, 0.0f, -6.0f );
-    glm::vec3 xAxis = glm::vec3( 1.0f, 0.0f, 0.0f );
-    glm::vec3 yAxis = glm::vec3( 0.0f, 1.0f, 0.0f );
-    glm::mat4 translated = glm::translate( identity, translate );
-    glm::mat4 rotatedAroundXAxis = glm::rotate( translated, cubeRotationAngleYZ, xAxis );
-    glm::mat4 rotatedAroundYAxis = glm::rotate( rotatedAroundXAxis, cubeRotationAngleXZ, yAxis );
+    glm::mat4 identity = glm::mat4(1.0f);
+    glm::vec3 translate = glm::vec3(0.0f, 0.0f, -6.0f);
+    glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
+    glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::mat4 translated = glm::translate(identity, translate);
+    glm::mat4 rotatedAroundXAxis = glm::rotate(translated, cubeRotationAngleYZ, xAxis);
+    glm::mat4 rotatedAroundYAxis = glm::rotate(rotatedAroundXAxis, cubeRotationAngleXZ, yAxis);
     cubeTransformMatrix = rotatedAroundYAxis;
 }
 
 void GLES2Lesson::fetchShaderLocations() {
 
-    vertexAttributePosition = glGetAttribLocation( gProgram, "aPosition");
-    modelMatrixAttributePosition = glGetUniformLocation( gProgram, "uModel");
-    projectionMatrixAttributePosition = glGetUniformLocation( gProgram, "uProjection");
-    samplerUniformPosition = glGetUniformLocation( gProgram, "sTexture" );
-    textureCoordinatesAttributePosition = glGetAttribLocation( gProgram, "aTexCoord" );
+    vertexAttributePosition = glGetAttribLocation(gProgram, "aPosition");
+    modelMatrixAttributePosition = glGetUniformLocation(gProgram, "uModel");
+    projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
+    samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
+    textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
 }
 
-void GLES2Lesson::drawGeometry( const int vertexVbo, const int indexVbo, int vertexCount, const glm::mat4& transform ) {
+void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
+                               const glm::mat4 &transform) {
 
-    glBindBuffer( GL_ARRAY_BUFFER, vertexVbo );
-
+    glBindBuffer(GL_ARRAY_BUFFER, vertexVbo);
     glEnableVertexAttribArray(vertexAttributePosition);
     glEnableVertexAttribArray(textureCoordinatesAttributePosition);
 
-    glUniform1i( samplerUniformPosition, 0 );
-    glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[ 0 ][ 0 ]);
-    glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof( float ) * 5, 0 );
-    glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE, sizeof( float ) * 5, (void*)(sizeof(float ) * 3) );
+    glUniform1i(samplerUniformPosition, 0);
 
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexVbo );
-    glDrawElements( GL_TRIANGLES, vertexCount, GL_UNSIGNED_SHORT, 0 );
+    glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
+    glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
+    glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,
+                          sizeof(float) * 5, (void *) (sizeof(float) * 3));
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
+    glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_SHORT, 0);
 
     glDisableVertexAttribArray(vertexAttributePosition);
     glDisableVertexAttribArray(textureCoordinatesAttributePosition);
 
-    glBindBuffer( GL_ARRAY_BUFFER, 0 );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void GLES2Lesson::deleteVBOs() {
-    glDeleteBuffers( 1, &vboCubeVertexDataIndex );
-    glDeleteBuffers( 1, &vboCubeVertexIndicesIndex );
+    glDeleteBuffers(1, &vboCubeVertexDataIndex);
+    glDeleteBuffers(1, &vboCubeVertexIndicesIndex);
 }
 
 void GLES2Lesson::createVBOs() {
-    glGenBuffers( 1, &vboCubeVertexDataIndex );
-    glBindBuffer( GL_ARRAY_BUFFER, vboCubeVertexDataIndex );
-    glBufferData( GL_ARRAY_BUFFER, 8 * sizeof( float ) * 5, cubeVertices, GL_STATIC_DRAW );
-    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+    glGenBuffers(1, &vboCubeVertexDataIndex);
+    glBindBuffer(GL_ARRAY_BUFFER, vboCubeVertexDataIndex);
+    glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float) * 5, cubeVertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     textureId = CreateSimpleTexture2D();
 
-    glGenBuffers( 1, &vboCubeVertexIndicesIndex );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof( GLushort ), cubeIndices, GL_STATIC_DRAW );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+    glGenBuffers(1, &vboCubeVertexIndicesIndex);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLushort), cubeIndices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void GLES2Lesson::clearBuffers() {
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    glClearDepthf( 1.0f );
+    glClearDepthf(1.0f);
     checkGlError("glClearColor");
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGlError("glClear");
 }
 
 void GLES2Lesson::setPerspective() {
-    glUniformMatrix4fv(projectionMatrixAttributePosition, 1, false, &projectionMatrix[ 0 ][ 0 ]);
+    glUniformMatrix4fv(projectionMatrixAttributePosition, 1, false, &projectionMatrix[0][0]);
 }
 
 void GLES2Lesson::prepareShaderProgram() {
@@ -292,20 +294,25 @@ void GLES2Lesson::prepareShaderProgram() {
 }
 
 void GLES2Lesson::render() {
-
     clearBuffers();
     prepareShaderProgram();
     setPerspective();
     resetTransformMatrices();
 
-    drawGeometry( vboCubeVertexDataIndex,
-                  vboCubeVertexIndicesIndex,
-                  36,
-                  cubeTransformMatrix
+    drawGeometry(vboCubeVertexDataIndex,
+                 vboCubeVertexIndicesIndex,
+                 36,
+                 cubeTransformMatrix
     );
 }
 
-void GLES2Lesson::setTexture( void **bitmapData, int size ) {
+void GLES2Lesson::setTexture(void **bitmapData, int size) {
+//    glBindBuffer( GL_ARRAY_BUFFER, vboCubeVertexDataIndex );
+//    glBindTexture( GL_TEXTURE_2D, 0 );
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+//    glBufferData( GL_ARRAY_BUFFER, size, bitmapData, GL_STATIC_DRAW );
+//    glBindBuffer( GL_ARRAY_BUFFER, 0 );
 }
 
 void GLES2Lesson::tick() {
