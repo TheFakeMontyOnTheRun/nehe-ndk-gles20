@@ -30,7 +30,16 @@ const float GLES2Lesson::cubeVertices[]{
         -1.0f, 1.0f, -1.0f, 0.0f, 0.0f,   //4
         1.0f, 1.0f, -1.0f, 1.0f, 0.0f,    //5
         1.0f, -1.0f, -1.0f, 1.0f, 1.0f,   //6
-        -1.0f, -1.0f, -1.0f, 0.0f, 1.0f   //7
+        -1.0f, -1.0f, -1.0f, 0.0f, 1.0f,   //7
+
+        -1.0f, 1.0f, 1.0f, 1.0f, 1.0f,    //0
+        1.0f, 1.0f, 1.0f, 0.0f, 1.0f,     //1
+        1.0f, -1.0f, 1.0f, 0.0f, 0.0f,   //2
+        -1.0f, -1.0f, 1.0f, 1.0f, 0.0f,   //3
+        -1.0f, 1.0f, -1.0f, 0.0f, 1.0f,   //4
+        1.0f, 1.0f, -1.0f, 1.0f, 1.0f,    //5
+        1.0f, -1.0f, -1.0f, 1.0f, 0.0f,   //6
+        -1.0f, -1.0f, -1.0f, 0.0f, 0.0f   //7
 };
 
 const unsigned short GLES2Lesson::cubeIndices[]{
@@ -40,18 +49,17 @@ const unsigned short GLES2Lesson::cubeIndices[]{
         5, 4, 7,
         5, 7, 6,
 
-        1, 5, 6,
-        1, 6, 2,
-
-        4, 0, 7,
-        0, 3, 7,
-
         4, 5, 1,
         0, 4, 1,
 
         6, 7, 2,
-        2, 7, 3
+        2, 7, 3,
 
+        9, 13, 14,
+        9, 14, 10,
+
+        12, 8, 15,
+        8, 11, 15
 };
 
 GLuint CreateSimpleTexture2D() {
@@ -265,7 +273,7 @@ void GLES2Lesson::deleteVBOs() {
 void GLES2Lesson::createVBOs() {
     glGenBuffers(1, &vboCubeVertexDataIndex);
     glBindBuffer(GL_ARRAY_BUFFER, vboCubeVertexDataIndex);
-    glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float) * 5, cubeVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float) * 5, cubeVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     textureId = CreateSimpleTexture2D();
@@ -316,7 +324,7 @@ void GLES2Lesson::setTexture(void **bitmapData, int size) {
 }
 
 void GLES2Lesson::tick() {
-    cubeRotationAngleYZ += 0.0f;
+    cubeRotationAngleYZ += 0.5f;
     cubeRotationAngleXZ += 1.0f;
 }
 

@@ -20,7 +20,7 @@ class GLES2Lesson {
     GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
     GLuint loadShader(GLenum shaderType, const char *pSource);
 
-    const static float cubeVertices[ 8 * 5 ];
+    const static float cubeVertices[ 16 * 5 ];
     const static unsigned short cubeIndices[ 6 * 6 ];
 
     glm::mat4 cubeTransformMatrix;
