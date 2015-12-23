@@ -62,7 +62,7 @@ const unsigned short GLES2Lesson::cubeIndices[]{
         8, 11, 15
 };
 
-GLuint CreateSimpleTexture2D() {
+GLuint CreateSimpleTexture2D( int*textureData, int width, int height) {
     // Texture object handle
     GLuint textureId = 0;
 
@@ -75,6 +75,19 @@ GLuint CreateSimpleTexture2D() {
                     255, 255, 0  // Yellow
             };
 
+    void *data;
+    int twidth;
+    int theight;
+
+    if ( textureData != nullptr ) {
+        data = textureData;
+        twidth = width;
+        theight = height;
+    } else {
+        data = pixels;
+        twidth = theight = 2;
+    }
+
     // Use tightly packed data
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -85,14 +98,13 @@ GLuint CreateSimpleTexture2D() {
     glBindTexture(GL_TEXTURE_2D, textureId);
 
     // Load the texture
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, twidth, theight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
     // Set the filtering mode
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     return textureId;
-
 }
 
 
@@ -181,7 +193,7 @@ GLES2Lesson::GLES2Lesson() {
 //start off as identity - late we will init it with proper values.
     cubeTransformMatrix = glm::mat4(1.0f);
     projectionMatrix = glm::mat4(1.0f);
-
+    textureData = nullptr;
     vertexAttributePosition = 0;
     modelMatrixAttributePosition = 0;
     projectionMatrixAttributePosition = 0;
@@ -276,8 +288,9 @@ void GLES2Lesson::createVBOs() {
     glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float) * 5, cubeVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    textureId = CreateSimpleTexture2D();
-
+    LOGI( "prepping the texture" );
+    textureId = CreateSimpleTexture2D( textureData, textureWidth, textureHeight );
+    LOGI( "done" );
     glGenBuffers(1, &vboCubeVertexIndicesIndex);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLushort), cubeIndices, GL_STATIC_DRAW);
@@ -314,13 +327,10 @@ void GLES2Lesson::render() {
     );
 }
 
-void GLES2Lesson::setTexture(void **bitmapData, int size) {
-//    glBindBuffer( GL_ARRAY_BUFFER, vboCubeVertexDataIndex );
-//    glBindTexture( GL_TEXTURE_2D, 0 );
-//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-//    glBufferData( GL_ARRAY_BUFFER, size, bitmapData, GL_STATIC_DRAW );
-//    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format) {
+    textureData = bitmapData;
+    textureWidth = width;
+    textureHeight = height;
 }
 
 void GLES2Lesson::tick() {

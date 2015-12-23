@@ -39,13 +39,16 @@ class GLES2Lesson {
     GLuint vboCubeVertexDataIndex;
     GLuint vboCubeVertexIndicesIndex;
 
+    int *textureData;
+    int textureWidth;
+    int textureHeight;
     float cubeRotationAngleYZ;
     float cubeRotationAngleXZ;
 public:
     GLES2Lesson();
     ~GLES2Lesson();
     bool init( float w, float h, const std::string& vertexShader, const std::string& fragmentShader );
-    void setTexture( void **bitmapData, int size );
+    void setTexture( int *bitmapData, int width, int height, int format );
     void render();
     void shutdown();
     void tick();
