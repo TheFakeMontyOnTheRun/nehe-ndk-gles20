@@ -18,6 +18,8 @@ package br.odb.nehe.lesson06;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
@@ -35,6 +37,10 @@ public class GL2JNIActivity extends Activity {
 
         assets = getAssets();
         GL2JNILib.onCreate( assets );
+
+        Bitmap bitmap = BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher  );
+        GL2JNILib.setTexture(bitmap);
+
         mView = new GL2JNIView(getApplication());
         setContentView(mView);
     }
