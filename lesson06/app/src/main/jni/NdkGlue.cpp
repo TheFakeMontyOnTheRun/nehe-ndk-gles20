@@ -34,9 +34,9 @@
 
 std::string gVertexShader;
 std::string gFragmentShader;
-GLES2Lesson* gles2Lesson = nullptr;
+GLES2Lesson *gles2Lesson = nullptr;
 
-int* pixels;
+int *pixels;
 AndroidBitmapInfo info;
 
 static int android_read(void *cookie, char *buf, int size) {
@@ -99,12 +99,12 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new GLES2Lesson();
-    gles2Lesson->setTexture( pixels, info.width, info.height, info.format );
+    gles2Lesson->setTexture(pixels, info.width, info.height, info.format);
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
 
 void renderFrame() {
-    if ( gles2Lesson != nullptr ) {
+    if (gles2Lesson != nullptr) {
         gles2Lesson->render();
     }
 }
@@ -117,7 +117,7 @@ void shutdown() {
 }
 
 void tick() {
-    if ( gles2Lesson != nullptr ) {
+    if (gles2Lesson != nullptr) {
         gles2Lesson->tick();
     }
 }
@@ -127,7 +127,7 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onCreate(JNIEnv *env,
                                                                     jobject assetManager);
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, void *reserved,
-                                                                    jobject bitmap);
+                                                                      jobject bitmap);
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
 
@@ -160,16 +160,17 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onDestroy(JNIEnv *env
     shutdown();
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, void *reserved, jobject bitmap) {
-        void** addr;
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, void *reserved,
+                                                                      jobject bitmap) {
+    void **addr;
 
-        AndroidBitmap_lockPixels( env, bitmap, addr );
+    AndroidBitmap_lockPixels(env, bitmap, addr);
 
-        AndroidBitmap_getInfo( env, bitmap, &info );
-        LOGI( "bitmap info: %d wide, %d tall, %d ints per pixel", info.width, info.height, info.format );
-        int size = info.width * info.height * info.format;
-        pixels = new int[ size ];
-        memcpy( pixels, *addr, size * sizeof( int ) );
+    AndroidBitmap_getInfo(env, bitmap, &info);
+    LOGI("bitmap info: %d wide, %d tall, %d ints per pixel", info.width, info.height, info.format);
+    int size = info.width * info.height * info.format;
+    pixels = new int[size];
+    memcpy(pixels, *addr, size * sizeof(int));
 
-        AndroidBitmap_unlockPixels( env, bitmap );
+    AndroidBitmap_unlockPixels(env, bitmap);
 }

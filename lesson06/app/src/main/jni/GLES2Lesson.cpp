@@ -62,7 +62,7 @@ const unsigned short GLES2Lesson::cubeIndices[]{
         8, 11, 15
 };
 
-GLuint CreateSimpleTexture2D( int*textureData, int width, int height) {
+GLuint CreateSimpleTexture2D(int *textureData, int width, int height) {
     // Texture object handle
     GLuint textureId = 0;
 
@@ -79,7 +79,7 @@ GLuint CreateSimpleTexture2D( int*textureData, int width, int height) {
     int twidth;
     int theight;
 
-    if ( textureData != nullptr ) {
+    if (textureData != nullptr) {
         data = textureData;
         twidth = width;
         theight = height;
@@ -288,9 +288,9 @@ void GLES2Lesson::createVBOs() {
     glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float) * 5, cubeVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    LOGI( "prepping the texture" );
-    textureId = CreateSimpleTexture2D( textureData, textureWidth, textureHeight );
-    LOGI( "done" );
+    LOGI("prepping the texture");
+    textureId = CreateSimpleTexture2D(textureData, textureWidth, textureHeight);
+    LOGI("done");
     glGenBuffers(1, &vboCubeVertexIndicesIndex);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLushort), cubeIndices, GL_STATIC_DRAW);
