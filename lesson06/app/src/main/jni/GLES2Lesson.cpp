@@ -339,5 +339,6 @@ void GLES2Lesson::tick() {
 }
 
 void GLES2Lesson::shutdown() {
+    delete textureData;
     LOGI("Shutdown!\n");
 }
