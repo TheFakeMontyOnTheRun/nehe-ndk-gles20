@@ -62,45 +62,20 @@ const unsigned short GLES2Lesson::cubeIndices[]{
         8, 11, 15
 };
 
-GLuint CreateSimpleTexture2D(int *textureData, int width, int height) {
+GLuint uploadTextureData(int *textureData, int width, int height) {
     // Texture object handle
     GLuint textureId = 0;
 
-    // 2x2 Image, 3 bytes per pixel (R, G, B)
-    GLubyte pixels[4 * 3] =
-            {
-                    255, 0, 0, // Red
-                    0, 255, 0, // Green
-                    0, 0, 255, // Blue
-                    255, 255, 0  // Yellow
-            };
-
-    void *data;
-    int twidth;
-    int theight;
-
-    if (textureData != nullptr) {
-        data = textureData;
-        twidth = width;
-        theight = height;
-    } else {
-        data = pixels;
-        twidth = theight = 2;
-    }
-
-    // Use tightly packed data
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-    // Generate a texture object
+    //Generate texture storage
     glGenTextures(1, &textureId);
 
-    // Bind the texture object
+    //specify what we want for that texture
     glBindTexture(GL_TEXTURE_2D, textureId);
 
-    // Load the texture
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, twidth, theight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    //upload the data
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData );
 
-    // Set the filtering mode
+    // Set the filtering mode - surprisingly, this is needed.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
@@ -261,6 +236,7 @@ void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vert
     glEnableVertexAttribArray(vertexAttributePosition);
     glEnableVertexAttribArray(textureCoordinatesAttributePosition);
 
+    //0 is for texturing unit 0 (since we never changed it)
     glUniform1i(samplerUniformPosition, 0);
 
     glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
@@ -289,9 +265,9 @@ void GLES2Lesson::createVBOs() {
     glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float) * 5, cubeVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    LOGI("prepping the texture");
-    textureId = CreateSimpleTexture2D(textureData, textureWidth, textureHeight);
-    LOGI("done");
+
+    textureId = uploadTextureData(textureData, textureWidth, textureHeight);
+
     glGenBuffers(1, &vboCubeVertexIndicesIndex);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLushort), cubeIndices, GL_STATIC_DRAW);

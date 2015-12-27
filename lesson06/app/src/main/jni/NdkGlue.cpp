@@ -100,6 +100,7 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 bool setupGraphics(int w, int h) {
     gles2Lesson = new GLES2Lesson();
     gles2Lesson->setTexture(pixels, 128, 128, 1);
+    pixels = nullptr; //now, it belongs to gles2Lesson.
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
 
@@ -127,7 +128,7 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onCreate(JNIEnv *env,
                                                                     jobject assetManager);
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap);
+        Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap);
 
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
@@ -181,9 +182,9 @@ Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
 
     long size = info.width * info.height * info.format;
     pixels = new int[size];
-    memcpy(pixels, addr, size * sizeof( int ));
+    memcpy(pixels, addr, size * sizeof(int));
 
-    if (( errorCode = AndroidBitmap_unlockPixels(env, bitmap) ) != 0 ) {
-        LOGI("error %d", errorCode );
+    if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
+        LOGI("error %d", errorCode);
     }
 }
