@@ -20,11 +20,14 @@ import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 
 import java.io.File;
+import java.io.IOException;
 
 
 public class GL2JNIActivity extends Activity {
@@ -32,11 +35,13 @@ public class GL2JNIActivity extends Activity {
     GL2JNIView mView;
     boolean running = false;
     static AssetManager assets;
-    @Override protected void onCreate(Bundle icicle) {
+
+    @Override
+    protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         assets = getAssets();
-        GL2JNILib.onCreate( assets );
+        GL2JNILib.onCreate(assets);
 
         Bitmap bitmap = null;
         try {
@@ -49,14 +54,16 @@ public class GL2JNIActivity extends Activity {
         setContentView(mView);
     }
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
 
         running = false;
         mView.onPause();
     }
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
         mView.onResume();
 
@@ -64,9 +71,9 @@ public class GL2JNIActivity extends Activity {
             @Override
             public void run() {
                 running = true;
-                while( running ) {
+                while (running) {
                     try {
-                        Thread.sleep( 20 );
+                        Thread.sleep(20);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
