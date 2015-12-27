@@ -204,6 +204,7 @@ GLES2Lesson::GLES2Lesson() {
 
 GLES2Lesson::~GLES2Lesson() {
     deleteVBOs();
+    glDeleteTextures( 1, &textureId );
 }
 
 bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
