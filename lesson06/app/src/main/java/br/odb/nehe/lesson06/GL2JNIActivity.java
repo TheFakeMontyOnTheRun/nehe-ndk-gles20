@@ -38,8 +38,12 @@ public class GL2JNIActivity extends Activity {
         assets = getAssets();
         GL2JNILib.onCreate( assets );
 
-        Bitmap bitmap = BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher  );
-        GL2JNILib.setTexture(bitmap);
+        Bitmap bitmap = null;
+        try {
+            bitmap = BitmapFactory.decodeStream(assets.open("texture.png"));
+            GL2JNILib.setTexture(bitmap);
+        } catch (IOException e) {
+        }
 
         mView = new GL2JNIView(getApplication());
         setContentView(mView);
