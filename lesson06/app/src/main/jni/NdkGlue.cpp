@@ -37,7 +37,7 @@ std::string gFragmentShader;
 GLES2Lesson *gles2Lesson = nullptr;
 
 int *pixels;
-AndroidBitmapInfo info;
+
 
 static int android_read(void *cookie, char *buf, int size) {
     return AAsset_read((AAsset *) cookie, buf, size);
@@ -99,7 +99,7 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new GLES2Lesson();
-    gles2Lesson->setTexture(pixels, info.width, info.height, info.format);
+    gles2Lesson->setTexture(pixels, 128, 128, 1);
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
 
@@ -165,6 +165,7 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *en
     void **addr;
 
     AndroidBitmap_lockPixels(env, bitmap, addr);
+    AndroidBitmapInfo info;
 
     AndroidBitmap_getInfo(env, bitmap, &info);
     LOGI("bitmap info: %d wide, %d tall, %d ints per pixel", info.width, info.height, info.format);
