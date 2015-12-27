@@ -126,8 +126,9 @@ extern "C" {
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
                                                                     jobject assetManager);
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, void *reserved,
-                                                                      jobject bitmap);
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap);
+
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
 
@@ -160,9 +161,8 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onDestroy(JNIEnv *env
     shutdown();
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, void *reserved,
-                                                                      jobject bitmap) {
-    void **addr;
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap) {
 
     AndroidBitmap_lockPixels(env, bitmap, addr);
     AndroidBitmapInfo info;
