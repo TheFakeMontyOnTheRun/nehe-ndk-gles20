@@ -164,14 +164,26 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson06_GL2JNILib_onDestroy(JNIEnv *env
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson06_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap) {
 
-    AndroidBitmap_lockPixels(env, bitmap, addr);
+    void *addr;
     AndroidBitmapInfo info;
+    int errorCode;
 
-    AndroidBitmap_getInfo(env, bitmap, &info);
+    if ((errorCode = AndroidBitmap_lockPixels(env, bitmap, &addr)) != 0) {
+        LOGI("error %d", errorCode);
+    }
+
+    if ((errorCode = AndroidBitmap_getInfo(env, bitmap, &info)) != 0) {
+        LOGI("error %d", errorCode);
+    }
+
     LOGI("bitmap info: %d wide, %d tall, %d ints per pixel", info.width, info.height, info.format);
-    int size = info.width * info.height * info.format;
-    pixels = new int[size];
-    memcpy(pixels, *addr, size * sizeof(int));
 
-    AndroidBitmap_unlockPixels(env, bitmap);
+
+    long size = info.width * info.height * info.format;
+    pixels = new int[size];
+    memcpy(pixels, addr, size * sizeof( int ));
+
+    if (( errorCode = AndroidBitmap_unlockPixels(env, bitmap) ) != 0 ) {
+        LOGI("error %d", errorCode );
+    }
 }
