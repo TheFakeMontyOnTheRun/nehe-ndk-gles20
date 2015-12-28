@@ -18,10 +18,12 @@ model {
     }
 
     android.ndk {
-        moduleName = "gl2jni"
+        moduleName = "NdkGlue"
         cppFlags  += ["-Werror",  "-std=gnu++14" ]
         ldLibs    += ["log", "GLESv2", "android"]
         stl = "stlport_static"
+
+        cppFlags  += "-I${file("./../../common_includes")}".toString()
     }
 
     android.buildTypes {
