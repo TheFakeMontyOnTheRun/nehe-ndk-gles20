@@ -25,7 +25,7 @@ public class GL2JNILib {
     public static AssetManager assetManager;
 
      static {
-         System.loadLibrary("gl2jni");
+         System.loadLibrary("NdkGlue");
      }
 
     /**
