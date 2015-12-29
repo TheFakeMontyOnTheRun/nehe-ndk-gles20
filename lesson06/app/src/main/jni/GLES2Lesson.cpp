@@ -202,6 +202,9 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
     projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f);
 
     createVBOs();
+
+    textureId = uploadTextureData(textureData, textureWidth, textureHeight);
+
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     glFrontFace(GL_CW);
@@ -264,9 +267,6 @@ void GLES2Lesson::createVBOs() {
     glBindBuffer(GL_ARRAY_BUFFER, vboCubeVertexDataIndex);
     glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float) * 5, cubeVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-
-    textureId = uploadTextureData(textureData, textureWidth, textureHeight);
 
     glGenBuffers(1, &vboCubeVertexIndicesIndex);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
