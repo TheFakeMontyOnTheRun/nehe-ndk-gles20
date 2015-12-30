@@ -40,8 +40,18 @@
 std::string gVertexShader;
 std::string gFragmentShader;
 GLES2Lesson *gles2Lesson = nullptr;
-
 int *pixels;
+
+void loadShaders(JNIEnv *env, jobject &obj) {
+    AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
+    FILE *fd;
+    fd = android_fopen("vertex.glsl", "r", asset_manager);
+    gVertexShader = readShaderToString(fd);
+    fclose(fd);
+    fd = android_fopen("fragment.glsl", "r", asset_manager);
+    gFragmentShader = readShaderToString(fd);
+    fclose(fd);
+}
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new GLES2Lesson();

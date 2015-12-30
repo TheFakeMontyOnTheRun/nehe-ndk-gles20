@@ -11,7 +11,6 @@
 
 #include <string>
 
-
 #include <android/log.h>
 
 #include "GLES2Lesson.h"

@@ -17,68 +17,25 @@
 // OpenGL ES 2.0 code
 
 #include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
+#include <jni.h>
+#include <android/log.h>
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
+
 #include <string>
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
 
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
+#include "android_asset_operations.h"
+
 static std::string gVertexShader;
 static std::string gFragmentShader;
-
-static int android_read(void *cookie, char *buf, int size) {
-    return AAsset_read((AAsset *) cookie, buf, size);
-}
-
-static int android_write(void *cookie, const char *buf, int size) {
-    return EACCES; // can't provide write access to the apk
-}
-
-static fpos_t android_seek(void *cookie, fpos_t offset, int whence) {
-    return AAsset_seek((AAsset *) cookie, offset, whence);
-}
-
-static int android_close(void *cookie) {
-    AAsset_close((AAsset *) cookie);
-    return 0;
-}
-
-
-FILE *android_fopen(const char *fname, const char *mode, AAssetManager *assetManager) {
-    if (mode[0] == 'w') return NULL;
-
-    AAsset *asset = AAssetManager_open(assetManager, fname, 0);
-    if (!asset) return NULL;
-
-    return funopen(asset, android_read, android_write, android_seek, android_close);
-}
-
-
-std::string readShaderToString(FILE *fileDescriptor) {
-    const unsigned N = 1024;
-    std::string total;
-    while (true) {
-        char buffer[N];
-        size_t read = fread((void *) &buffer[0], 1, N, fileDescriptor);
-        if (read) {
-            for (int c = 0; c < read; ++c) {
-                total.push_back(buffer[c]);
-            }
-        }
-        if (read < N) {
-            break;
-        }
-    }
-
-    return total;
-}
 
 void loadShaders(JNIEnv *env, jobject &obj) {
     AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
