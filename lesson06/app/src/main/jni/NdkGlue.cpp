@@ -18,6 +18,9 @@
 #include <stdint.h>
 #include <jni.h>
 #include <android/bitmap.h>
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
+#include <android/log.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #include <string>
@@ -25,8 +28,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 
 #include "GLES2Lesson.h"
