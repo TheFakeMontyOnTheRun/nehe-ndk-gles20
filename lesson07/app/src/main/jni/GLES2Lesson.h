@@ -23,6 +23,9 @@ class GLES2Lesson {
     const static float cubeVertices[ 16 * 5 ];
     const static unsigned short cubeIndices[ 6 * 6 ];
 
+    const static glm::vec4 ambientLightFullColor;
+    const static glm::vec4 ambientLightOffColor;
+
     glm::mat4 cubeTransformMatrix;
     glm::mat4 projectionMatrix;
 
@@ -45,6 +48,10 @@ class GLES2Lesson {
     GLuint currentFilter;
     float cubeRotationAngleYZ;
     float cubeRotationAngleXZ;
+
+    glm::vec4 ambientLightColor;
+
+    GLuint ambientLightColorShaderLocation;
 public:
     GLES2Lesson();
     ~GLES2Lesson();
@@ -54,6 +61,7 @@ public:
     void shutdown();
     void tick();
     void toggleFiltering();
+    void toggleLightning();
 };
 
 #endif //LESSON02_GLES2LESSON_H

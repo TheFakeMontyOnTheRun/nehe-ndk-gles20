@@ -66,6 +66,10 @@ const unsigned short GLES2Lesson::cubeIndices[]{
         8, 11, 15
 };
 
+const glm::vec4 GLES2Lesson::ambientLightFullColor = glm::vec4( 0.5f, 0.5f, 0.5f, 1.0f );
+
+const glm::vec4 GLES2Lesson::ambientLightOffColor = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f );
+
 GLuint uploadTextureData(int *textureData, int width, int height) {
     // Texture object handle
     GLuint textureId = 0;
@@ -175,7 +179,10 @@ GLES2Lesson::GLES2Lesson() {
     gProgram = 0;
     cubeRotationAngleYZ = 0.0f;
     cubeRotationAngleXZ = 0.0f;
+
     currentFilter = GL_NEAREST;
+
+    ambientLightColor = glm::vec4( 0.5f, 0.5f, 0.5f, 1.0f );
 }
 
 GLES2Lesson::~GLES2Lesson() {
@@ -231,6 +238,8 @@ void GLES2Lesson::fetchShaderLocations() {
     projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
     samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
     textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
+
+    ambientLightColorShaderLocation = glGetUniformLocation( gProgram, "uAmbientLightColor");
 }
 
 void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
@@ -243,8 +252,11 @@ void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vert
     //0 is for texturing unit 0 (since we never changed it)
     glUniform1i(samplerUniformPosition, 0);
 
+    glUniform4fv( ambientLightColorShaderLocation, 1, &ambientLightColor[ 0 ] );
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
+
     glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
     glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,
@@ -332,4 +344,11 @@ void GLES2Lesson::toggleFiltering() {
         LOGI( "Using GL_NEAREST\n" );
     }
 }
+
+void GLES2Lesson::toggleLightning() {
+    if ( ambientLightColor == ambientLightFullColor ) {
+        ambientLightColor = ambientLightOffColor;
+    } else {
+        ambientLightColor = ambientLightFullColor;
+    }
 }

@@ -98,6 +98,8 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_tick(JNIEnv *env, job
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson07_GL2JNILib_toggleFiltering(JNIEnv *env, jclass type);
 
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson07_GL2JNILib_toggleLightningMode(JNIEnv *env, jclass type);
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
@@ -152,4 +154,9 @@ Java_br_odb_nehe_lesson07_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson07_GL2JNILib_toggleFiltering(JNIEnv *env, jclass type) {
     gles2Lesson->toggleFiltering();
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_toggleLightningMode(JNIEnv *env, jclass type) {
+    gles2Lesson->toggleLightning();
 }
