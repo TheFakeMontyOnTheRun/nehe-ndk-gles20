@@ -52,6 +52,13 @@ public class GL2JNIActivity extends Activity {
 
         mView = new GL2JNIView(getApplication());
         setContentView(mView);
+
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GL2JNILib.toggleLightningMode();
+            }
+        });
     }
 
     @Override

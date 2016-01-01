@@ -79,10 +79,6 @@ GLuint uploadTextureData(int *textureData, int width, int height) {
     //upload the data
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData );
 
-    // Set the filtering mode - surprisingly, this is needed.
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
     return textureId;
 }
 
@@ -179,6 +175,7 @@ GLES2Lesson::GLES2Lesson() {
     gProgram = 0;
     cubeRotationAngleYZ = 0.0f;
     cubeRotationAngleXZ = 0.0f;
+    currentFilter = GL_NEAREST;
 }
 
 GLES2Lesson::~GLES2Lesson() {
@@ -246,6 +243,8 @@ void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vert
     //0 is for texturing unit 0 (since we never changed it)
     glUniform1i(samplerUniformPosition, 0);
 
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
     glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
     glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,
@@ -322,4 +321,15 @@ void GLES2Lesson::tick() {
 void GLES2Lesson::shutdown() {
     delete textureData;
     LOGI("Shutdown!\n");
+}
+
+void GLES2Lesson::toggleFiltering() {
+    if ( currentFilter == GL_NEAREST ) {
+        currentFilter = GL_LINEAR;
+        LOGI( "Using GL_LINEAR\n" );
+    } else {
+        currentFilter = GL_NEAREST;
+        LOGI( "Using GL_NEAREST\n" );
+    }
+}
 }

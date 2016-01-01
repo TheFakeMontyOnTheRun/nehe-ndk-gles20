@@ -39,4 +39,5 @@ public class GL2JNILib {
     public static native void onDestroy();
     public static native void onCreate( AssetManager assetManager );
     public static native void setTexture( Bitmap bitmap );
+    public static native void toggleFiltering();
 }

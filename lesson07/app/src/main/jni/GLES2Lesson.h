@@ -42,6 +42,7 @@ class GLES2Lesson {
     int *textureData;
     int textureWidth;
     int textureHeight;
+    GLuint currentFilter;
     float cubeRotationAngleYZ;
     float cubeRotationAngleXZ;
 public:
@@ -52,6 +53,7 @@ public:
     void render();
     void shutdown();
     void tick();
+    void toggleFiltering();
 };
 
 #endif //LESSON02_GLES2LESSON_H

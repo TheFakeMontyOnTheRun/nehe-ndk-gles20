@@ -94,7 +94,11 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_init(JNIEnv *env, job
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_step(JNIEnv *env, jobject obj);
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_tick(JNIEnv *env, jobject obj);
-};
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson07_GL2JNILib_toggleFiltering(JNIEnv *env, jclass type);
+
+}
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
                                                                     jobject assetManager) {
@@ -143,4 +147,9 @@ Java_br_odb_nehe_lesson07_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
     if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
         LOGI("error %d", errorCode);
     }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_toggleFiltering(JNIEnv *env, jclass type) {
+    gles2Lesson->toggleFiltering();
 }
