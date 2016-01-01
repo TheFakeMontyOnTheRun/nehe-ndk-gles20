@@ -183,6 +183,8 @@ GLES2Lesson::GLES2Lesson() {
     currentFilter = GL_NEAREST;
 
     ambientLightColor = glm::vec4( 0.5f, 0.5f, 0.5f, 1.0f );
+    rotationXZSpeed = 0.0f;
+    rotationYZSpeed = 0.0f;
 }
 
 GLES2Lesson::~GLES2Lesson() {
@@ -326,8 +328,8 @@ void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format)
 }
 
 void GLES2Lesson::tick() {
-    cubeRotationAngleYZ += 0.5f;
-    cubeRotationAngleXZ += 1.0f;
+    cubeRotationAngleYZ += rotationYZSpeed;
+    cubeRotationAngleXZ += rotationXZSpeed;
 }
 
 void GLES2Lesson::shutdown() {
@@ -351,4 +353,20 @@ void GLES2Lesson::toggleLightning() {
     } else {
         ambientLightColor = ambientLightFullColor;
     }
+}
+
+void GLES2Lesson::speedUpXZ() {
+    rotationXZSpeed += 0.125f;
+}
+
+void GLES2Lesson::speedDownXZ() {
+    rotationXZSpeed -= 0.125f;
+}
+
+void GLES2Lesson::speedUpYZ() {
+    rotationYZSpeed += 0.125f;
+}
+
+void GLES2Lesson::speedDownYZ() {
+    rotationYZSpeed -= 0.125f;
 }

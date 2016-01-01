@@ -100,6 +100,20 @@ JNIEXPORT void JNICALL
 
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson07_GL2JNILib_toggleLightningMode(JNIEnv *env, jclass type);
+
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_speedUpYZRotation(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_speedDownYZRotation(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_speedUpXZRotation(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_speedDownXZRotation(JNIEnv *env, jclass type);
+
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
@@ -159,4 +173,24 @@ Java_br_odb_nehe_lesson07_GL2JNILib_toggleFiltering(JNIEnv *env, jclass type) {
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson07_GL2JNILib_toggleLightningMode(JNIEnv *env, jclass type) {
     gles2Lesson->toggleLightning();
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_speedUpYZRotation(JNIEnv *env, jclass type) {
+    gles2Lesson->speedUpYZ();
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_speedDownYZRotation(JNIEnv *env, jclass type) {
+    gles2Lesson->speedUpYZ();
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_speedUpXZRotation(JNIEnv *env, jclass type) {
+    gles2Lesson->speedUpXZ();
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_speedDownXZRotation(JNIEnv *env, jclass type) {
+    gles2Lesson->speedDownXZ();
 }

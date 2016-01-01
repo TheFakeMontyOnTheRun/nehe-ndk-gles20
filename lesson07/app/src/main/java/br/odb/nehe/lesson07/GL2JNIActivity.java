@@ -23,6 +23,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -67,6 +68,33 @@ public class GL2JNIActivity extends Activity {
 
         running = false;
         mView.onPause();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch ( keyCode ) {
+            case KeyEvent.KEYCODE_L:
+                GL2JNILib.toggleLightningMode();
+                return true;
+            case KeyEvent.KEYCODE_F:
+                GL2JNILib.toggleFiltering();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                GL2JNILib.speedDownXZRotation();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                GL2JNILib.speedUpXZRotation();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                GL2JNILib.speedDownYZRotation();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                GL2JNILib.speedUpYZRotation();
+                return true;
+            default:
+                return super.onKeyDown(keyCode, event);
+        }
     }
 
     @Override

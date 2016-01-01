@@ -52,6 +52,9 @@ class GLES2Lesson {
     glm::vec4 ambientLightColor;
 
     GLuint ambientLightColorShaderLocation;
+
+    float rotationXZSpeed;
+    float rotationYZSpeed;
 public:
     GLES2Lesson();
     ~GLES2Lesson();
@@ -62,6 +65,12 @@ public:
     void tick();
     void toggleFiltering();
     void toggleLightning();
+
+    void speedUpXZ();
+    void speedDownXZ();
+
+    void speedUpYZ();
+    void speedDownYZ();
 };
 
 #endif //LESSON02_GLES2LESSON_H
