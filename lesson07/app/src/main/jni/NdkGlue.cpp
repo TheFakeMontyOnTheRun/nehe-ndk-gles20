@@ -182,7 +182,7 @@ Java_br_odb_nehe_lesson07_GL2JNILib_speedUpYZRotation(JNIEnv *env, jclass type) 
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson07_GL2JNILib_speedDownYZRotation(JNIEnv *env, jclass type) {
-    gles2Lesson->speedUpYZ();
+    gles2Lesson->speedDownYZ();
 }
 
 JNIEXPORT void JNICALL
