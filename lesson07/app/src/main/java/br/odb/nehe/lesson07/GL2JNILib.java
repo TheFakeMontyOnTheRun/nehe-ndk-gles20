@@ -46,4 +46,5 @@ public class GL2JNILib {
     public static native void speedDownYZRotation();
     public static native void speedUpXZRotation();
     public static native void speedDownXZRotation();
+    public static native void reset();
 }

@@ -71,6 +71,8 @@ public:
 
     void speedUpYZ();
     void speedDownYZ();
+
+    void reset();
 };
 
 #endif //LESSON02_GLES2LESSON_H

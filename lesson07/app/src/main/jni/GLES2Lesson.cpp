@@ -370,3 +370,10 @@ void GLES2Lesson::speedUpYZ() {
 void GLES2Lesson::speedDownYZ() {
     rotationYZSpeed -= 0.125f;
 }
+
+void GLES2Lesson::reset() {
+    cubeRotationAngleYZ = 0.0f;
+    rotationYZSpeed = 0.0f;
+    cubeRotationAngleXZ = 0.0f;
+    rotationXZSpeed = 0.0f;
+}

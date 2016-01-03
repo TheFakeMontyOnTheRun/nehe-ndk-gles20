@@ -92,6 +92,9 @@ public class GL2JNIActivity extends Activity {
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 GL2JNILib.speedUpYZRotation();
                 return true;
+            case KeyEvent.KEYCODE_R:
+                GL2JNILib.reset();
+                return true;
             default:
                 return super.onKeyDown(keyCode, event);
         }
