@@ -51,8 +51,12 @@ class GLES2Lesson {
     float cubeRotationAngleYZ;
     float cubeRotationAngleXZ;
 
+    glm::vec4 diffuseLightDirection;
+    glm::vec4 diffuseLightColor;
     glm::vec4 ambientLightColor;
 
+    GLuint diffuseLightDirectionShaderLocation;
+    GLuint diffuseLightColorShaderLocation;
     GLuint ambientLightColorShaderLocation;
 
     float rotationXZSpeed;

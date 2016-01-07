@@ -192,9 +192,11 @@ GLES2Lesson::GLES2Lesson() {
 
     currentFilter = GL_NEAREST;
 
-    ambientLightColor = glm::vec4( 0.5f, 0.5f, 0.5f, 1.0f );
     rotationXZSpeed = 0.0f;
     rotationYZSpeed = 0.0f;
+    ambientLightColor = ambientLightFullColor;
+    diffuseLightDirection = glm::normalize( glm::vec4( 0.0f, 0.0f, -1.0f, 0.0f ) );
+    diffuseLightColor = glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f );
 }
 
 GLES2Lesson::~GLES2Lesson() {
@@ -253,6 +255,8 @@ void GLES2Lesson::fetchShaderLocations() {
     textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
 
     ambientLightColorShaderLocation = glGetUniformLocation( gProgram, "uAmbientLightColor");
+    diffuseLightColorShaderLocation = glGetUniformLocation( gProgram, "uDiffuseLightColor" );
+    diffuseLightDirectionShaderLocation = glGetUniformLocation( gProgram, "uDiffuseLightDirection" );
     normalAttributePosition = glGetAttribLocation( gProgram, "aVertexNormal" );
 }
 
@@ -317,6 +321,10 @@ void GLES2Lesson::setPerspective() {
 void GLES2Lesson::prepareShaderProgram() {
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
+
+    glUniform4fv( diffuseLightColorShaderLocation, 1, &diffuseLightColor[ 0 ]);
+    glUniform4fv( diffuseLightDirectionShaderLocation, 1, &diffuseLightDirection[ 0 ]);
+    glUniform4fv( ambientLightColorShaderLocation, 1, &ambientLightColor[ 0 ] );
 
     glUniform1i(samplerUniformPosition, 0);
 
