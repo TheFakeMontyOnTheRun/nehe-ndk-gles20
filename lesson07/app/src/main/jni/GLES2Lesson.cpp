@@ -223,6 +223,7 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
 
     createVBOs();
 
+    glActiveTexture( GL_TEXTURE0 );
     textureId = uploadTextureData(textureData, textureWidth, textureHeight);
 
     glEnable(GL_DEPTH_TEST);
@@ -261,15 +262,10 @@ void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vert
     glBindBuffer(GL_ARRAY_BUFFER, vertexVbo);
     glEnableVertexAttribArray(vertexAttributePosition);
     glEnableVertexAttribArray(textureCoordinatesAttributePosition);
-
-    //0 is for texturing unit 0 (since we never changed it)
-    glUniform1i(samplerUniformPosition, 0);
     glEnableVertexAttribArray(normalAttributePosition);
 
     glUniform4fv( ambientLightColorShaderLocation, 1, &ambientLightColor[ 0 ] );
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
     glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
 
     glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9, 0);
@@ -321,6 +317,12 @@ void GLES2Lesson::setPerspective() {
 void GLES2Lesson::prepareShaderProgram() {
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
+
+    glUniform1i(samplerUniformPosition, 0);
+
+    glActiveTexture( GL_TEXTURE0 );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
 }
 
 void GLES2Lesson::render() {
