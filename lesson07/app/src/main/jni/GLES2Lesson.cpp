@@ -187,16 +187,12 @@ GLES2Lesson::GLES2Lesson() {
     modelMatrixAttributePosition = 0;
     projectionMatrixAttributePosition = 0;
     gProgram = 0;
-    cubeRotationAngleYZ = 0.0f;
-    cubeRotationAngleXZ = 0.0f;
-
     currentFilter = GL_NEAREST;
 
-    rotationXZSpeed = 0.0f;
-    rotationYZSpeed = 0.0f;
     ambientLightColor = ambientLightFullColor;
     diffuseLightDirection = glm::normalize( glm::vec4( 0.0f, 0.0f, -1.0f, 0.0f ) );
     diffuseLightColor = glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f );
+    reset();
 }
 
 GLES2Lesson::~GLES2Lesson() {
