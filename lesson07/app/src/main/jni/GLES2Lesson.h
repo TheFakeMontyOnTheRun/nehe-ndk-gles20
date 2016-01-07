@@ -20,7 +20,7 @@ class GLES2Lesson {
     GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
     GLuint loadShader(GLenum shaderType, const char *pSource);
 
-    const static float cubeVertices[ 16 * 5 ];
+    const static float cubeVertices[ 6 * 4 * 9 ];
     const static unsigned short cubeIndices[ 6 * 6 ];
 
     const static glm::vec4 ambientLightFullColor;
@@ -34,6 +34,8 @@ class GLES2Lesson {
     GLuint samplerUniformPosition;
     GLuint textureCoordinatesAttributePosition;
     GLuint projectionMatrixAttributePosition;
+    GLuint normalAttributePosition;
+
     GLuint gProgram;
 
     GLuint textureId;
