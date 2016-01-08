@@ -8,20 +8,30 @@
 class GLES2Lesson {
 
     void fetchShaderLocations();
+
     void setPerspective();
+
     void prepareShaderProgram();
+
     void clearBuffers();
+
     void resetTransformMatrices();
+
     void printVerboseDriverInformation();
+
     void createVBOs();
+
     void deleteVBOs();
-    void drawGeometry( const int vertexVbo, const int indexVbo, int vertexCount, const glm::mat4& transform );
+
+    void drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
+                      const glm::mat4 &transform);
 
     GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
+
     GLuint loadShader(GLenum shaderType, const char *pSource);
 
-    const static float cubeVertices[ 6 * 4 * 9 ];
-    const static unsigned short cubeIndices[ 6 * 6 ];
+    const static float cubeVertices[6 * 4 * 9];
+    const static unsigned short cubeIndices[6 * 6];
 
     const static glm::vec4 ambientLightFullColor;
     const static glm::vec4 ambientLightOffColor;
@@ -63,19 +73,29 @@ class GLES2Lesson {
     float rotationYZSpeed;
 public:
     GLES2Lesson();
+
     ~GLES2Lesson();
-    bool init( float w, float h, const std::string& vertexShader, const std::string& fragmentShader );
-    void setTexture( int *bitmapData, int width, int height, int format );
+
+    bool init(float w, float h, const std::string &vertexShader, const std::string &fragmentShader);
+
+    void setTexture(int *bitmapData, int width, int height, int format);
+
     void render();
+
     void shutdown();
+
     void tick();
+
     void toggleFiltering();
+
     void toggleLightning();
 
     void speedUpXZ();
+
     void speedDownXZ();
 
     void speedUpYZ();
+
     void speedDownYZ();
 
     void reset();

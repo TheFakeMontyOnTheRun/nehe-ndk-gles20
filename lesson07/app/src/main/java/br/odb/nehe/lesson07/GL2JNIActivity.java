@@ -23,7 +23,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -73,7 +75,7 @@ public class GL2JNIActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        switch ( keyCode ) {
+        switch (keyCode) {
             case KeyEvent.KEYCODE_L:
                 GL2JNILib.toggleLightningMode();
                 return true;

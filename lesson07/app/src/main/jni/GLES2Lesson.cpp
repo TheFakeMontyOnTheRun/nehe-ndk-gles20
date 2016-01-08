@@ -16,6 +16,7 @@
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
+
 //Counter Clockwise
 const float GLES2Lesson::cubeVertices[]{
 //    4________5
@@ -28,57 +29,60 @@ const float GLES2Lesson::cubeVertices[]{
 // 3|/______|/2
 //x, y, z, u, v, nx, ny, nz, nw
 
-    //FLOOR
-     1.0f,  -1.0f,  -1.0f,  1.0f,   1.0f,    0.0f,  -1.0f,   0.0f,   0.0f,  //6 - 0
-    -1.0f,  -1.0f,  -1.0f,  0.0f,   1.0f,    0.0f,  -1.0f,   0.0f,   0.0f,  //7 - 1
-     1.0f,  -1.0f,   1.0f,  1.0f,   0.0f,    0.0f,  -1.0f,   0.0f,   0.0f,  //2 - 2
-    -1.0f,  -1.0f,   1.0f,  0.0f,   0.0f,    0.0f,  -1.0f,   0.0f,   0.0f, //3 - 3
-    //CEILING
-    -1.0f,   1.0f,   1.0f,  0.0f,   1.0f,    0.0f,   1.0f,   0.0f,   0.0f,  //0 - 4
-     1.0f,   1.0f,   1.0f,  1.0f,   1.0f,    0.0f,   1.0f,   0.0f,   0.0f,   //1 - 5
-    -1.0f,   1.0f,  -1.0f,  0.0f,   0.0f,    0.0f,   1.0f,   0.0f,   0.0f, //4 - 6
-     1.0f,   1.0f,  -1.0f,  1.0f,   0.0f,    0.0f,   1.0f,   0.0f,   0.0f, //5 - 7
-     //SOUTH
-    -1.0f,   1.0f,   1.0f,  0.0f,   1.0f,    0.0f,   0.0f,   1.0f,   0.0f,  //0 - 8
-     1.0f,   1.0f,   1.0f,  1.0f,   1.0f,    0.0f,   0.0f,   1.0f,   0.0f,   //1 - 9
-     1.0f,  -1.0f,   1.0f,  1.0f,   0.0f,    0.0f,   0.0f,   1.0f,   0.0f,  //2 - 10
-    -1.0f,  -1.0f,   1.0f,  0.0f,   0.0f,    0.0f,   0.0f,   1.0f,   0.0f, //3 - 11
-    //NORTH
-    -1.0f,   1.0f,  -1.0f,  0.0f,   0.0f,    0.0f,   0.0f,  -1.0f,   0.0f, //4 - 12
-     1.0f,   1.0f,  -1.0f,  1.0f,   0.0f,    0.0f,   0.0f,  -1.0f,   0.0f, //5 - 13
-     1.0f,  -1.0f,  -1.0f,  1.0f,   1.0f,    0.0f,   0.0f,  -1.0f,   0.0f,  //6 - 14
-    -1.0f,  -1.0f,  -1.0f,  0.0f,   1.0f,    0.0f,   0.0f,  -1.0f,   0.0f,  //7 -15
-    //EAST
-     1.0f,   1.0f,   1.0f,  0.0f,   1.0f,    1.0f,   0.0f,   0.0f,   0.0f,   //1 - 16
-     1.0f,  -1.0f,   1.0f,  0.0f,   0.0f,    1.0f,   0.0f,   0.0f,   0.0f,  //2 - 17
-     1.0f,   1.0f,  -1.0f,  1.0f,   1.0f,    1.0f,   0.0f,   0.0f,   0.0f, //5 - 18
-     1.0f,  -1.0f,  -1.0f,  1.0f,   0.0f,    1.0f,   0.0f,   0.0f,   0.0f,  //6 - 19
-    //WEST
-    -1.0f,   1.0f,   1.0f,  1.0f,   1.0f,   -1.0f,   0.0f,   0.0f,   0.0f,  //0 - 20
-    -1.0f,  -1.0f,   1.0f,  1.0f,   0.0f,   -1.0f,   0.0f,   0.0f,   0.0f, //3 - 21
-    -1.0f,   1.0f,  -1.0f,  0.0f,   1.0f,   -1.0f,   0.0f,   0.0f,   0.0f, //4 - 22
-    -1.0f,  -1.0f,  -1.0f,  0.0f,   0.0f,   -1.0f,   0.0f,   0.0f,   0.0f  //7 - 23
+        //FLOOR
+        1.0f,  -1.0f,  -1.0f,  1.0f,   1.0f,    0.0f,  -1.0f,   0.0f,   0.0f,  //6 - 0
+       -1.0f,  -1.0f,  -1.0f,  0.0f,   1.0f,    0.0f,  -1.0f,   0.0f,   0.0f,  //7 - 1
+        1.0f,  -1.0f,   1.0f,  1.0f,   0.0f,    0.0f,  -1.0f,   0.0f,   0.0f,  //2 - 2
+       -1.0f,  -1.0f,   1.0f,  0.0f,   0.0f,    0.0f,  -1.0f,   0.0f,   0.0f, //3 - 3
+        //CEILING
+       -1.0f,   1.0f,   1.0f,  0.0f,   1.0f,    0.0f,   1.0f,   0.0f,   0.0f,  //0 - 4
+        1.0f,   1.0f,   1.0f,  1.0f,   1.0f,    0.0f,   1.0f,   0.0f,   0.0f,   //1 - 5
+        -1.0f,   1.0f,  -1.0f,  0.0f,   0.0f,    0.0f,   1.0f,   0.0f,   0.0f, //4 - 6
+        1.0f,   1.0f,  -1.0f,  1.0f,   0.0f,    0.0f,   1.0f,   0.0f,   0.0f, //5 - 7
+        //SOUTH
+       -1.0f,   1.0f,   1.0f,  0.0f,   1.0f,    0.0f,   0.0f,   1.0f,   0.0f,  //0 - 8
+        1.0f,   1.0f,   1.0f,  1.0f,   1.0f,    0.0f,   0.0f,   1.0f,   0.0f,   //1 - 9
+        1.0f,  -1.0f,   1.0f,  1.0f,   0.0f,    0.0f,   0.0f,   1.0f,   0.0f,  //2 - 10
+       -1.0f,  -1.0f,   1.0f,  0.0f,   0.0f,    0.0f,   0.0f,   1.0f,   0.0f, //3 - 11
+        //NORTH
+       -1.0f,   1.0f,  -1.0f,  0.0f,   0.0f,    0.0f,   0.0f,  -1.0f,   0.0f, //4 - 12
+        1.0f,   1.0f,  -1.0f,  1.0f,   0.0f,    0.0f,   0.0f,  -1.0f,   0.0f, //5 - 13
+        1.0f,  -1.0f,  -1.0f,  1.0f,   1.0f,    0.0f,   0.0f,  -1.0f,   0.0f,  //6 - 14
+       -1.0f,  -1.0f,  -1.0f,  0.0f,   1.0f,    0.0f,   0.0f,  -1.0f,   0.0f,  //7 -15
+        //EAST
+        1.0f,   1.0f,   1.0f,  0.0f,   1.0f,    1.0f,   0.0f,   0.0f,   0.0f,   //1 - 16
+        1.0f,  -1.0f,   1.0f,  0.0f,   0.0f,    1.0f,   0.0f,   0.0f,   0.0f,  //2 - 17
+        1.0f,   1.0f,  -1.0f,  1.0f,   1.0f,    1.0f,   0.0f,   0.0f,   0.0f, //5 - 18
+        1.0f,  -1.0f,  -1.0f,  1.0f,   0.0f,    1.0f,   0.0f,   0.0f,   0.0f,  //6 - 19
+        //WEST
+       -1.0f,   1.0f,   1.0f,  1.0f,   1.0f,   -1.0f,   0.0f,   0.0f,   0.0f,  //0 - 20
+       -1.0f,  -1.0f,   1.0f,  1.0f,   0.0f,   -1.0f,   0.0f,   0.0f,   0.0f, //3 - 21
+       -1.0f,   1.0f,  -1.0f,  0.0f,   1.0f,   -1.0f,   0.0f,   0.0f,   0.0f, //4 - 22
+       -1.0f,  -1.0f,  -1.0f,  0.0f,   0.0f,   -1.0f,   0.0f,   0.0f,   0.0f  //7 - 23
 };
 
 
 const unsigned short GLES2Lesson::cubeIndices[]{
-    20, 21, 23,
-    22, 20, 23,
-    16, 18, 19,
-    16, 19, 17,
-    13, 12, 14,
-    14, 12, 15,
-     8,  9, 10,
-     8, 10, 11,
-     6,  7,  5,
-     6,  5,  4,
-     3,  2,  1,
-     1,  0,  2
+       20, 21, 23,
+       22, 20, 23,
+       16, 18, 19,
+       16, 19, 17,
+       13, 12, 14,
+       14, 12, 15,
+        8,  9, 10,
+        8, 10, 11,
+        6,  7,  5,
+        6,  5,  4,
+        3,  2,  1,
+        1,  0,  2
 };
 
-const glm::vec4 GLES2Lesson::ambientLightFullColor = glm::vec4( 0.5f, 0.5f, 0.5f, 1.0f );
 
-const glm::vec4 GLES2Lesson::ambientLightOffColor = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f );
+
+
+const glm::vec4 GLES2Lesson::ambientLightFullColor = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+
+const glm::vec4 GLES2Lesson::ambientLightOffColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 GLuint uploadTextureData(int *textureData, int width, int height) {
     // Texture object handle
@@ -91,7 +95,8 @@ GLuint uploadTextureData(int *textureData, int width, int height) {
     glBindTexture(GL_TEXTURE_2D, textureId);
 
     //upload the data
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData );
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                 textureData);
 
     return textureId;
 }
@@ -190,14 +195,14 @@ GLES2Lesson::GLES2Lesson() {
     currentFilter = GL_NEAREST;
 
     ambientLightColor = ambientLightFullColor;
-    diffuseLightDirection = glm::normalize( glm::vec4( 0.0f, 0.0f, -1.0f, 0.0f ) );
-    diffuseLightColor = glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f );
+    diffuseLightDirection = glm::normalize(glm::vec4(0.0f, 0.0f, -1.0f, 0.0f));
+    diffuseLightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     reset();
 }
 
 GLES2Lesson::~GLES2Lesson() {
     deleteVBOs();
-    glDeleteTextures( 1, &textureId );
+    glDeleteTextures(1, &textureId);
 }
 
 bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
@@ -221,7 +226,7 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
 
     createVBOs();
 
-    glActiveTexture( GL_TEXTURE0 );
+    glActiveTexture(GL_TEXTURE0);
     textureId = uploadTextureData(textureData, textureWidth, textureHeight);
 
     glEnable(GL_DEPTH_TEST);
@@ -250,10 +255,10 @@ void GLES2Lesson::fetchShaderLocations() {
     samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
     textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
 
-    ambientLightColorShaderLocation = glGetUniformLocation( gProgram, "uAmbientLightColor");
-    diffuseLightColorShaderLocation = glGetUniformLocation( gProgram, "uDiffuseLightColor" );
-    diffuseLightDirectionShaderLocation = glGetUniformLocation( gProgram, "uDiffuseLightDirection" );
-    normalAttributePosition = glGetAttribLocation( gProgram, "aVertexNormal" );
+    ambientLightColorShaderLocation = glGetUniformLocation(gProgram, "uAmbientLightColor");
+    diffuseLightColorShaderLocation = glGetUniformLocation(gProgram, "uDiffuseLightColor");
+    diffuseLightDirectionShaderLocation = glGetUniformLocation(gProgram, "uDiffuseLightDirection");
+    normalAttributePosition = glGetAttribLocation(gProgram, "aVertexNormal");
 }
 
 void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
@@ -264,7 +269,7 @@ void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vert
     glEnableVertexAttribArray(textureCoordinatesAttributePosition);
     glEnableVertexAttribArray(normalAttributePosition);
 
-    glUniform4fv( ambientLightColorShaderLocation, 1, &ambientLightColor[ 0 ] );
+    glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
 
     glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
 
@@ -318,13 +323,13 @@ void GLES2Lesson::prepareShaderProgram() {
     glUseProgram(gProgram);
     checkGlError("glUseProgram");
 
-    glUniform4fv( diffuseLightColorShaderLocation, 1, &diffuseLightColor[ 0 ]);
-    glUniform4fv( diffuseLightDirectionShaderLocation, 1, &diffuseLightDirection[ 0 ]);
-    glUniform4fv( ambientLightColorShaderLocation, 1, &ambientLightColor[ 0 ] );
+    glUniform4fv(diffuseLightColorShaderLocation, 1, &diffuseLightColor[0]);
+    glUniform4fv(diffuseLightDirectionShaderLocation, 1, &diffuseLightDirection[0]);
+    glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
 
     glUniform1i(samplerUniformPosition, 0);
 
-    glActiveTexture( GL_TEXTURE0 );
+    glActiveTexture(GL_TEXTURE0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
 }
@@ -359,17 +364,17 @@ void GLES2Lesson::shutdown() {
 }
 
 void GLES2Lesson::toggleFiltering() {
-    if ( currentFilter == GL_NEAREST ) {
+    if (currentFilter == GL_NEAREST) {
         currentFilter = GL_LINEAR;
-        LOGI( "Using GL_LINEAR\n" );
+        LOGI("Using GL_LINEAR\n");
     } else {
         currentFilter = GL_NEAREST;
-        LOGI( "Using GL_NEAREST\n" );
+        LOGI("Using GL_NEAREST\n");
     }
 }
 
 void GLES2Lesson::toggleLightning() {
-    if ( ambientLightColor == ambientLightFullColor ) {
+    if (ambientLightColor == ambientLightFullColor) {
         ambientLightColor = ambientLightOffColor;
     } else {
         ambientLightColor = ambientLightFullColor;

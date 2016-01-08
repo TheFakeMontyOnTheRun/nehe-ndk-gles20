@@ -103,19 +103,19 @@ JNIEXPORT void JNICALL
 
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson07_GL2JNILib_speedUpYZRotation(JNIEnv *env, jclass type);
+        Java_br_odb_nehe_lesson07_GL2JNILib_speedUpYZRotation(JNIEnv *env, jclass type);
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson07_GL2JNILib_speedDownYZRotation(JNIEnv *env, jclass type);
+        Java_br_odb_nehe_lesson07_GL2JNILib_speedDownYZRotation(JNIEnv *env, jclass type);
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson07_GL2JNILib_speedUpXZRotation(JNIEnv *env, jclass type);
+        Java_br_odb_nehe_lesson07_GL2JNILib_speedUpXZRotation(JNIEnv *env, jclass type);
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson07_GL2JNILib_speedDownXZRotation(JNIEnv *env, jclass type);
+        Java_br_odb_nehe_lesson07_GL2JNILib_speedDownXZRotation(JNIEnv *env, jclass type);
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson07_GL2JNILib_reset(JNIEnv *env, jclass type);
+        Java_br_odb_nehe_lesson07_GL2JNILib_reset(JNIEnv *env, jclass type);
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
