@@ -403,3 +403,8 @@ void GLES2Lesson::reset() {
     cubeRotationAngleXZ = 0.0f;
     rotationXZSpeed = 0.0f;
 }
+
+void GLES2Lesson::setSpeeds( const glm::vec2& velocity) {
+    rotationXZSpeed = velocity.x;
+    rotationYZSpeed = velocity.y;
+}

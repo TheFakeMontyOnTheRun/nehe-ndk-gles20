@@ -116,6 +116,10 @@ JNIEXPORT void JNICALL
 
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson07_GL2JNILib_reset(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_dragTo(JNIEnv *env, jclass type, jfloat x, jfloat y);
+
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
@@ -215,4 +219,11 @@ Java_br_odb_nehe_lesson07_GL2JNILib_reset(JNIEnv *env, jclass type) {
         gles2Lesson->reset();
     }
 }
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson07_GL2JNILib_dragTo(JNIEnv *env, jclass type, jfloat x, jfloat y) {
+
+    if ( gles2Lesson != nullptr ) {
+        gles2Lesson->setSpeeds( glm::normalize( glm::vec2( x, y ) ) );
+    }
 }

@@ -62,6 +62,24 @@ public class GL2JNIActivity extends Activity {
                 GL2JNILib.toggleLightningMode();
             }
         });
+
+        mView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                float halfXRes = ( v.getWidth() / 2.0f );
+                float halfYRes = ( v.getHeight() / 2.0f );
+                float deltaX = halfXRes - event.getX();
+                float deltaY = halfYRes - event.getY();
+
+                if ( Math.abs( deltaX ) > halfXRes / 2.0f || Math.abs( deltaY ) > halfYRes / 2.0f ) {
+                    GL2JNILib.dragTo( deltaX, deltaY );
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 
     @Override

@@ -99,6 +99,8 @@ public:
     void speedDownYZ();
 
     void reset();
+
+    void setSpeeds(const glm::vec2& param);
 };
 
 #endif //LESSON02_GLES2LESSON_H
