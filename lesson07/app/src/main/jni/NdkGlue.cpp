@@ -39,7 +39,7 @@
 
 std::string gVertexShader;
 std::string gFragmentShader;
-GLES2Lesson *gles2Lesson = nullptr;
+odb::GLES2Lesson *gles2Lesson = nullptr;
 int *pixels;
 
 void loadShaders(JNIEnv *env, jobject &obj) {
@@ -54,7 +54,7 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 }
 
 bool setupGraphics(int w, int h) {
-    gles2Lesson = new GLES2Lesson();
+    gles2Lesson = new odb::GLES2Lesson();
     gles2Lesson->setTexture(pixels, 128, 128, 1);
     pixels = nullptr; //now, it belongs to gles2Lesson.
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
@@ -67,7 +67,7 @@ void renderFrame() {
 }
 
 void shutdown() {
-    GLES2Lesson *local = gles2Lesson;
+    odb::GLES2Lesson *local = gles2Lesson;
     gles2Lesson = nullptr;
     local->shutdown();
     delete local;
