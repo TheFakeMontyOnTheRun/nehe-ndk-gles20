@@ -28,6 +28,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,7 +60,17 @@ public class GL2JNIActivity extends Activity {
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GL2JNILib.toggleFiltering();
+                Toast.makeText(GL2JNIActivity.this, "Toggling filtering", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
                 GL2JNILib.toggleLightningMode();
+                Toast.makeText(GL2JNIActivity.this, "Toggling lightning", Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
 
