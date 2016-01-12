@@ -92,7 +92,7 @@ public class GL2JNIActivity extends Activity {
             }
         });
 
-        Toast.makeText(GL2JNIActivity.this, "Besides the keyboard, you can also touch the cube to toggle filtering, long touch to toggle lightning and touch screen boarders to controls spinning", Toast.LENGTH_SHORT ).show();
+        Toast.makeText(GL2JNIActivity.this, "Besides the keyboard, you can also touch the cube to toggle filtering, long touch to toggle lightning and touch screen boarders to controls spinning", Toast.LENGTH_SHORT).show();
     }
 
     @Override
