@@ -191,7 +191,7 @@ namespace odb {
         projectionMatrixAttributePosition = 0;
         gProgram = 0;
         currentFilter = GL_NEAREST;
-
+        enableBlending = true;
         ambientLightColor = ambientLightFullColor;
         diffuseLightDirection = glm::normalize(glm::vec4(0.0f, 0.0f, -1.0f, 0.0f));
         diffuseLightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -227,10 +227,8 @@ namespace odb {
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
 
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
-        glFrontFace(GL_CW);
-        glDepthMask(true);
+
+        enableAlphaBlending();
         return true;
     }
 
@@ -339,6 +337,13 @@ namespace odb {
         setPerspective();
         resetTransformMatrices();
 
+        if (enableBlending) {
+            enableAlphaBlending();
+        } else {
+            disableAlfaBlending();
+        }
+
+
         drawGeometry(vboCubeVertexDataIndex,
                      vboCubeVertexIndicesIndex,
                      36,
@@ -409,11 +414,28 @@ namespace odb {
     }
 
     void GLES2Lesson::toggleBlending() {
+
+        enableBlending = !enableBlending;
+        if (enableBlending) {
+            LOGI("Using GL_BLEND\n");
+        } else {
+            LOGI("Not using GL_BLEND\n");
+        }
     }
 
     void GLES2Lesson::disableAlfaBlending() const {
+
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+        glDepthMask(true);
+        glDisable(GL_BLEND);
     }
 
     void GLES2Lesson::enableAlphaBlending() const {
+
+        glDisable(GL_DEPTH_TEST);
+        glDepthMask(false);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     }
 }

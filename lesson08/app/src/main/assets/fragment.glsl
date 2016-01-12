@@ -6,5 +6,5 @@ uniform vec4 uDiffuseLightColor;
 varying float vLightIntensity;
 
 void main() {
-    gl_FragColor =   texture2D( sTexture, vTextureCoords ) * ( uAmbientLightColor + ( vLightIntensity * uDiffuseLightColor ) );
+    gl_FragColor =  vec4(( texture2D( sTexture, vTextureCoords ) * ( uAmbientLightColor + ( vLightIntensity * uDiffuseLightColor ) ) ).xyz, 0.25);
 }

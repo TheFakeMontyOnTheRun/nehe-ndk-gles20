@@ -71,6 +71,8 @@ namespace odb {
         GLuint diffuseLightColorShaderLocation;
         GLuint ambientLightColorShaderLocation;
 
+        bool enableBlending;
+
         float rotationXZSpeed;
         float rotationYZSpeed;
     public:

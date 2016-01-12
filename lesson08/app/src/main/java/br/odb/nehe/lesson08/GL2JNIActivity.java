@@ -60,8 +60,6 @@ public class GL2JNIActivity extends Activity {
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GL2JNILib.toggleFiltering();
-                Toast.makeText(GL2JNIActivity.this, "Toggling filtering", Toast.LENGTH_SHORT).show();
                 GL2JNILib.toggleBlending();
                 Toast.makeText(GL2JNIActivity.this, "Toggling blending", Toast.LENGTH_SHORT).show();
             }
