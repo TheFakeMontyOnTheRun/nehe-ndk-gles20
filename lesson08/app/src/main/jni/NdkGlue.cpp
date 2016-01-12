@@ -118,8 +118,10 @@ JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson08_GL2JNILib_reset(JNIEnv *env, jclass type);
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson08_GL2JNILib_dragTo(JNIEnv *env, jclass type, jfloat x, jfloat y);
+        Java_br_odb_nehe_lesson08_GL2JNILib_dragTo(JNIEnv *env, jclass type, jfloat x, jfloat y);
 
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson08_GL2JNILib_toggleBlending(JNIEnv *env, jclass type);
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
@@ -228,5 +230,9 @@ Java_br_odb_nehe_lesson08_GL2JNILib_dragTo(JNIEnv *env, jclass type, jfloat x, j
     }
 }
 
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson08_GL2JNILib_toggleBlending(JNIEnv *env, jclass type) {
+    if (gles2Lesson != nullptr) {
+        gles2Lesson->toggleBlending();
     }
 }

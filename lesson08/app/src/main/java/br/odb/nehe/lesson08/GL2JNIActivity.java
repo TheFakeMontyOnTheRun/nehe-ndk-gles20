@@ -62,6 +62,8 @@ public class GL2JNIActivity extends Activity {
             public void onClick(View v) {
                 GL2JNILib.toggleFiltering();
                 Toast.makeText(GL2JNIActivity.this, "Toggling filtering", Toast.LENGTH_SHORT).show();
+                GL2JNILib.toggleBlending();
+                Toast.makeText(GL2JNIActivity.this, "Toggling blending", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -127,6 +129,9 @@ public class GL2JNIActivity extends Activity {
                 return true;
             case KeyEvent.KEYCODE_R:
                 GL2JNILib.reset();
+                return true;
+            case KeyEvent.KEYCODE_B:
+                GL2JNILib.toggleBlending();
                 return true;
             default:
                 return super.onKeyDown(keyCode, event);

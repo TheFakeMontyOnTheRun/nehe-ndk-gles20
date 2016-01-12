@@ -407,4 +407,13 @@ namespace odb {
         rotationXZSpeed = -velocity.x;
         rotationYZSpeed = -velocity.y;
     }
+
+    void GLES2Lesson::toggleBlending() {
+    }
+
+    void GLES2Lesson::disableAlfaBlending() const {
+    }
+
+    void GLES2Lesson::enableAlphaBlending() const {
+    }
 }

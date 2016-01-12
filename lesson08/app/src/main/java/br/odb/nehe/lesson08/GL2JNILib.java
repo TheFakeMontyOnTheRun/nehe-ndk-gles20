@@ -60,4 +60,6 @@ public class GL2JNILib {
     public static native void reset();
 
     public static native void dragTo(float x, float y);
+
+    public static native void toggleBlending();
 }

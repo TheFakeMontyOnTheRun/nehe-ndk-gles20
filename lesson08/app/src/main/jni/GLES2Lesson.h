@@ -104,6 +104,12 @@ namespace odb {
         void reset();
 
         void setSpeeds(const glm::vec2 &param);
+
+        void toggleBlending();
+
+        void enableAlphaBlending() const;
+
+        void disableAlfaBlending() const;
     };
 }
 #endif //LESSON02_GLES2LESSON_H
