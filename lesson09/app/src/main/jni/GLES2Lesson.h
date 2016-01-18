@@ -35,9 +35,6 @@ namespace odb {
         const static float cubeVertices[6 * 4 * 9];
         const static unsigned short cubeIndices[6 * 6];
 
-        const static glm::vec4 ambientLightFullColor;
-        const static glm::vec4 ambientLightOffColor;
-
         glm::mat4 cubeTransformMatrix;
         glm::mat4 projectionMatrix;
 
@@ -46,7 +43,6 @@ namespace odb {
         GLuint samplerUniformPosition;
         GLuint textureCoordinatesAttributePosition;
         GLuint projectionMatrixAttributePosition;
-        GLuint normalAttributePosition;
 
         GLuint gProgram;
 
@@ -59,22 +55,6 @@ namespace odb {
         int *textureData;
         int textureWidth;
         int textureHeight;
-        GLuint currentFilter;
-        float cubeRotationAngleYZ;
-        float cubeRotationAngleXZ;
-
-        glm::vec4 diffuseLightDirection;
-        glm::vec4 diffuseLightColor;
-        glm::vec4 ambientLightColor;
-
-        GLuint diffuseLightDirectionShaderLocation;
-        GLuint diffuseLightColorShaderLocation;
-        GLuint ambientLightColorShaderLocation;
-
-        bool enableBlending;
-
-        float rotationXZSpeed;
-        float rotationYZSpeed;
     public:
         GLES2Lesson();
 
@@ -91,27 +71,7 @@ namespace odb {
 
         void tick();
 
-        void toggleFiltering();
-
-        void toggleLightning();
-
-        void speedUpXZ();
-
-        void speedDownXZ();
-
-        void speedUpYZ();
-
-        void speedDownYZ();
-
         void reset();
-
-        void setSpeeds(const glm::vec2 &param);
-
-        void toggleBlending();
-
-        void enableAlphaBlending() const;
-
-        void disableAlfaBlending() const;
     };
 }
 #endif //LESSON02_GLES2LESSON_H

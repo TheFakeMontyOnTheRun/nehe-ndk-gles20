@@ -33,7 +33,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
-
 public class GL2JNIActivity extends Activity {
 
     GL2JNIView mView;
@@ -49,7 +48,7 @@ public class GL2JNIActivity extends Activity {
 
         Bitmap bitmap = null;
         try {
-            bitmap = BitmapFactory.decodeStream(assets.open("celestial.png"));
+            bitmap = BitmapFactory.decodeStream(assets.open("star.png"));
             GL2JNILib.setTexture(bitmap);
         } catch (IOException e) {
         }
@@ -57,42 +56,6 @@ public class GL2JNIActivity extends Activity {
         mView = new GL2JNIView(getApplication());
         setContentView(mView);
 
-        mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GL2JNILib.toggleBlending();
-                Toast.makeText(GL2JNIActivity.this, "Toggling blending", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                GL2JNILib.toggleLightningMode();
-                Toast.makeText(GL2JNIActivity.this, "Toggling lightning", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-
-        mView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                float halfXRes = (v.getWidth() / 2.0f);
-                float halfYRes = (v.getHeight() / 2.0f);
-                float deltaX = halfXRes - event.getX();
-                float deltaY = halfYRes - event.getY();
-
-                if (Math.abs(deltaX) > halfXRes / 2.0f || Math.abs(deltaY) > halfYRes / 2.0f) {
-                    GL2JNILib.dragTo(deltaX, deltaY);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-
-        Toast.makeText(GL2JNIActivity.this, "Besides the keyboard, you can also touch the cube to toggle filtering, long touch to toggle lightning and touch screen boarders to controls spinning", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -101,39 +64,6 @@ public class GL2JNIActivity extends Activity {
 
         running = false;
         mView.onPause();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_L:
-                GL2JNILib.toggleLightningMode();
-                return true;
-            case KeyEvent.KEYCODE_F:
-                GL2JNILib.toggleFiltering();
-                return true;
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-                GL2JNILib.speedDownXZRotation();
-                return true;
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                GL2JNILib.speedUpXZRotation();
-                return true;
-            case KeyEvent.KEYCODE_DPAD_UP:
-                GL2JNILib.speedDownYZRotation();
-                return true;
-            case KeyEvent.KEYCODE_DPAD_DOWN:
-                GL2JNILib.speedUpYZRotation();
-                return true;
-            case KeyEvent.KEYCODE_R:
-                GL2JNILib.reset();
-                return true;
-            case KeyEvent.KEYCODE_B:
-                GL2JNILib.toggleBlending();
-                return true;
-            default:
-                return super.onKeyDown(keyCode, event);
-        }
     }
 
     @Override

@@ -78,10 +78,6 @@ namespace odb {
     };
 
 
-    const glm::vec4 GLES2Lesson::ambientLightFullColor = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
-
-    const glm::vec4 GLES2Lesson::ambientLightOffColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-
     GLuint uploadTextureData(int *textureData, int width, int height) {
         // Texture object handle
         GLuint textureId = 0;
@@ -190,11 +186,6 @@ namespace odb {
         modelMatrixAttributePosition = 0;
         projectionMatrixAttributePosition = 0;
         gProgram = 0;
-        currentFilter = GL_NEAREST;
-        enableBlending = true;
-        ambientLightColor = ambientLightFullColor;
-        diffuseLightDirection = glm::normalize(glm::vec4(0.0f, 0.0f, -1.0f, 0.0f));
-        diffuseLightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
         reset();
     }
 
@@ -226,9 +217,6 @@ namespace odb {
 
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
-
-
-        enableAlphaBlending();
         return true;
     }
 
@@ -238,9 +226,6 @@ namespace odb {
         glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
         glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
         glm::mat4 translated = glm::translate(identity, translate);
-        glm::mat4 rotatedAroundXAxis = glm::rotate(translated, cubeRotationAngleYZ, xAxis);
-        glm::mat4 rotatedAroundYAxis = glm::rotate(rotatedAroundXAxis, cubeRotationAngleXZ, yAxis);
-        cubeTransformMatrix = rotatedAroundYAxis;
     }
 
     void GLES2Lesson::fetchShaderLocations() {
@@ -250,12 +235,6 @@ namespace odb {
         projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
         samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
         textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
-
-        ambientLightColorShaderLocation = glGetUniformLocation(gProgram, "uAmbientLightColor");
-        diffuseLightColorShaderLocation = glGetUniformLocation(gProgram, "uDiffuseLightColor");
-        diffuseLightDirectionShaderLocation = glGetUniformLocation(gProgram,
-                                                                   "uDiffuseLightDirection");
-        normalAttributePosition = glGetAttribLocation(gProgram, "aVertexNormal");
     }
 
     void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
@@ -264,24 +243,18 @@ namespace odb {
         glBindBuffer(GL_ARRAY_BUFFER, vertexVbo);
         glEnableVertexAttribArray(vertexAttributePosition);
         glEnableVertexAttribArray(textureCoordinatesAttributePosition);
-        glEnableVertexAttribArray(normalAttributePosition);
-
-        glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
 
         glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
 
         glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9, 0);
         glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,
                               sizeof(float) * 9, (void *) (sizeof(float) * 3));
-        glVertexAttribPointer(normalAttributePosition, 4, GL_FLOAT, GL_TRUE,
-                              sizeof(float) * 9, (void *) (sizeof(float) * 5));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
         glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_SHORT, 0);
 
         glDisableVertexAttribArray(vertexAttributePosition);
         glDisableVertexAttribArray(textureCoordinatesAttributePosition);
-        glDisableVertexAttribArray(normalAttributePosition);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -320,15 +293,11 @@ namespace odb {
         glUseProgram(gProgram);
         checkGlError("glUseProgram");
 
-        glUniform4fv(diffuseLightColorShaderLocation, 1, &diffuseLightColor[0]);
-        glUniform4fv(diffuseLightDirectionShaderLocation, 1, &diffuseLightDirection[0]);
-        glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
-
         glUniform1i(samplerUniformPosition, 0);
 
         glActiveTexture(GL_TEXTURE0);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
 
     void GLES2Lesson::render() {
@@ -336,13 +305,6 @@ namespace odb {
         prepareShaderProgram();
         setPerspective();
         resetTransformMatrices();
-
-        if (enableBlending) {
-            enableAlphaBlending();
-        } else {
-            disableAlfaBlending();
-        }
-
 
         drawGeometry(vboCubeVertexDataIndex,
                      vboCubeVertexIndicesIndex,
@@ -358,8 +320,6 @@ namespace odb {
     }
 
     void GLES2Lesson::tick() {
-        cubeRotationAngleYZ += rotationYZSpeed;
-        cubeRotationAngleXZ += rotationXZSpeed;
     }
 
     void GLES2Lesson::shutdown() {
@@ -367,75 +327,6 @@ namespace odb {
         LOGI("Shutdown!\n");
     }
 
-    void GLES2Lesson::toggleFiltering() {
-        if (currentFilter == GL_NEAREST) {
-            currentFilter = GL_LINEAR;
-            LOGI("Using GL_LINEAR\n");
-        } else {
-            currentFilter = GL_NEAREST;
-            LOGI("Using GL_NEAREST\n");
-        }
-    }
-
-    void GLES2Lesson::toggleLightning() {
-        if (ambientLightColor == ambientLightFullColor) {
-            ambientLightColor = ambientLightOffColor;
-        } else {
-            ambientLightColor = ambientLightFullColor;
-        }
-    }
-
-    void GLES2Lesson::speedUpXZ() {
-        rotationXZSpeed += 0.125f;
-    }
-
-    void GLES2Lesson::speedDownXZ() {
-        rotationXZSpeed -= 0.125f;
-    }
-
-    void GLES2Lesson::speedUpYZ() {
-        rotationYZSpeed += 0.125f;
-    }
-
-    void GLES2Lesson::speedDownYZ() {
-        rotationYZSpeed -= 0.125f;
-    }
-
     void GLES2Lesson::reset() {
-        cubeRotationAngleYZ = 0.0f;
-        rotationYZSpeed = 0.0f;
-        cubeRotationAngleXZ = 0.0f;
-        rotationXZSpeed = 0.0f;
-    }
-
-    void GLES2Lesson::setSpeeds(const glm::vec2 &velocity) {
-        rotationXZSpeed = -velocity.x;
-        rotationYZSpeed = -velocity.y;
-    }
-
-    void GLES2Lesson::toggleBlending() {
-
-        enableBlending = !enableBlending;
-        if (enableBlending) {
-            LOGI("Using GL_BLEND\n");
-        } else {
-            LOGI("Not using GL_BLEND\n");
-        }
-    }
-
-    void GLES2Lesson::disableAlfaBlending() const {
-
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
-        glDepthMask(true);
-        glDisable(GL_BLEND);
-    }
-
-    void GLES2Lesson::enableAlphaBlending() const {
-
-        glDisable(GL_DEPTH_TEST);
-        glDepthMask(false);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     }
 }

@@ -95,33 +95,6 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_step(JNIEnv *env, job
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_tick(JNIEnv *env, jobject obj);
 
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_toggleFiltering(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_toggleLightningMode(JNIEnv *env, jclass type);
-
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_speedUpYZRotation(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_speedDownYZRotation(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_speedUpXZRotation(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_speedDownXZRotation(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_reset(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_dragTo(JNIEnv *env, jclass type, jfloat x, jfloat y);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_toggleBlending(JNIEnv *env, jclass type);
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
@@ -170,69 +143,5 @@ Java_br_odb_nehe_lesson09_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
 
     if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
         LOGI("error %d", errorCode);
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_toggleFiltering(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->toggleFiltering();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_toggleLightningMode(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->toggleLightning();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_speedUpYZRotation(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->speedUpYZ();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_speedDownYZRotation(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->speedDownYZ();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_speedUpXZRotation(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->speedUpXZ();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_speedDownXZRotation(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->speedDownXZ();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_reset(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->reset();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_dragTo(JNIEnv *env, jclass type, jfloat x, jfloat y) {
-
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->setSpeeds(glm::normalize(glm::vec2(x, y)));
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_toggleBlending(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->toggleBlending();
     }
 }

@@ -44,22 +44,4 @@ public class GL2JNILib {
     public static native void onCreate(AssetManager assetManager);
 
     public static native void setTexture(Bitmap bitmap);
-
-    public static native void toggleFiltering();
-
-    public static native void toggleLightningMode();
-
-    public static native void speedUpYZRotation();
-
-    public static native void speedDownYZRotation();
-
-    public static native void speedUpXZRotation();
-
-    public static native void speedDownXZRotation();
-
-    public static native void reset();
-
-    public static native void dragTo(float x, float y);
-
-    public static native void toggleBlending();
 }
