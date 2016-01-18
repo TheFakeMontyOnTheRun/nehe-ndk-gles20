@@ -17,64 +17,18 @@
 #include "NdkGlue.h"
 
 namespace odb {
-//Counter Clockwise
-    const float GLES2Lesson::cubeVertices[]{
-//    4________5
-//    /|       /|
-//   / |      / |
-// 0/__|___1_/  |
-//  | 7|____|___|6
-//  |  /    |  /
-//  | /     | /
-// 3|/______|/2
-//x, y, z, u, v, nx, ny, nz, nw
 
-            //FLOOR
-            1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f,  //6 - 0
-            -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f,  //7 - 1
-            1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,  //2 - 2
-            -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, //3 - 3
-            //CEILING
-            -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,  //0 - 4
-            1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,   //1 - 5
-            -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //4 - 6
-            1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //5 - 7
-            //SOUTH
-            -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //0 - 8
-            1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,   //1 - 9
-            1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //2 - 10
-            -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, //3 - 11
-            //NORTH
-            -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, //4 - 12
-            1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, //5 - 13
-            1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,  //6 - 14
-            -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,  //7 -15
-            //EAST
-            1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,   //1 - 16
-            1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  //2 - 17
-            1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, //5 - 18
-            1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  //6 - 19
-            //WEST
-            -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f,  //0 - 20
-            -1.0f, -1.0f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, //3 - 21
-            -1.0f, 1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, //4 - 22
-            -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f  //7 - 23
+    const float GLES2Lesson::cubeVertices[]{
+            -1.0f, 1.0f, -3.0f, 0.0f, 0.0f,
+            1.0f, 1.0f, -3.0f, 1.0f, 0.0f,
+            1.0f, -1.0f, -3.0f, 1.0f, 1.0f,
+            -1.0f, -1.0f, -3.0f, 0.0f, 1.0f,
     };
 
 
     const unsigned short GLES2Lesson::cubeIndices[]{
-            20, 21, 23,
-            22, 20, 23,
-            16, 18, 19,
-            16, 19, 17,
-            13, 12, 14,
-            14, 12, 15,
-            8, 9, 10,
-            8, 10, 11,
-            6, 7, 5,
-            6, 5, 4,
-            3, 2, 1,
-            1, 0, 2
+            0, 3, 1,
+            2
     };
 
 
@@ -221,11 +175,6 @@ namespace odb {
     }
 
     void GLES2Lesson::resetTransformMatrices() {
-        glm::mat4 identity = glm::mat4(1.0f);
-        glm::vec3 translate = glm::vec3(0.0f, 0.0f, -6.0f);
-        glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
-        glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
-        glm::mat4 translated = glm::translate(identity, translate);
     }
 
     void GLES2Lesson::fetchShaderLocations() {
@@ -246,12 +195,12 @@ namespace odb {
 
         glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
 
-        glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9, 0);
+        glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
         glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,
-                              sizeof(float) * 9, (void *) (sizeof(float) * 3));
+                              sizeof(float) * 5, (void *) (sizeof(float) * 3));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
-        glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLE_STRIP, vertexCount, GL_UNSIGNED_SHORT, 0);
 
         glDisableVertexAttribArray(vertexAttributePosition);
         glDisableVertexAttribArray(textureCoordinatesAttributePosition);
@@ -268,12 +217,12 @@ namespace odb {
     void GLES2Lesson::createVBOs() {
         glGenBuffers(1, &vboCubeVertexDataIndex);
         glBindBuffer(GL_ARRAY_BUFFER, vboCubeVertexDataIndex);
-        glBufferData(GL_ARRAY_BUFFER, 4 * 6 * sizeof(float) * 9, cubeVertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float) * 5, cubeVertices, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glGenBuffers(1, &vboCubeVertexIndicesIndex);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLushort), cubeIndices, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLushort), cubeIndices, GL_STATIC_DRAW);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
@@ -308,7 +257,7 @@ namespace odb {
 
         drawGeometry(vboCubeVertexDataIndex,
                      vboCubeVertexIndicesIndex,
-                     36,
+                     4,
                      cubeTransformMatrix
         );
     }
