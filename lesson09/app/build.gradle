@@ -21,7 +21,7 @@ model {
         moduleName = "NdkGlue"
         cppFlags  += ["-Werror",  "-std=gnu++14" ]
         ldLibs    += ["log", "GLESv2", "android", "jnigraphics" ]
-        stl = "stlport_static"
+        stl = "gnustl_static"
 
         cppFlags  += "-I${file("./../../common_includes")}".toString()
     }

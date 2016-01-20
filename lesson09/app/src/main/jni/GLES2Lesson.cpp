@@ -10,15 +10,14 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include <string>
-
+#include <array>
 #include <android/log.h>
 
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
 namespace odb {
-
-    const float GLES2Lesson::cubeVertices[]{
+    const std::array< float, 4 * 9 > GLES2Lesson::cubeVertices{
             -1.0f, 1.0f, -3.0f, 0.0f, 0.0f,
             1.0f, 1.0f, -3.0f, 1.0f, 0.0f,
             1.0f, -1.0f, -3.0f, 1.0f, 1.0f,
@@ -26,7 +25,7 @@ namespace odb {
     };
 
 
-    const unsigned short GLES2Lesson::cubeIndices[]{
+    const std::array<unsigned short,4> GLES2Lesson::cubeIndices{
             0, 3, 1,
             2
     };
@@ -217,12 +216,12 @@ namespace odb {
     void GLES2Lesson::createVBOs() {
         glGenBuffers(1, &vboCubeVertexDataIndex);
         glBindBuffer(GL_ARRAY_BUFFER, vboCubeVertexDataIndex);
-        glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float) * 5, cubeVertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float) * 5, cubeVertices.data(), GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glGenBuffers(1, &vboCubeVertexIndicesIndex);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLushort), cubeIndices, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLushort), cubeIndices.data(), GL_STATIC_DRAW);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 

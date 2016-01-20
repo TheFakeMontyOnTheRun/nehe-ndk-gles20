@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-// OpenGL ES 2.0 code
 #include <stdint.h>
 #include <jni.h>
 #include <android/bitmap.h>
@@ -25,6 +24,7 @@
 #include <GLES2/gl2ext.h>
 #include <string>
 #include <vector>
+#include <array>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
