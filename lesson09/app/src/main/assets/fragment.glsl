@@ -4,9 +4,11 @@ uniform sampler2D sTexture;
 uniform vec4 uTint;
 
 void main() {
-    gl_FragColor = texture2D( sTexture, vTextureCoords );
     vec4 texel = texture2D( sTexture, vTextureCoords );
 
+    if ( texel.a < 0.1 ) {
+        discard;
+    }
 
     gl_FragColor = texel * uTint;
 }
