@@ -48,7 +48,7 @@ namespace odb {
         GLuint samplerUniformPosition;
         GLuint textureCoordinatesAttributePosition;
         GLuint projectionMatrixAttributePosition;
-
+        GLuint fragmentTintPosition;
         GLuint gProgram;
 
         GLuint textureId;

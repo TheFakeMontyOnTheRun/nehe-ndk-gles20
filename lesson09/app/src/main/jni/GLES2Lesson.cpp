@@ -186,6 +186,7 @@ namespace odb {
         projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
         samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
         textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
+        fragmentTintPosition = glGetUniformLocation(gProgram, "uTint");
     }
 
     void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
@@ -259,6 +260,9 @@ namespace odb {
         resetTransformMatrices();
 
         for (auto &star : mStars) {
+
+            glUniform4fv(fragmentTintPosition, 1, &star->mColor[0]);
+
             drawGeometry(vboCubeVertexDataIndex,
                          vboCubeVertexIndicesIndex,
                          4,
