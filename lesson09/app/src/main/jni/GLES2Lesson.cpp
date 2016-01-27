@@ -172,6 +172,8 @@ namespace odb {
 
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
+        initStars();
+
         return true;
     }
 
@@ -256,11 +258,15 @@ namespace odb {
         setPerspective();
         resetTransformMatrices();
 
-        drawGeometry(vboCubeVertexDataIndex,
-                     vboCubeVertexIndicesIndex,
-                     4,
-                     cubeTransformMatrix
-        );
+        for ( auto& star : mStars ) {
+            cubeTransformMatrix = glm::translate( glm::mat4( 1.0f ), star->mPosition );
+
+            drawGeometry(vboCubeVertexDataIndex,
+                         vboCubeVertexIndicesIndex,
+                         4,
+                         cubeTransformMatrix
+            );
+        }
     }
 
     void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format) {
@@ -281,5 +287,21 @@ namespace odb {
     }
 
     void GLES2Lesson::initStars() {
+        std::shared_ptr<Star> star;
+
+        star = std::make_shared<Star>();
+        star->mPosition= glm::vec3{-1.0f, 0.0f, -1.0f };
+        star->mColor=glm::vec4{1.0f, 0.0f, 0.0f, 1.0f };
+        mStars.push_back( star );
+
+        star = std::make_shared<Star>();
+        star->mPosition= glm::vec3{1.0f, 0.0f, -2.0f };
+        star->mColor=glm::vec4{1.0f, 0.0f, 0.0f, 1.0f };
+        mStars.push_back( star );
+
+        star = std::make_shared<Star>();
+        star->mPosition= glm::vec3{0.0f, 1.0f, -8.0f };
+        star->mColor=glm::vec4{1.0f, 0.0f, 0.0f, 1.0f };
+        mStars.push_back( star );
     }
 }
