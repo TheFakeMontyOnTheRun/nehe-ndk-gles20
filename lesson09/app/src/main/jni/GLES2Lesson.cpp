@@ -133,8 +133,8 @@ namespace odb {
     }
 
     GLES2Lesson::GLES2Lesson() {
-//start off as identity - late we will init it with proper values.
         cubeTransformMatrix = glm::mat4(1.0f);
+//start off as identity - later we will init it with proper values.
         projectionMatrix = glm::mat4(1.0f);
         textureData = nullptr;
         vertexAttributePosition = 0;
