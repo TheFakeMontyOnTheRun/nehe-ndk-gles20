@@ -19,7 +19,7 @@
 #include "Star.h"
 
 namespace odb {
-    const std::array< float, 4 * 9 > GLES2Lesson::cubeVertices{
+    const std::array<float, 4 * 9> GLES2Lesson::cubeVertices{
             -1.0f, 1.0f, -3.0f, 0.0f, 0.0f,
             1.0f, 1.0f, -3.0f, 1.0f, 0.0f,
             1.0f, -1.0f, -3.0f, 1.0f, 1.0f,
@@ -27,7 +27,7 @@ namespace odb {
     };
 
 
-    const std::array<unsigned short,4> GLES2Lesson::cubeIndices{
+    const std::array<unsigned short, 4> GLES2Lesson::cubeIndices{
             0, 3, 1,
             2
     };
@@ -133,7 +133,6 @@ namespace odb {
     }
 
     GLES2Lesson::GLES2Lesson() {
-        cubeTransformMatrix = glm::mat4(1.0f);
 //start off as identity - later we will init it with proper values.
         projectionMatrix = glm::mat4(1.0f);
         textureData = nullptr;
@@ -225,7 +224,8 @@ namespace odb {
 
         glGenBuffers(1, &vboCubeVertexIndicesIndex);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLushort), cubeIndices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLushort), cubeIndices.data(),
+                     GL_STATIC_DRAW);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
@@ -258,9 +258,7 @@ namespace odb {
         setPerspective();
         resetTransformMatrices();
 
-        for ( auto& star : mStars ) {
-            cubeTransformMatrix = glm::translate( glm::mat4( 1.0f ), star->mPosition );
-
+        for (auto &star : mStars) {
             drawGeometry(vboCubeVertexDataIndex,
                          vboCubeVertexIndicesIndex,
                          4,
@@ -290,18 +288,18 @@ namespace odb {
         std::shared_ptr<Star> star;
 
         star = std::make_shared<Star>();
-        star->mColor=glm::vec4{1.0f, 0.0f, 0.0f, 1.0f };
-        mStars.push_back( star );
         star->mTransform = glm::translate( glm::mat4( 1.0f ), glm::vec3( -1.0f, 0.0f, -2.0f )),
+        star->mColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
+        mStars.push_back(star);
 
         star = std::make_shared<Star>();
-        star->mColor=glm::vec4{1.0f, 0.0f, 0.0f, 1.0f };
-        mStars.push_back( star );
         star->mTransform = glm::translate( glm::mat4( 1.0f ), glm::vec3( 1.0f, 0.0f, -2.0f )),
+        star->mColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
+        mStars.push_back(star);
 
         star = std::make_shared<Star>();
-        star->mColor=glm::vec4{1.0f, 0.0f, 0.0f, 1.0f };
-        mStars.push_back( star );
         star->mTransform = glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 1.0f, -8.0f )),
+        star->mColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
+        mStars.push_back(star);
     }
 }
