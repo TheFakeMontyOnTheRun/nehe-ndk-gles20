@@ -5,6 +5,8 @@
 #ifndef LESSON02_GLES2LESSON_H
 #define LESSON02_GLES2LESSON_H
 
+#include "Star.h"
+
 namespace odb {
 
     class GLES2Lesson {
@@ -25,6 +27,8 @@ namespace odb {
 
         void deleteVBOs();
 
+        void initStars();
+
         void drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
                           const glm::mat4 &transform);
 
@@ -34,6 +38,8 @@ namespace odb {
 
         const static std::array< float, 4 * 9 > cubeVertices;
         const static std::array<unsigned short, 4> cubeIndices;
+
+        std::vector<std::shared_ptr<Star>> mStars;
 
         glm::mat4 cubeTransformMatrix;
         glm::mat4 projectionMatrix;

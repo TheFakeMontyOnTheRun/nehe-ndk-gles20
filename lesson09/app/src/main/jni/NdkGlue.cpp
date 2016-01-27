@@ -22,6 +22,7 @@
 #include <android/log.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
+#include <memory>
 #include <string>
 #include <vector>
 #include <array>

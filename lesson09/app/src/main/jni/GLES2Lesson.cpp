@@ -8,13 +8,15 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-
+#include <memory>
+#include <vector>
 #include <string>
 #include <array>
 #include <android/log.h>
 
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
+#include "Star.h"
 
 namespace odb {
     const std::array< float, 4 * 9 > GLES2Lesson::cubeVertices{
@@ -276,5 +278,8 @@ namespace odb {
     }
 
     void GLES2Lesson::reset() {
+    }
+
+    void GLES2Lesson::initStars() {
     }
 }
