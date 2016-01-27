@@ -292,18 +292,18 @@ namespace odb {
         std::shared_ptr<Star> star;
 
         star = std::make_shared<Star>();
-        star->mTransform = glm::translate( glm::mat4( 1.0f ), glm::vec3( -1.0f, 0.0f, -2.0f )),
-        star->mColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
+        star->mTransform = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 0.0f, -2.0f)),
+                star->mColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
         mStars.push_back(star);
 
         star = std::make_shared<Star>();
-        star->mTransform = glm::translate( glm::mat4( 1.0f ), glm::vec3( 1.0f, 0.0f, -2.0f )),
-        star->mColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
+        star->mTransform = glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.0f, -2.0f)),
+                star->mColor = glm::vec4{0.0f, 1.0f, 0.0f, 1.0f};
         mStars.push_back(star);
 
         star = std::make_shared<Star>();
-        star->mTransform = glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 1.0f, -8.0f )),
-        star->mColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
+        star->mTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, -8.0f)),
+                star->mColor = glm::vec4{0.0f, 0.0f, 1.0f, 1.0f};
         mStars.push_back(star);
     }
 }
