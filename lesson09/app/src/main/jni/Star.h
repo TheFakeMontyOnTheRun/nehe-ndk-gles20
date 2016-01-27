@@ -9,7 +9,7 @@
 class Star {
 public:
     glm::vec4 mColor;
-    glm::vec3 mPosition;
+    glm::mat4 mTransform;
 };
 
 

@@ -41,7 +41,6 @@ namespace odb {
 
         std::vector<std::shared_ptr<Star>> mStars;
 
-        glm::mat4 cubeTransformMatrix;
         glm::mat4 projectionMatrix;
 
         GLuint vertexAttributePosition;
