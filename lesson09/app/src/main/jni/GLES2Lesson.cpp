@@ -283,6 +283,21 @@ namespace odb {
     }
 
     void GLES2Lesson::tick() {
+
+        movementPosition += movementDelta;
+
+        float acc = 0.0f;
+
+        for (auto &star: mStars) {
+            acc += 2.0f;
+            star->mTransform = glm::mat4(1.0f);
+            star->mTransform = glm::rotate(star->mTransform, movementPosition * acc,
+                                           glm::vec3(0.0f, 0.0f, 1.0f));
+            star->mTransform = glm::translate(star->mTransform,
+                                              glm::vec3(acc, 0.0f, -movementPosition));
+            star->mTransform = glm::rotate(star->mTransform, movementPosition,
+                                           glm::vec3(0.0f, 0.0f, 1.0f));
+        }
     }
 
     void GLES2Lesson::shutdown() {
@@ -291,6 +306,8 @@ namespace odb {
     }
 
     void GLES2Lesson::reset() {
+        movementPosition = 0.0f;
+        movementDelta = 0.1f;
     }
 
     void GLES2Lesson::initStars() {

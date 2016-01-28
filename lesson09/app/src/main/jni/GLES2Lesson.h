@@ -60,6 +60,9 @@ namespace odb {
         int *textureData;
         int textureWidth;
         int textureHeight;
+
+        float movementPosition;
+        float movementDelta;
     public:
         GLES2Lesson();
 
