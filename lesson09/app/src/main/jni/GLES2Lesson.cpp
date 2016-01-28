@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
 #include <array>
+#include <random>
 #include <android/log.h>
 
 #include "GLES2Lesson.h"
@@ -31,6 +32,8 @@ namespace odb {
             0, 3, 1,
             2
     };
+
+    const int GLES2Lesson::PREFERED_NUMBER_OF_STARS = 10;
 
 
     GLuint uploadTextureData(int *textureData, int width, int height) {
@@ -312,20 +315,16 @@ namespace odb {
 
     void GLES2Lesson::initStars() {
         std::shared_ptr<Star> star;
+        std::default_random_engine rndEngine;
+        std::normal_distribution<float> distribution(0.0f, 1.0f);
 
-        star = std::make_shared<Star>();
-        star->mTransform = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 0.0f, -2.0f)),
-                star->mColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
-        mStars.push_back(star);
+        rndEngine.seed(time(nullptr));
 
-        star = std::make_shared<Star>();
-        star->mTransform = glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.0f, -2.0f)),
-                star->mColor = glm::vec4{0.0f, 1.0f, 0.0f, 1.0f};
-        mStars.push_back(star);
-
-        star = std::make_shared<Star>();
-        star->mTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, -8.0f)),
-                star->mColor = glm::vec4{0.0f, 0.0f, 1.0f, 1.0f};
-        mStars.push_back(star);
+        for (int i = 0; i < PREFERED_NUMBER_OF_STARS; ++i) {
+            mStars.push_back(std::make_shared<Star>(glm::vec3(distribution(rndEngine), 0.0f, -i),
+                                                    glm::vec4(distribution(rndEngine),
+                                                              distribution(rndEngine),
+                                                              distribution(rndEngine), 1.0f)));
+        }
     }
 }

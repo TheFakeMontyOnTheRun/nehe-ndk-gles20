@@ -10,6 +10,8 @@ class Star {
 public:
     glm::vec4 mColor;
     glm::mat4 mTransform;
+
+    Star( const glm::vec3& aPosition, const glm::vec4& aColour );
 };
 
 

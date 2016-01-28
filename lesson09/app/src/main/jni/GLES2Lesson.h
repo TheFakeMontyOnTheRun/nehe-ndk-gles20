@@ -39,6 +39,8 @@ namespace odb {
         const static std::array< float, 4 * 9 > cubeVertices;
         const static std::array<unsigned short, 4> cubeIndices;
 
+        const static int PREFERED_NUMBER_OF_STARS;
+
         std::vector<std::shared_ptr<Star>> mStars;
 
         glm::mat4 projectionMatrix;
