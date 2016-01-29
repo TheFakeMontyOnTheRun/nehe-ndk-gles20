@@ -291,15 +291,19 @@ namespace odb {
 
         float acc = 0.0f;
 
+        glm::mat4 transform( 1.0f );
+
         for (auto &star: mStars) {
             acc += 2.0f;
-            star->mTransform = glm::mat4(1.0f);
-            star->mTransform = glm::rotate(star->mTransform, movementPosition * acc,
+            transform = glm::mat4(1.0f);
+            transform = glm::rotate(transform, movementPosition * acc,
                                            glm::vec3(0.0f, 0.0f, 1.0f));
-            star->mTransform = glm::translate(star->mTransform,
+            transform = glm::translate(transform,
                                               glm::vec3(acc, 0.0f, -movementPosition));
-            star->mTransform = glm::rotate(star->mTransform, movementPosition,
+            transform = glm::rotate(transform, movementPosition,
                                            glm::vec3(0.0f, 0.0f, 1.0f));
+
+            star->mTransform = transform;
         }
     }
 
