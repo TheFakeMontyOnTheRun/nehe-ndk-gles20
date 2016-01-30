@@ -294,13 +294,13 @@ namespace odb {
         glm::mat4 transform( 1.0f );
 
         for (auto &star: mStars) {
-            acc += 2.0f;
+            acc += 1.0f;
             transform = glm::mat4(1.0f);
-            transform = glm::rotate(transform, movementPosition * acc,
+            transform = glm::rotate(transform, acc * movementPosition,
                                            glm::vec3(0.0f, 0.0f, 1.0f));
             transform = glm::translate(transform,
-                                              glm::vec3(acc, 0.0f, -movementPosition));
-            transform = glm::rotate(transform, movementPosition,
+                                              glm::vec3(acc, 0.0f, -( movementPosition / PREFERED_NUMBER_OF_STARS )  * ( PREFERED_NUMBER_OF_STARS - acc ) ));
+            transform = glm::rotate(transform, acc,
                                            glm::vec3(0.0f, 0.0f, 1.0f));
 
             star->mTransform = transform;
