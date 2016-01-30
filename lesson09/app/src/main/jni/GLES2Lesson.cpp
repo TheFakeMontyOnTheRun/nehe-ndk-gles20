@@ -33,7 +33,7 @@ namespace odb {
             2
     };
 
-    const int GLES2Lesson::PREFERED_NUMBER_OF_STARS = 10;
+    const int GLES2Lesson::PREFERED_NUMBER_OF_STARS = 50;
 
 
     GLuint uploadTextureData(int *textureData, int width, int height) {
