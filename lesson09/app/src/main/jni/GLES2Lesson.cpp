@@ -176,8 +176,8 @@ namespace odb {
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
         initStars();
 
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE );
         glFrontFace(GL_CW);
         glDepthMask(true);
 
