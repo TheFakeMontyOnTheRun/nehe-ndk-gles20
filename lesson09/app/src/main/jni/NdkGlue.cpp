@@ -166,37 +166,38 @@ Java_br_odb_nehe_lesson09_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson09_GL2JNILib_toggleTwinkling(JNIEnv *env, jclass type) {
-    if ( gles2Lesson != nullptr ) {
+    if (gles2Lesson != nullptr) {
         gles2Lesson->toggleTwinkling();
     }
 }
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson09_GL2JNILib_zoomIn(JNIEnv *env, jclass type) {
-    if ( gles2Lesson != nullptr ) {
+    if (gles2Lesson != nullptr) {
         gles2Lesson->zoomIn();
     }
 }
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson09_GL2JNILib_speedUpTwist(JNIEnv *env, jclass type) {
-    if ( gles2Lesson != nullptr ) {
+    if (gles2Lesson != nullptr) {
         gles2Lesson->speedUpTwist();
     }
 }
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson09_GL2JNILib_zoomDown(JNIEnv *env, jclass type) {
-    if ( gles2Lesson != nullptr ) {
+    if (gles2Lesson != nullptr) {
         gles2Lesson->zoomOut();
     }
 }
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson09_GL2JNILib_speedDownTwist(JNIEnv *env, jclass type) {
-    if ( gles2Lesson != nullptr ) {
+    if (gles2Lesson != nullptr) {
         gles2Lesson->speedDownTwist();
     }
+}
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson09_GL2JNILib_reset(JNIEnv *env, jclass type) {
