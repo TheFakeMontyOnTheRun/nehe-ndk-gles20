@@ -43,7 +43,7 @@ public class GL2JNILib {
 
     public static native void onCreate(AssetManager assetManager);
 
-    public static native void setTexture(Bitmap bitmap);
+    public static native void setTexture(Bitmap bitmap, Bitmap detail);
 
     public static native void toggleTwinkling();
 

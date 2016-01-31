@@ -174,6 +174,8 @@ namespace odb {
 
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
+        glActiveTexture(GL_TEXTURE1);
+        twinkleId = uploadTextureData(twinkleData, textureWidth, textureHeight);
         initStars();
 
         glEnable(GL_BLEND);
@@ -254,11 +256,16 @@ namespace odb {
         glUseProgram(gProgram);
         checkGlError("glUseProgram");
 
-        glUniform1i(samplerUniformPosition, 0);
+        glUniform1i(samplerUniformPosition, twinkling? 1 : 0 );
 
         glActiveTexture(GL_TEXTURE0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        glActiveTexture(GL_TEXTURE1);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
     }
 
     void GLES2Lesson::render() {
@@ -279,8 +286,9 @@ namespace odb {
         }
     }
 
-    void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format) {
+    void GLES2Lesson::setTexture(int *bitmapData, int *detailData, int width, int height, int format) {
         textureData = bitmapData;
+        twinkleData = detailData;
         textureWidth = width;
         textureHeight = height;
     }
@@ -320,6 +328,7 @@ namespace odb {
         movementDelta = 0.1f;
         rotationPosition = 0.0f;
         rotationDelta = 0.1f;
+        twinkling = false;
     }
 
     void GLES2Lesson::initStars() {
@@ -339,6 +348,8 @@ namespace odb {
 
     void GLES2Lesson::toggleTwinkling() {
         LOGI( "Toggling twinkling" );
+
+        twinkling = !twinkling;
     }
 
     void GLES2Lesson::zoomIn() {

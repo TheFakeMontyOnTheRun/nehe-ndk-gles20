@@ -54,12 +54,14 @@ namespace odb {
         GLuint gProgram;
 
         GLuint textureId;
+        GLuint twinkleId;
 
         //VBO stuff
         GLuint vboCubeVertexDataIndex;
         GLuint vboCubeVertexIndicesIndex;
 
         int *textureData;
+        int *twinkleData;
         int textureWidth;
         int textureHeight;
 
@@ -67,6 +69,7 @@ namespace odb {
         float movementDelta;
         float rotationPosition;
         float rotationDelta;
+        bool twinkling;
     public:
         GLES2Lesson();
 
@@ -75,7 +78,7 @@ namespace odb {
         bool init(float w, float h, const std::string &vertexShader,
                   const std::string &fragmentShader);
 
-        void setTexture(int *bitmapData, int width, int height, int format);
+        void setTexture(int *bitmapData, int *width, int height, int format, int i);
 
         void render();
 
