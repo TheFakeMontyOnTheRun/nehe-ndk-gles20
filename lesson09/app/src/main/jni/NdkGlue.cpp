@@ -96,6 +96,20 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_step(JNIEnv *env, job
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_tick(JNIEnv *env, jobject obj);
 
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson09_GL2JNILib_toggleTwinkling(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson09_GL2JNILib_zoomIn(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson09_GL2JNILib_speedUpTwist(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson09_GL2JNILib_zoomDown(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson09_GL2JNILib_speedDownTwist(JNIEnv *env, jclass type);
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
@@ -144,5 +158,40 @@ Java_br_odb_nehe_lesson09_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
 
     if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
         LOGI("error %d", errorCode);
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson09_GL2JNILib_toggleTwinkling(JNIEnv *env, jclass type) {
+    if ( gles2Lesson != nullptr ) {
+        gles2Lesson->toggleTwinkling();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson09_GL2JNILib_zoomIn(JNIEnv *env, jclass type) {
+    if ( gles2Lesson != nullptr ) {
+        gles2Lesson->zoomIn();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson09_GL2JNILib_speedUpTwist(JNIEnv *env, jclass type) {
+    if ( gles2Lesson != nullptr ) {
+        gles2Lesson->speedUpTwist();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson09_GL2JNILib_zoomDown(JNIEnv *env, jclass type) {
+    if ( gles2Lesson != nullptr ) {
+        gles2Lesson->zoomOut();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson09_GL2JNILib_speedDownTwist(JNIEnv *env, jclass type) {
+    if ( gles2Lesson != nullptr ) {
+        gles2Lesson->speedDownTwist();
     }
 }

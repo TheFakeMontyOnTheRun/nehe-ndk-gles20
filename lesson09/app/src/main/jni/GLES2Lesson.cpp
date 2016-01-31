@@ -333,4 +333,24 @@ namespace odb {
                                                               distribution(rndEngine), 1.0f)));
         }
     }
+
+    void GLES2Lesson::toggleTwinkling() {
+        LOGI( "Toggling twinkling" );
+    }
+
+    void GLES2Lesson::zoomIn() {
+        LOGI( "Zooming in" );
+    }
+
+    void GLES2Lesson::speedUpTwist() {
+        LOGI( "Speeding up twisting" );
+    }
+
+    void GLES2Lesson::zoomOut() {
+        LOGI( "Zooming out" );
+    }
+
+    void GLES2Lesson::speedDownTwist() {
+        LOGI( "Speeding down twisting" );
+    }
 }

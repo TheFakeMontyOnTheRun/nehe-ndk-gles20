@@ -82,6 +82,16 @@ namespace odb {
         void tick();
 
         void reset();
+
+        void toggleTwinkling();
+
+        void zoomIn();
+
+        void speedUpTwist();
+
+        void zoomOut();
+
+        void speedDownTwist();
     };
 }
 #endif //LESSON02_GLES2LESSON_H

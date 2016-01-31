@@ -55,7 +55,34 @@ public class GL2JNIActivity extends Activity {
 
         mView = new GL2JNIView(getApplication());
         setContentView(mView);
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch( keyCode ) {
+            case KeyEvent.KEYCODE_T:
+                GL2JNILib.toggleTwinkling();
+                return true;
+
+            case KeyEvent.KEYCODE_DPAD_UP:
+                GL2JNILib.zoomIn();
+                return true;
+
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                GL2JNILib.speedUpTwist();
+                return true;
+
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                GL2JNILib.zoomDown();
+                return true;
+
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                GL2JNILib.speedDownTwist();
+                return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
