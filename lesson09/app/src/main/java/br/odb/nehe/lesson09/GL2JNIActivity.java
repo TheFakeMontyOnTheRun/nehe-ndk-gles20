@@ -80,6 +80,10 @@ public class GL2JNIActivity extends Activity {
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 GL2JNILib.speedDownTwist();
                 return true;
+
+            case KeyEvent.KEYCODE_R:
+                GL2JNILib.reset();
+                return true;
         }
 
         return super.onKeyDown(keyCode, event);

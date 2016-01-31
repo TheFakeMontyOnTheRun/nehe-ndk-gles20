@@ -97,6 +97,9 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_step(JNIEnv *env, job
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_tick(JNIEnv *env, jobject obj);
 
 JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson09_GL2JNILib_reset(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson09_GL2JNILib_toggleTwinkling(JNIEnv *env, jclass type);
 
 JNIEXPORT void JNICALL
@@ -193,5 +196,11 @@ JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson09_GL2JNILib_speedDownTwist(JNIEnv *env, jclass type) {
     if ( gles2Lesson != nullptr ) {
         gles2Lesson->speedDownTwist();
+    }
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson09_GL2JNILib_reset(JNIEnv *env, jclass type) {
+    if (gles2Lesson != nullptr) {
+        gles2Lesson->reset();
     }
 }

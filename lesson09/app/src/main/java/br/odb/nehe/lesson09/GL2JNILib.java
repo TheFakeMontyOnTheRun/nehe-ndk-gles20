@@ -54,4 +54,6 @@ public class GL2JNILib {
     public static native void zoomDown();
 
     public static native void speedDownTwist();
+
+    public static native void reset();
 }

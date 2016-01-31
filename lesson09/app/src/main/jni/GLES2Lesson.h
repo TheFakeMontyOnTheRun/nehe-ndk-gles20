@@ -65,6 +65,8 @@ namespace odb {
 
         float movementPosition;
         float movementDelta;
+        float rotationPosition;
+        float rotationDelta;
     public:
         GLES2Lesson();
 
