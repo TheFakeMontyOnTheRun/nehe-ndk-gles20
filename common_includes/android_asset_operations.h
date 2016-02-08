@@ -25,7 +25,7 @@ FILE *android_fopen(const char *fname, const char *mode, AAssetManager *assetMan
     return funopen(asset, android_read, android_write, android_seek, android_close);
 }
 
-std::string readShaderToString(FILE *fileDescriptor) {
+std::string readToString(FILE *fileDescriptor) {
     const unsigned N = 1024;
     std::string total;
     while (true) {

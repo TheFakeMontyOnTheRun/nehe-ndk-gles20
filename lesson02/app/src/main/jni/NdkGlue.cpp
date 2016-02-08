@@ -41,10 +41,10 @@ void loadShaders(JNIEnv *env, jobject &obj) {
     AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
     FILE *fd;
     fd = android_fopen("vertex.glsl", "r", asset_manager);
-    gVertexShader = readShaderToString(fd);
+    gVertexShader = readToString(fd);
     fclose(fd);
     fd = android_fopen("fragment.glsl", "r", asset_manager);
-    gFragmentShader = readShaderToString(fd);
+    gFragmentShader = readToString(fd);
     fclose(fd);
 }
 
