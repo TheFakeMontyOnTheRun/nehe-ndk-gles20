@@ -32,7 +32,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-
+#include "Star.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
@@ -86,7 +86,8 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_onCreate(JNIEnv *env,
                                                                     jobject assetManager);
 
 JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson09_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap, jobject detail);
+        Java_br_odb_nehe_lesson09_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap,
+                                                       jobject detail);
 
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
@@ -139,7 +140,8 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson09_GL2JNILib_onDestroy(JNIEnv *env
 }
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson09_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap, jobject detail) {
+Java_br_odb_nehe_lesson09_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap,
+                                               jobject detail) {
 
     void *addr;
     AndroidBitmapInfo info;
@@ -163,7 +165,6 @@ Java_br_odb_nehe_lesson09_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
     if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
         LOGI("error %d", errorCode);
     }
-
 
 
     if ((errorCode = AndroidBitmap_lockPixels(env, detail, &addr)) != 0) {

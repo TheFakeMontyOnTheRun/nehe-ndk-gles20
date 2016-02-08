@@ -5,8 +5,6 @@
 #ifndef LESSON02_GLES2LESSON_H
 #define LESSON02_GLES2LESSON_H
 
-#include "Star.h"
-
 namespace odb {
 
     class GLES2Lesson {
@@ -36,12 +34,12 @@ namespace odb {
 
         GLuint loadShader(GLenum shaderType, const char *pSource);
 
-        const static std::array< float, 4 * 9 > cubeVertices;
-        const static std::array<unsigned short, 4> cubeIndices;
+        const static std::array <float, 4 * 9> cubeVertices;
+        const static std::array <unsigned short, 4> cubeIndices;
 
         const static int PREFERED_NUMBER_OF_STARS;
 
-        std::vector<std::shared_ptr<Star>> mStars;
+        std::vector <std::shared_ptr<Star>> mStars;
 
         glm::mat4 projectionMatrix;
 
@@ -78,7 +76,7 @@ namespace odb {
         bool init(float w, float h, const std::string &vertexShader,
                   const std::string &fragmentShader);
 
-        void setTexture(int *bitmapData, int *width, int height, int format, int i);
+        void setTexture(int *bitmapData, int *detailData, int width, int height, int format);
 
         void render();
 

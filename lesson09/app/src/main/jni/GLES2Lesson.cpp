@@ -2,8 +2,6 @@
 // Created by monty on 23/11/15.
 //
 
-
-
 #include <GLES2/gl2.h>
 
 #include "glm/glm.hpp"
@@ -15,9 +13,10 @@
 #include <random>
 #include <android/log.h>
 
+#include "Star.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
-#include "Star.h"
+
 
 namespace odb {
     const std::array<float, 4 * 9> GLES2Lesson::cubeVertices{
@@ -256,7 +255,7 @@ namespace odb {
         glUseProgram(gProgram);
         checkGlError("glUseProgram");
 
-        glUniform1i(samplerUniformPosition, twinkling? 1 : 0 );
+        glUniform1i(samplerUniformPosition, twinkling ? 1 : 0);
 
         glActiveTexture(GL_TEXTURE0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -286,7 +285,8 @@ namespace odb {
         }
     }
 
-    void GLES2Lesson::setTexture(int *bitmapData, int *detailData, int width, int height, int format) {
+    void GLES2Lesson::setTexture(int *bitmapData, int *detailData, int width, int height,
+                                 int format) {
         textureData = bitmapData;
         twinkleData = detailData;
         textureWidth = width;
@@ -347,31 +347,31 @@ namespace odb {
     }
 
     void GLES2Lesson::toggleTwinkling() {
-        LOGI( "Toggling twinkling" );
+        LOGI("Toggling twinkling");
 
         twinkling = !twinkling;
     }
 
     void GLES2Lesson::zoomIn() {
-        LOGI( "Zooming in" );
+        LOGI("Zooming in");
 
         movementDelta -= 0.5f;
     }
 
     void GLES2Lesson::speedUpTwist() {
-        LOGI( "Speeding up twisting" );
+        LOGI("Speeding up twisting");
 
         rotationDelta += 0.5f;
     }
 
     void GLES2Lesson::zoomOut() {
-        LOGI( "Zooming out" );
+        LOGI("Zooming out");
 
         movementDelta += 0.5f;
     }
 
     void GLES2Lesson::speedDownTwist() {
-        LOGI( "Speeding down twisting" );
+        LOGI("Speeding down twisting");
 
         rotationDelta -= 0.5f;
     }
