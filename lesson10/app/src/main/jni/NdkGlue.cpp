@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <stdint.h>
 #include <jni.h>
@@ -25,14 +27,17 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <iterator>
 #include <array>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
-
+#include "Triangle.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
@@ -40,25 +45,72 @@
 
 std::string gVertexShader;
 std::string gFragmentShader;
+std::string worldData;
 odb::GLES2Lesson *gles2Lesson = nullptr;
 int *pixels;
-int *details;
 
 void loadShaders(JNIEnv *env, jobject &obj) {
     AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
     FILE *fd;
     fd = android_fopen("vertex.glsl", "r", asset_manager);
-    gVertexShader = readShaderToString(fd);
+    gVertexShader = readToString(fd);
     fclose(fd);
     fd = android_fopen("fragment.glsl", "r", asset_manager);
-    gFragmentShader = readShaderToString(fd);
+    gFragmentShader = readToString(fd);
     fclose(fd);
+}
+
+
+
+void loadWorld(JNIEnv *env, jobject &obj) {
+    AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
+    FILE *fd;
+    fd = android_fopen("world.txt", "r", asset_manager);
+    worldData = readToString(fd);
+    fclose(fd);
+
+    std::stringstream buffer;
+
+    for (char a : worldData) {
+        std::cout << "character:" << a << std::endl;
+        if (a == '\n') {
+            if (buffer.str()[0] != '/' && buffer.str().length() > 1) {
+
+                //This might seem a little arcane, but makes sense - let me explain:
+                //we created a stream that will contain the data stored into the worldData string
+                //we're initializing the tokens vector by walking the stream up until the end.
+                //but how is the end signaled? The default constructor for a istream_iterator signals a end iterator
+                //thus, we're reading it until the end of the stream. Or so I guess...
+
+                std::vector<std::string> tokens{std::istream_iterator<std::string>(buffer),
+                                                std::istream_iterator<std::string>{}};
+
+                if (tokens[0] != "NUMPOLLIES") {
+                    float x = std::atof(tokens[0].c_str());
+                    float y = std::atof(tokens[1].c_str());
+                    float z = std::atof(tokens[2].c_str());
+                    float u = std::atof(tokens[3].c_str());
+                    float v = std::atof(tokens[4].c_str());
+
+
+                    std::stringstream toCout;
+                    toCout << "f: " << x << ", " << y << ", " << z << ", " << u << ", " << v <<std::endl;
+                    LOGI( toCout.str().c_str() );
+                }
+            }
+            buffer.str("");
+            buffer.clear();
+        } else {
+            buffer << a;
+        }
+    }
 }
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new odb::GLES2Lesson();
-    gles2Lesson->setTexture(pixels, details, 128, 128, 1);
-    pixels = nullptr; //now, it belongs to gles2Lesson.
+    gles2Lesson->setTexture(pixels, 128, 128, 1);
+    pixels = nullptr;
+
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
 
@@ -86,8 +138,7 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onCreate(JNIEnv *env,
                                                                     jobject assetManager);
 
 JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap, jobject detail);
-
+        Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap);
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
 
@@ -99,26 +150,12 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_tick(JNIEnv *env, job
 
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson10_GL2JNILib_reset(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson10_GL2JNILib_toggleTwinkling(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson10_GL2JNILib_zoomIn(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson10_GL2JNILib_speedUpTwist(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson10_GL2JNILib_zoomDown(JNIEnv *env, jclass type);
-
-JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson10_GL2JNILib_speedDownTwist(JNIEnv *env, jclass type);
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
                                                                     jobject assetManager) {
     loadShaders(env, assetManager);
+    loadWorld(env, assetManager );
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_init(JNIEnv *env, jobject obj,
@@ -139,7 +176,7 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onDestroy(JNIEnv *env
 }
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap, jobject detail) {
+Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap) {
 
     void *addr;
     AndroidBitmapInfo info;
@@ -162,62 +199,6 @@ Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
 
     if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
         LOGI("error %d", errorCode);
-    }
-
-
-
-    if ((errorCode = AndroidBitmap_lockPixels(env, detail, &addr)) != 0) {
-        LOGI("error %d", errorCode);
-    }
-
-    if ((errorCode = AndroidBitmap_getInfo(env, detail, &info)) != 0) {
-        LOGI("error %d", errorCode);
-    }
-
-    LOGI("detail info: %d wide, %d tall, %d ints per pixel", info.width, info.height, info.format);
-
-
-    size = info.width * info.height * info.format;
-    details = new int[size];
-    memcpy(details, addr, size * sizeof(int));
-
-    if ((errorCode = AndroidBitmap_unlockPixels(env, detail)) != 0) {
-        LOGI("error %d", errorCode);
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson10_GL2JNILib_toggleTwinkling(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->toggleTwinkling();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson10_GL2JNILib_zoomIn(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->zoomIn();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson10_GL2JNILib_speedUpTwist(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->speedUpTwist();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson10_GL2JNILib_zoomDown(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->zoomOut();
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson10_GL2JNILib_speedDownTwist(JNIEnv *env, jclass type) {
-    if (gles2Lesson != nullptr) {
-        gles2Lesson->speedDownTwist();
     }
 }
 

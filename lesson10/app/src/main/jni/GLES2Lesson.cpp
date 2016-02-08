@@ -1,8 +1,6 @@
 //
-// Created by monty on 23/11/15.
+// Created by monty on 2015/02/06
 //
-
-
 
 #include <GLES2/gl2.h>
 
@@ -15,27 +13,11 @@
 #include <random>
 #include <android/log.h>
 
+#include "Triangle.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
-#include "Star.h"
 
 namespace odb {
-    const std::array<float, 4 * 9> GLES2Lesson::cubeVertices{
-            -1.0f, 1.0f, -3.0f, 0.0f, 0.0f,
-            1.0f, 1.0f, -3.0f, 1.0f, 0.0f,
-            1.0f, -1.0f, -3.0f, 1.0f, 1.0f,
-            -1.0f, -1.0f, -3.0f, 0.0f, 1.0f,
-    };
-
-
-    const std::array<unsigned short, 4> GLES2Lesson::cubeIndices{
-            0, 3, 1,
-            2
-    };
-
-    const int GLES2Lesson::PREFERED_NUMBER_OF_STARS = 50;
-
-
     GLuint uploadTextureData(int *textureData, int width, int height) {
         // Texture object handle
         GLuint textureId = 0;
@@ -174,9 +156,6 @@ namespace odb {
 
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
-        glActiveTexture(GL_TEXTURE1);
-        twinkleId = uploadTextureData(twinkleData, textureWidth, textureHeight);
-        initStars();
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);
@@ -196,7 +175,6 @@ namespace odb {
         projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
         samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
         textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
-        fragmentTintPosition = glGetUniformLocation(gProgram, "uTint");
     }
 
     void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
@@ -228,16 +206,16 @@ namespace odb {
     }
 
     void GLES2Lesson::createVBOs() {
-        glGenBuffers(1, &vboCubeVertexDataIndex);
-        glBindBuffer(GL_ARRAY_BUFFER, vboCubeVertexDataIndex);
-        glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float) * 5, cubeVertices.data(), GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        glGenBuffers(1, &vboCubeVertexIndicesIndex);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLushort), cubeIndices.data(),
-                     GL_STATIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//        glGenBuffers(1, &vboCubeVertexDataIndex);
+//        glBindBuffer(GL_ARRAY_BUFFER, vboCubeVertexDataIndex);
+//        glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float) * 5, cubeVertices.data(), GL_STATIC_DRAW);
+//        glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//        glGenBuffers(1, &vboCubeVertexIndicesIndex);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
+//        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLushort), cubeIndices.data(),
+//                     GL_STATIC_DRAW);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     void GLES2Lesson::clearBuffers() {
@@ -256,16 +234,11 @@ namespace odb {
         glUseProgram(gProgram);
         checkGlError("glUseProgram");
 
-        glUniform1i(samplerUniformPosition, twinkling? 1 : 0 );
+        glUniform1i(samplerUniformPosition, 0);
 
         glActiveTexture(GL_TEXTURE0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        glActiveTexture(GL_TEXTURE1);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
     }
 
     void GLES2Lesson::render() {
@@ -274,48 +247,23 @@ namespace odb {
         setPerspective();
         resetTransformMatrices();
 
-        for (auto &star : mStars) {
-
-            glUniform4fv(fragmentTintPosition, 1, &star->mColor[0]);
-
-            drawGeometry(vboCubeVertexDataIndex,
-                         vboCubeVertexIndicesIndex,
-                         4,
-                         star->mTransform
-            );
-        }
+//        for (auto &trig : mTriangles) {
+//
+//            drawGeometry(vboCubeVertexDataIndex,
+//                         vboCubeVertexIndicesIndex,
+//                         4,
+//                         glm::mat4(1.0f)
+//            );
+//        }
     }
 
-    void GLES2Lesson::setTexture(int *bitmapData, int *detailData, int width, int height, int format) {
+    void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format) {
         textureData = bitmapData;
-        twinkleData = detailData;
         textureWidth = width;
         textureHeight = height;
     }
 
     void GLES2Lesson::tick() {
-
-        movementPosition += movementDelta;
-        rotationPosition += rotationDelta;
-
-        float acc = 0.0f;
-
-        glm::mat4 transform(1.0f);
-
-        for (auto &star: mStars) {
-            acc += 1.0f;
-            transform = glm::mat4(1.0f);
-            transform = glm::rotate(transform, acc * rotationPosition,
-                                    glm::vec3(0.0f, 0.0f, 1.0f));
-            transform = glm::translate(transform,
-                                       glm::vec3(acc, 0.0f,
-                                                 -(movementPosition / PREFERED_NUMBER_OF_STARS) *
-                                                 (PREFERED_NUMBER_OF_STARS - acc)));
-            transform = glm::rotate(transform, acc,
-                                    glm::vec3(0.0f, 0.0f, 1.0f));
-
-            star->mTransform = transform;
-        }
     }
 
     void GLES2Lesson::shutdown() {
@@ -324,55 +272,9 @@ namespace odb {
     }
 
     void GLES2Lesson::reset() {
-        movementPosition = 0.0f;
-        movementDelta = 0.1f;
-        rotationPosition = 0.0f;
-        rotationDelta = 0.1f;
-        twinkling = false;
     }
 
-    void GLES2Lesson::initStars() {
-        std::shared_ptr<Star> star;
-        std::default_random_engine rndEngine;
-        std::normal_distribution<float> distribution(0.0f, 1.0f);
-
-        rndEngine.seed(time(nullptr));
-
-        for (int i = 0; i < PREFERED_NUMBER_OF_STARS; ++i) {
-            mStars.push_back(std::make_shared<Star>(glm::vec3(distribution(rndEngine), 0.0f, -i),
-                                                    glm::vec4(distribution(rndEngine),
-                                                              distribution(rndEngine),
-                                                              distribution(rndEngine), 1.0f)));
-        }
-    }
-
-    void GLES2Lesson::toggleTwinkling() {
-        LOGI( "Toggling twinkling" );
-
-        twinkling = !twinkling;
-    }
-
-    void GLES2Lesson::zoomIn() {
-        LOGI( "Zooming in" );
-
-        movementDelta -= 0.5f;
-    }
-
-    void GLES2Lesson::speedUpTwist() {
-        LOGI( "Speeding up twisting" );
-
-        rotationDelta += 0.5f;
-    }
-
-    void GLES2Lesson::zoomOut() {
-        LOGI( "Zooming out" );
-
-        movementDelta += 0.5f;
-    }
-
-    void GLES2Lesson::speedDownTwist() {
-        LOGI( "Speeding down twisting" );
-
-        rotationDelta -= 0.5f;
+    void GLES2Lesson::addTriangleAt(const glm::vec4 &aP0, const glm::vec4 &aP1, glm::vec4 &aP2) {
+//        mTriangles.emplace_back( &aP0, &aP1, &aP2 );
     }
 }
