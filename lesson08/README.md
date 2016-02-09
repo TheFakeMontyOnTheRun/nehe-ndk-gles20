@@ -6,4 +6,4 @@ Gotta admit that, despite being a easy one, I expected this go smoothier. The fr
 
 This is possibly the last lesson to employ this cube. Next lesson will probably still be based on this, radically changed.
 
-![ ](/screenshot.jpg?raw=true)
+![ ](/screenshot.png?raw=true)
