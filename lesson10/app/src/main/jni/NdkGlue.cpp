@@ -36,8 +36,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <unordered_set>
 
 #include "Triangle.h"
+#include <map>
+#include "Trig.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
@@ -58,52 +61,6 @@ void loadShaders(JNIEnv *env, jobject &obj) {
     fd = android_fopen("fragment.glsl", "r", asset_manager);
     gFragmentShader = readToString(fd);
     fclose(fd);
-}
-
-
-
-void loadWorld(JNIEnv *env, jobject &obj) {
-    AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
-    FILE *fd;
-    fd = android_fopen("world.txt", "r", asset_manager);
-    worldData = readToString(fd);
-    fclose(fd);
-
-    std::stringstream buffer;
-
-    for (char a : worldData) {
-        std::cout << "character:" << a << std::endl;
-        if (a == '\n') {
-            if (buffer.str()[0] != '/' && buffer.str().length() > 1) {
-
-                //This might seem a little arcane, but makes sense - let me explain:
-                //we created a stream that will contain the data stored into the worldData string
-                //we're initializing the tokens vector by walking the stream up until the end.
-                //but how is the end signaled? The default constructor for a istream_iterator signals a end iterator
-                //thus, we're reading it until the end of the stream. Or so I guess...
-
-                std::vector<std::string> tokens{std::istream_iterator<std::string>(buffer),
-                                                std::istream_iterator<std::string>{}};
-
-                if (tokens[0] != "NUMPOLLIES") {
-                    float x = std::atof(tokens[0].c_str());
-                    float y = std::atof(tokens[1].c_str());
-                    float z = std::atof(tokens[2].c_str());
-                    float u = std::atof(tokens[3].c_str());
-                    float v = std::atof(tokens[4].c_str());
-
-
-                    std::stringstream toCout;
-                    toCout << "f: " << x << ", " << y << ", " << z << ", " << u << ", " << v <<std::endl;
-                    LOGI( toCout.str().c_str() );
-                }
-            }
-            buffer.str("");
-            buffer.clear();
-        } else {
-            buffer << a;
-        }
-    }
 }
 
 bool setupGraphics(int w, int h) {
@@ -152,10 +109,94 @@ JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson10_GL2JNILib_reset(JNIEnv *env, jclass type);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
-                                                                    jobject assetManager) {
+glm::vec3 readVertex(std::vector<std::string>::iterator &it) {
+    float x = atof(it->c_str());
+    it++;
+
+    float y = atof(it->c_str());
+    it++;
+
+    float z = atof(it->c_str());
+    it++;
+
+    return glm::vec3(x, y, z);
+}
+
+glm::vec2 readUv(std::vector<std::string>::iterator &it) {
+    float x = atof(it->c_str());
+    it++;
+
+    float y = atof(it->c_str());
+    it++;
+
+    return glm::vec2(x, y);
+}
+
+std::string filterComments(std::string input) {
+    bool reading = true;
+    std::stringstream output;
+
+    for (auto &character : input) {
+
+        if (character == '/') {
+            reading = false;
+        } else if (character == '\n') {
+            reading = true;
+        }
+
+        if (reading) {
+            output << character;
+        }
+    }
+
+    return output.str();
+}
+
+void readWorld(JNIEnv *env, void *reserved,
+               jobject assetManager) {
+
+    AAssetManager *asset_manager = AAssetManager_fromJava(env, assetManager);
+    FILE *fd;
+    fd = android_fopen("world.txt", "r", asset_manager);
+    worldData = readToString(fd);
+    fclose(fd);
+
+    std::stringstream buffer;
+
+    buffer << filterComments(worldData);
+
+    std::vector<std::string> tokenList{std::istream_iterator<std::string>(buffer),
+                                       std::istream_iterator<std::string>{}};
+    auto it = tokenList.begin();
+    auto end = tokenList.end() - 1;
+
+    it++;
+
+    int numPolies = atoi(it->c_str());
+
+    it++;
+
+    while (trigs.size() < numPolies && it != end) {
+        Trig trig;
+
+        trig.p0 = readVertex(it);
+        trig.t0 = readUv(it);
+        trig.p1 = readVertex(it);
+        trig.t1 = readUv(it);
+        trig.p2 = readVertex(it);
+        trig.t2 = readUv(it);
+
+        trigs.push_back(trig);
+
+    }
+
+    LOGI("done loading\n");
+}
+
+void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
+                                                          jobject assetManager) {
     loadShaders(env, assetManager);
-    loadWorld(env, assetManager );
+    readWorld(env, reserved, assetManager);
 }
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_init(JNIEnv *env, jobject obj,
