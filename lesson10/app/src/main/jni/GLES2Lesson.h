@@ -70,6 +70,8 @@ namespace odb {
         void tick();
 
         void reset();
+
+        void addTrigs(std::vector<Trig> vector);
     };
 }
 #endif //LESSON02_GLES2LESSON_H

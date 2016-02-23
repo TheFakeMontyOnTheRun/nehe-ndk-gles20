@@ -276,5 +276,7 @@ namespace odb {
 
     void GLES2Lesson::addTriangleAt(const glm::vec4 &aP0, const glm::vec4 &aP1, glm::vec4 &aP2) {
 //        mTriangles.emplace_back( &aP0, &aP1, &aP2 );
+    void GLES2Lesson::addTrigs(std::vector<Trig> newTrigs) {
+    }
     }
 }

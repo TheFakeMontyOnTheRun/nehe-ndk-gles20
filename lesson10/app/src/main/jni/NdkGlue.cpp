@@ -15,30 +15,21 @@
  */
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "GLES2/gl2.h"
 
-#include <stdint.h>
 #include <jni.h>
 #include <android/bitmap.h>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
 #include <android/log.h>
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
 #include <memory>
-#include <string>
 #include <vector>
 #include <iostream>
-#include <string>
 #include <sstream>
 #include <algorithm>
 #include <iterator>
-#include <array>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <unordered_set>
 
-#include "Triangle.h"
 #include <map>
 #include "Trig.h"
 #include "GLES2Lesson.h"
@@ -49,6 +40,7 @@
 std::string gVertexShader;
 std::string gFragmentShader;
 std::string worldData;
+std::vector<Trig> trigs;
 odb::GLES2Lesson *gles2Lesson = nullptr;
 int *pixels;
 
@@ -67,7 +59,7 @@ bool setupGraphics(int w, int h) {
     gles2Lesson = new odb::GLES2Lesson();
     gles2Lesson->setTexture(pixels, 128, 128, 1);
     pixels = nullptr;
-
+    gles2Lesson->addTrigs(trigs);
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
 
