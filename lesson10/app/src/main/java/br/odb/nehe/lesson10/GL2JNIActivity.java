@@ -48,7 +48,7 @@ public class GL2JNIActivity extends Activity {
 
         Bitmap bitmap = null;
         try {
-            bitmap = BitmapFactory.decodeStream(assets.open("star.png"));
+            bitmap = BitmapFactory.decodeStream(assets.open("mud.png"));
             GL2JNILib.setTexture(bitmap);
         } catch (IOException e) {
         }
