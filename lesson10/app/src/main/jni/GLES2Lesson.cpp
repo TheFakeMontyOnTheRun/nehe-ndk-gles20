@@ -13,7 +13,7 @@
 #include <random>
 #include <android/log.h>
 
-#include "Triangle.h"
+#include "Trig.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
@@ -258,7 +258,7 @@ namespace odb {
 //                         4,
 //                         glm::mat4(1.0f)
 //            );
-//        }
+        glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &glm::mat4(1.0f)[0][0]);
     }
 
     void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format) {
@@ -278,9 +278,9 @@ namespace odb {
     void GLES2Lesson::reset() {
     }
 
-    void GLES2Lesson::addTriangleAt(const glm::vec4 &aP0, const glm::vec4 &aP1, glm::vec4 &aP2) {
-//        mTriangles.emplace_back( &aP0, &aP1, &aP2 );
     void GLES2Lesson::addTrigs(std::vector<Trig> newTrigs) {
+        mTrigs.insert(mTrigs.end(), newTrigs.begin(), newTrigs.end());
     }
+
     }
 }

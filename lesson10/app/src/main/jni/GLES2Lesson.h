@@ -52,11 +52,9 @@ namespace odb {
         int *textureData;
         int textureWidth;
         int textureHeight;
+        std::vector<Trig> mTrigs;
         glm::vec3 camera;
     public:
-
-        void addTriangleAt( const glm::vec4& aP0, const glm::vec4& aP1, glm::vec4& aP2 );
-
         GLES2Lesson();
 
         ~GLES2Lesson();
