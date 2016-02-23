@@ -147,8 +147,7 @@ namespace odb {
         glViewport(0, 0, w, h);
         checkGlError("glViewport");
 
-        projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 1024.0f);
-
+        projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f);
 
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
