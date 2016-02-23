@@ -25,6 +25,8 @@ namespace odb {
 
         GLuint loadShader(GLenum shaderType, const char *pSource);
 
+        void drawTrig(Trig &trig, const glm::mat4 &transform);
+
         glm::mat4 projectionMatrix;
         glm::mat4 viewMatrix;
 
@@ -37,7 +39,6 @@ namespace odb {
         GLuint gProgram;
 
         GLuint textureId;
-
 
         int *textureData;
         int textureWidth;

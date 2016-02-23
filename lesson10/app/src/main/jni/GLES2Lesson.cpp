@@ -207,6 +207,10 @@ namespace odb {
         resetTransformMatrices();
 
         glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &glm::mat4(1.0f)[0][0]);
+
+        for (auto &trig : mTrigs) {
+            drawTrig(trig, glm::mat4(1.0f));
+        }
     }
 
     void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format) {
@@ -230,5 +234,22 @@ namespace odb {
         mTrigs.insert(mTrigs.end(), newTrigs.begin(), newTrigs.end());
     }
 
+    void GLES2Lesson::drawTrig(Trig &trig, const glm::mat4 &transform) {
+        glEnableVertexAttribArray(vertexAttributePosition);
+        glEnableVertexAttribArray(textureCoordinatesAttributePosition);
+
+        checkGlError("enable attribute");
+        glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
+        checkGlError("upload model matrix");
+        glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_TRUE, 0,
+                              trig.getVertexData());
+        checkGlError("upload vertex data");
+        glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,
+                              0, trig.getUVData());
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        checkGlError("draw");
+        glDisableVertexAttribArray(vertexAttributePosition);
+        checkGlError("disable attribute");
+        glDisableVertexAttribArray(textureCoordinatesAttributePosition);
     }
 }
