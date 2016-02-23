@@ -153,8 +153,6 @@ namespace odb {
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
 
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
         glFrontFace(GL_CW);
         glDepthMask(true);
 
