@@ -33,9 +33,11 @@ namespace odb {
         GLuint loadShader(GLenum shaderType, const char *pSource);
 
         glm::mat4 projectionMatrix;
+        glm::mat4 viewMatrix;
 
         GLuint vertexAttributePosition;
         GLuint modelMatrixAttributePosition;
+        GLuint viewMatrixAttributePosition;
         GLuint samplerUniformPosition;
         GLuint textureCoordinatesAttributePosition;
         GLuint projectionMatrixAttributePosition;
@@ -50,6 +52,7 @@ namespace odb {
         int *textureData;
         int textureWidth;
         int textureHeight;
+        glm::vec3 camera;
     public:
 
         void addTriangleAt( const glm::vec4& aP0, const glm::vec4& aP1, glm::vec4& aP2 );

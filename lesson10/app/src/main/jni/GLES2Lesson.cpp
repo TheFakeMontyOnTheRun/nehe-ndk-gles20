@@ -166,12 +166,16 @@ namespace odb {
     }
 
     void GLES2Lesson::resetTransformMatrices() {
+        viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.25f, 0.0f), glm::vec3(0.0f, 0.25f, 1.0f),
+                                 glm::vec3(0.0, 1.0f, 0.0f));
+        glUniformMatrix4fv(viewMatrixAttributePosition, 1, false, &viewMatrix[0][0]);
     }
 
     void GLES2Lesson::fetchShaderLocations() {
 
         vertexAttributePosition = glGetAttribLocation(gProgram, "aPosition");
         modelMatrixAttributePosition = glGetUniformLocation(gProgram, "uModel");
+        viewMatrixAttributePosition = glGetUniformLocation(gProgram, "uView");
         projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
         samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
         textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
