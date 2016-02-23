@@ -62,23 +62,18 @@ public class GL2JNIActivity extends Activity {
 
         switch( keyCode ) {
             case KeyEvent.KEYCODE_T:
-                GL2JNILib.toggleTwinkling();
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_UP:
-                GL2JNILib.zoomIn();
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_RIGHT:
-                GL2JNILib.speedUpTwist();
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                GL2JNILib.zoomDown();
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_LEFT:
-                GL2JNILib.speedDownTwist();
                 return true;
 
             case KeyEvent.KEYCODE_R:

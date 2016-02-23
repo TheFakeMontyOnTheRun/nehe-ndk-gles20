@@ -45,15 +45,5 @@ public class GL2JNILib {
 
     public static native void setTexture(Bitmap bitmap);
 
-    public static native void toggleTwinkling();
-
-    public static native void zoomIn();
-
-    public static native void speedUpTwist();
-
-    public static native void zoomDown();
-
-    public static native void speedDownTwist();
-
     public static native void reset();
 }
