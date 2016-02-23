@@ -45,8 +45,10 @@ namespace odb {
         int textureHeight;
         std::vector<Trig> mTrigs;
         glm::vec3 camera;
+
+
     public:
-        GLES2Lesson();
+        explicit GLES2Lesson();
 
         ~GLES2Lesson();
 
