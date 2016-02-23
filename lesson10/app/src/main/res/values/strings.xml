@@ -23,7 +23,7 @@
 
 <resources>
     <!-- Simple strings. -->
-    <string name="gl2jni_activity">NeHe GLES2 NDK Lesson 9</string>
+    <string name="gl2jni_activity">NeHe GLES2 NDK Lesson 10</string>
 
 </resources>
 
