@@ -8,8 +8,6 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <memory>
 #include <vector>
-#include <string>
-#include <array>
 #include <random>
 #include <android/log.h>
 
@@ -129,7 +127,6 @@ namespace odb {
     }
 
     GLES2Lesson::~GLES2Lesson() {
-        deleteVBOs();
         glDeleteTextures(1, &textureId);
     }
 
@@ -152,7 +149,6 @@ namespace odb {
 
         projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 1024.0f);
 
-        createVBOs();
 
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
@@ -179,47 +175,6 @@ namespace odb {
         projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
         samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
         textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
-    }
-
-    void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
-                                   const glm::mat4 &transform) {
-
-        glBindBuffer(GL_ARRAY_BUFFER, vertexVbo);
-        glEnableVertexAttribArray(vertexAttributePosition);
-        glEnableVertexAttribArray(textureCoordinatesAttributePosition);
-
-        glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
-
-        glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
-        glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,
-                              sizeof(float) * 5, (void *) (sizeof(float) * 3));
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
-        glDrawElements(GL_TRIANGLE_STRIP, vertexCount, GL_UNSIGNED_SHORT, 0);
-
-        glDisableVertexAttribArray(vertexAttributePosition);
-        glDisableVertexAttribArray(textureCoordinatesAttributePosition);
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-
-    void GLES2Lesson::deleteVBOs() {
-        glDeleteBuffers(1, &vboCubeVertexDataIndex);
-        glDeleteBuffers(1, &vboCubeVertexIndicesIndex);
-    }
-
-    void GLES2Lesson::createVBOs() {
-//        glGenBuffers(1, &vboCubeVertexDataIndex);
-//        glBindBuffer(GL_ARRAY_BUFFER, vboCubeVertexDataIndex);
-//        glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float) * 5, cubeVertices.data(), GL_STATIC_DRAW);
-//        glBindBuffer(GL_ARRAY_BUFFER, 0);
-//
-//        glGenBuffers(1, &vboCubeVertexIndicesIndex);
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboCubeVertexIndicesIndex);
-//        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLushort), cubeIndices.data(),
-//                     GL_STATIC_DRAW);
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     void GLES2Lesson::clearBuffers() {
@@ -251,13 +206,6 @@ namespace odb {
         setPerspective();
         resetTransformMatrices();
 
-//        for (auto &trig : mTriangles) {
-//
-//            drawGeometry(vboCubeVertexDataIndex,
-//                         vboCubeVertexIndicesIndex,
-//                         4,
-//                         glm::mat4(1.0f)
-//            );
         glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &glm::mat4(1.0f)[0][0]);
     }
 

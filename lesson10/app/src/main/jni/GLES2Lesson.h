@@ -21,13 +21,6 @@ namespace odb {
 
         void printVerboseDriverInformation();
 
-        void createVBOs();
-
-        void deleteVBOs();
-
-        void drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
-                          const glm::mat4 &transform);
-
         GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
 
         GLuint loadShader(GLenum shaderType, const char *pSource);
@@ -45,9 +38,6 @@ namespace odb {
 
         GLuint textureId;
 
-        //VBO stuff
-        GLuint vboCubeVertexDataIndex;
-        GLuint vboCubeVertexIndicesIndex;
 
         int *textureData;
         int textureWidth;
