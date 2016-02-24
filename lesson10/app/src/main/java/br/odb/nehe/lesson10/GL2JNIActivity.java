@@ -22,6 +22,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.io.IOException;
 
@@ -47,6 +49,14 @@ public class GL2JNIActivity extends Activity {
 
         mView = new GL2JNIView(getApplication());
         setContentView(mView);
+        mView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                GL2JNILib.onTouchNormalized( event.getX() / v.getWidth(), event.getY() / v.getHeight() );
+                return true;
+            }
+        });
     }
 
     @Override

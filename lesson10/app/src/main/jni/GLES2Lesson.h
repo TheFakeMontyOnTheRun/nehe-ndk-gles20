@@ -68,15 +68,17 @@ namespace odb {
 
         void addTrigs(std::vector<Trig> vector);
 
-        void moveForward();
+        void moveForward(float d);
 
-        void moveBackward();
+        void moveBackward(float d);
 
-        void turnRight();
+        void turnRight(float d);
 
-        void turnLeft();
+        void turnLeft(float d);
 
         void updateDirectionVector();
+
+        void onNormalizedTouch(float d, float d1);
     };
 }
 #endif //LESSON02_GLES2LESSON_H

@@ -256,21 +256,21 @@ namespace odb {
         glDisableVertexAttribArray(textureCoordinatesAttributePosition);
     }
 
-    void GLES2Lesson::moveForward() {
-        camera += cameraDirection;
+    void GLES2Lesson::moveForward(float factor) {
+        camera += cameraDirection * factor;
     }
 
-    void GLES2Lesson::moveBackward() {
-        camera -= cameraDirection;
+    void GLES2Lesson::moveBackward(float factor) {
+        camera -= cameraDirection * factor;
     }
 
-    void GLES2Lesson::turnRight() {
-        angleXzInDegress -= 3.0f;
+    void GLES2Lesson::turnRight(float factor) {
+        angleXzInDegress -= factor;
         updateDirectionVector();
     }
 
-    void GLES2Lesson::turnLeft() {
-        angleXzInDegress += 3.0f;
+    void GLES2Lesson::turnLeft(float factor) {
+        angleXzInDegress += factor;
         updateDirectionVector();
     }
 
@@ -279,5 +279,19 @@ namespace odb {
         float angleInRadians = angleXzInDegress * (3.14159f / 180.0f);
 
         cameraDirection = glm::vec3(sin(angleInRadians), 0.0f, cos(angleInRadians));
+    }
+
+    void GLES2Lesson::onNormalizedTouch(float x, float y) {
+        if ( x < 0.25f ) {
+            turnLeft(1.5f);
+        } else if ( x > 0.75f ){
+            turnRight(1.5f);
+        }
+
+        if ( y < 0.25f ) {
+            moveForward(0.1f);
+        } else if ( y > 0.75f ){
+            moveBackward(0.1f);
+        }
     }
 }

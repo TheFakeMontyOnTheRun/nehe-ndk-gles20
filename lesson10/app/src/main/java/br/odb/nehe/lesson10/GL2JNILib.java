@@ -54,4 +54,6 @@ public class GL2JNILib {
     public static native void moveBackward();
 
     public static native void turnLeft();
+
+    public static native void onTouchNormalized(float x, float y);
 }

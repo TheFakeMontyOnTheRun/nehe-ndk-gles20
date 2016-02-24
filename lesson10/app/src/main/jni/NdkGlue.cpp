@@ -112,6 +112,10 @@ JNIEXPORT void JNICALL
 
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson10_GL2JNILib_turnLeft(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson10_GL2JNILib_onTouchNormalized(JNIEnv *env, jclass type, jfloat x,
+                                                              jfloat y);
 }
 
 glm::vec3 readVertex(std::vector<std::string>::iterator &it) {
@@ -258,27 +262,36 @@ Java_br_odb_nehe_lesson10_GL2JNILib_reset(JNIEnv *env, jclass type) {
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_moveForward(JNIEnv *env, jclass type) {
     if (gles2Lesson != nullptr) {
-        gles2Lesson->moveForward();
+        gles2Lesson->moveForward(3.0f);
     }
 }
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_moveBackward(JNIEnv *env, jclass type) {
     if (gles2Lesson != nullptr) {
-        gles2Lesson->moveBackward();
+        gles2Lesson->moveBackward(3.0f);
     }
 }
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_turnRight(JNIEnv *env, jclass type) {
     if (gles2Lesson != nullptr) {
-        gles2Lesson->turnRight();
+        gles2Lesson->turnRight(3.0f);
     }
 }
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_turnLeft(JNIEnv *env, jclass type) {
     if (gles2Lesson != nullptr) {
-        gles2Lesson->turnLeft();
+        gles2Lesson->turnLeft(3.0f);
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_onTouchNormalized(JNIEnv *env, jclass type, jfloat x,
+                                                      jfloat y) {
+
+    if (gles2Lesson != nullptr) {
+        gles2Lesson->onNormalizedTouch( (float)x, (float)y );
     }
 }
