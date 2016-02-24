@@ -156,8 +156,8 @@ namespace odb {
 
         glFrontFace(GL_CW);
         glDepthMask(true);
-        glEnable( GL_DEPTH_TEST );
-        glDepthFunc( GL_LEQUAL );
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
 
         angleXzInDegress = 0.0f;
         updateDirectionVector();

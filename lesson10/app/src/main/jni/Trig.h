@@ -7,8 +7,8 @@
 
 
 class Trig {
-    float* cachedVertexData;
-    float* cachedUVData;
+    float *cachedVertexData;
+    float *cachedUVData;
 public:
     glm::vec3 p0;
     glm::vec2 t0;
@@ -20,7 +20,9 @@ public:
     glm::vec2 t2;
 
     Trig();
+
     const float *getVertexData();
+
     const float *getUVData();
 };
 
