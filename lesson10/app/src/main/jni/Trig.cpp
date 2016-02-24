@@ -7,7 +7,6 @@
 
 Trig::Trig() {
     cachedVertexData = nullptr;
-    cachedIndexData = nullptr;
     cachedUVData = nullptr;
 }
 const float* Trig::getUVData() {
@@ -46,17 +45,4 @@ const float* Trig::getVertexData() {
     }
 
     return cachedVertexData;
-}
-
-const unsigned short *Trig::getIndexData() {
-
-    if ( cachedIndexData == nullptr) {
-        cachedIndexData = new unsigned short[ 3 ];
-
-        for ( auto i : { 0, 1, 2 } ) {
-            cachedIndexData[ i ] = i;
-        }
-    }
-
-    return cachedIndexData;
 }

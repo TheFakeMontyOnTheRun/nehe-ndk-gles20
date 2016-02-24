@@ -9,7 +9,6 @@
 class Trig {
     float* cachedVertexData;
     float* cachedUVData;
-    unsigned short* cachedIndexData;
 public:
     glm::vec3 p0;
     glm::vec2 t0;
@@ -23,7 +22,6 @@ public:
     Trig();
     const float *getVertexData();
     const float *getUVData();
-    const unsigned short *getIndexData();
 };
 
 
