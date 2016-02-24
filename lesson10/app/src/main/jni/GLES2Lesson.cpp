@@ -149,6 +149,8 @@ namespace odb {
 
         projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f);
 
+        camera = glm::vec3(0.0f, 0.25f, 0.0f);
+
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
 
@@ -157,11 +159,13 @@ namespace odb {
         glEnable( GL_DEPTH_TEST );
         glDepthFunc( GL_LEQUAL );
 
+        angleXzInDegress = 0.0f;
+        updateDirectionVector();
         return true;
     }
 
     void GLES2Lesson::resetTransformMatrices() {
-        viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.25f, 0.0f), glm::vec3(0.0f, 0.25f, 1.0f),
+        viewMatrix = glm::lookAt(camera, camera + cameraDirection,
                                  glm::vec3(0.0, 1.0f, 0.0f));
         glUniformMatrix4fv(viewMatrixAttributePosition, 1, false, &viewMatrix[0][0]);
     }
@@ -250,5 +254,30 @@ namespace odb {
         glDisableVertexAttribArray(vertexAttributePosition);
         checkGlError("disable attribute");
         glDisableVertexAttribArray(textureCoordinatesAttributePosition);
+    }
+
+    void GLES2Lesson::moveForward() {
+        camera += cameraDirection;
+    }
+
+    void GLES2Lesson::moveBackward() {
+        camera -= cameraDirection;
+    }
+
+    void GLES2Lesson::turnRight() {
+        angleXzInDegress -= 3.0f;
+        updateDirectionVector();
+    }
+
+    void GLES2Lesson::turnLeft() {
+        angleXzInDegress += 3.0f;
+        updateDirectionVector();
+    }
+
+    void GLES2Lesson::updateDirectionVector() {
+
+        float angleInRadians = angleXzInDegress * (3.14159f / 180.0f);
+
+        cameraDirection = glm::vec3(sin(angleInRadians), 0.0f, cos(angleInRadians));
     }
 }

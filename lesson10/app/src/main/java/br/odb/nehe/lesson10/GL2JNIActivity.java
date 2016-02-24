@@ -65,15 +65,19 @@ public class GL2JNIActivity extends Activity {
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_UP:
+                GL2JNILib.moveForward();
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_RIGHT:
+                GL2JNILib.turnRight();
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_DOWN:
+                GL2JNILib.moveBackward();
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_LEFT:
+                GL2JNILib.turnLeft();
                 return true;
 
             case KeyEvent.KEYCODE_R:

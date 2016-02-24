@@ -46,4 +46,12 @@ public class GL2JNILib {
     public static native void setTexture(Bitmap bitmap);
 
     public static native void reset();
+
+    public static native void moveForward();
+
+    public static native void turnRight();
+
+    public static native void moveBackward();
+
+    public static native void turnLeft();
 }

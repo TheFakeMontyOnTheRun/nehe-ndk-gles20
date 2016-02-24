@@ -99,6 +99,19 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_tick(JNIEnv *env, job
 
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson10_GL2JNILib_reset(JNIEnv *env, jclass type);
+
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson10_GL2JNILib_moveForward(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson10_GL2JNILib_moveBackward(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson10_GL2JNILib_turnRight(JNIEnv *env, jclass type);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson10_GL2JNILib_turnLeft(JNIEnv *env, jclass type);
 }
 
 glm::vec3 readVertex(std::vector<std::string>::iterator &it) {
@@ -239,5 +252,33 @@ JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_reset(JNIEnv *env, jclass type) {
     if (gles2Lesson != nullptr) {
         gles2Lesson->reset();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_moveForward(JNIEnv *env, jclass type) {
+    if (gles2Lesson != nullptr) {
+        gles2Lesson->moveForward();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_moveBackward(JNIEnv *env, jclass type) {
+    if (gles2Lesson != nullptr) {
+        gles2Lesson->moveBackward();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_turnRight(JNIEnv *env, jclass type) {
+    if (gles2Lesson != nullptr) {
+        gles2Lesson->turnRight();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_turnLeft(JNIEnv *env, jclass type) {
+    if (gles2Lesson != nullptr) {
+        gles2Lesson->turnLeft();
     }
 }

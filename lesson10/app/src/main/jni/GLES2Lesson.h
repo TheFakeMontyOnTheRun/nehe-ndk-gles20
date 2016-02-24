@@ -45,7 +45,8 @@ namespace odb {
         int textureHeight;
         std::vector<Trig> mTrigs;
         glm::vec3 camera;
-
+        glm::vec3 cameraDirection;
+        float angleXzInDegress;
 
     public:
         explicit GLES2Lesson();
@@ -66,6 +67,16 @@ namespace odb {
         void reset();
 
         void addTrigs(std::vector<Trig> vector);
+
+        void moveForward();
+
+        void moveBackward();
+
+        void turnRight();
+
+        void turnLeft();
+
+        void updateDirectionVector();
     };
 }
 #endif //LESSON02_GLES2LESSON_H
