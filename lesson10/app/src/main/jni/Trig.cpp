@@ -46,3 +46,8 @@ const float* Trig::getVertexData() {
 
     return cachedVertexData;
 }
+
+Trig::~Trig() {
+    delete cachedUVData;
+    delete cachedVertexData;
+}

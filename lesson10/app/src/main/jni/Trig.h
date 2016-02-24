@@ -24,6 +24,8 @@ public:
     const float *getVertexData();
 
     const float *getUVData();
+
+    virtual ~Trig();
 };
 
 
