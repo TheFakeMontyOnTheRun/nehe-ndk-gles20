@@ -23,7 +23,7 @@ const float* Trig::getUVData() {
         cachedUVData[ 5 ] = t2.y;
     }
 
-    return cachedVertexData;
+    return cachedUVData;
 }
 
 
