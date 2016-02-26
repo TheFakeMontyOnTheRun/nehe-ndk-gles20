@@ -32,6 +32,9 @@ public class GL2JNIActivity extends Activity {
     GL2JNIView mView;
     boolean running = false;
     static AssetManager assets;
+    private float fingerX;
+    private float fingerY;
+    private boolean touching;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -53,8 +56,19 @@ public class GL2JNIActivity extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                GL2JNILib.onTouchNormalized( event.getX() / v.getWidth(), event.getY() / v.getHeight() );
-                return true;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        touching = false;
+                        return true;
+                    case MotionEvent.ACTION_DOWN:
+                        touching = true;
+                    case MotionEvent.ACTION_MOVE:
+                        fingerX = event.getX() / v.getWidth();
+                        fingerY = event.getY() / v.getHeight();
+                        return true;
+                    default:
+                        return false;
+                }
             }
         });
     }
@@ -62,7 +76,7 @@ public class GL2JNIActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        switch( keyCode ) {
+        switch (keyCode) {
             case KeyEvent.KEYCODE_T:
                 return true;
 
@@ -110,6 +124,10 @@ public class GL2JNIActivity extends Activity {
                 while (running) {
                     try {
                         Thread.sleep(20);
+                        if (touching) {
+                            GL2JNILib.onTouchNormalized(fingerX, fingerY);
+                        }
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
