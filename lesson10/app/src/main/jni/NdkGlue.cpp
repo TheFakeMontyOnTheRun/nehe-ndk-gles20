@@ -31,13 +31,14 @@
 #include <unordered_set>
 
 #include <map>
+#include "NativeBitmap.h"
 #include "Trig.h"
 #include "WalkBouncer.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
 #include "android_asset_operations.h"
-#include "NativeBitmap.h"
+
 
 std::string gVertexShader;
 std::string gFragmentShader;
