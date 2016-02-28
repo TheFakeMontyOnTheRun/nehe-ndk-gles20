@@ -59,9 +59,7 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new odb::GLES2Lesson();
-    gles2Lesson->setTexture(texture->getPixelData(), texture->getWidth(), texture->getHeight(), 1);
-    texture->releaseTextureData();
-    delete texture;
+    gles2Lesson->setTexture(texture );
     texture = nullptr;
     gles2Lesson->addTrigs(trigs);
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());

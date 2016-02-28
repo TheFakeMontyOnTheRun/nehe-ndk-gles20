@@ -40,7 +40,7 @@ namespace odb {
         WalkBouncer mBouncer;
         GLuint textureId;
 
-        int *textureData;
+        NativeBitmap *mTexture;
         int textureWidth;
         int textureHeight;
         std::vector<Trig> mTrigs;
@@ -56,7 +56,7 @@ namespace odb {
         bool init(float w, float h, const std::string &vertexShader,
                   const std::string &fragmentShader);
 
-        void setTexture(int *bitmapData, int width, int height, int format);
+        void setTexture(NativeBitmap *texture);
 
         void render();
 

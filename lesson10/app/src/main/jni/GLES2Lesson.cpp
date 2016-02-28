@@ -11,12 +11,13 @@
 #include <random>
 #include <android/log.h>
 #include "WalkBouncer.h"
+#include "NativeBitmap.h"
 #include "Trig.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
 namespace odb {
-    GLuint uploadTextureData(int *textureData, int width, int height) {
+    GLuint uploadTextureData(NativeBitmap *texture) {
         // Texture object handle
         GLuint textureId = 0;
 
@@ -27,8 +28,8 @@ namespace odb {
         glBindTexture(GL_TEXTURE_2D, textureId);
 
         //upload the data
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                     textureData);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->getWidth(), texture->getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                     texture->getPixelData());
 
         return textureId;
     }
@@ -118,7 +119,7 @@ namespace odb {
     GLES2Lesson::GLES2Lesson() {
 //start off as identity - later we will init it with proper values.
         projectionMatrix = glm::mat4(1.0f);
-        textureData = nullptr;
+        mTexture = nullptr;
         vertexAttributePosition = 0;
         modelMatrixAttributePosition = 0;
         projectionMatrixAttributePosition = 0;
@@ -152,7 +153,7 @@ namespace odb {
         camera = glm::vec3(0.0f, 0.25f, 0.0f);
 
         glActiveTexture(GL_TEXTURE0);
-        textureId = uploadTextureData(textureData, textureWidth, textureHeight);
+        textureId = uploadTextureData(mTexture);
 
         glFrontFace(GL_CW);
         glDepthMask(true);
@@ -216,17 +217,15 @@ namespace odb {
         }
     }
 
-    void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format) {
-        textureData = bitmapData;
-        textureWidth = width;
-        textureHeight = height;
+    void GLES2Lesson::setTexture(NativeBitmap *texture) {
+        mTexture = texture;
     }
 
     void GLES2Lesson::tick() {
     }
 
     void GLES2Lesson::shutdown() {
-        delete textureData;
+        delete mTexture;
         LOGI("Shutdown!\n");
     }
 
