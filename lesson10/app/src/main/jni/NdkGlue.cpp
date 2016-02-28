@@ -37,13 +37,14 @@
 #include "NdkGlue.h"
 
 #include "android_asset_operations.h"
+#include "NativeBitmap.h"
 
 std::string gVertexShader;
 std::string gFragmentShader;
 std::string worldData;
 std::vector<Trig> trigs;
 odb::GLES2Lesson *gles2Lesson = nullptr;
-int *pixels;
+NativeBitmap *texture;
 
 void loadShaders(JNIEnv *env, jobject &obj) {
     AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
@@ -58,8 +59,10 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new odb::GLES2Lesson();
-    gles2Lesson->setTexture(pixels, 128, 128, 1);
-    pixels = nullptr;
+    gles2Lesson->setTexture(texture->getPixelData(), texture->getWidth(), texture->getHeight(), 1);
+    texture->releaseTextureData();
+    delete texture;
+    texture = nullptr;
     gles2Lesson->addTrigs(trigs);
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
@@ -245,9 +248,9 @@ Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
 
 
     long size = info.width * info.height * info.format;
-    pixels = new int[size];
+    int *pixels = new int[size];
     memcpy(pixels, addr, size * sizeof(int));
-
+    texture  = new NativeBitmap( 128, 128, pixels );
     if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
         LOGI("error %d", errorCode);
     }
