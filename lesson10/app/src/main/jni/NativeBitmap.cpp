@@ -29,3 +29,18 @@ void NativeBitmap::releaseTextureData() {
 NativeBitmap::~NativeBitmap() {
     delete mRawData;
 }
+
+NativeBitmap *NativeBitmap::makeBitmapWithHalfDimensions() {
+    int *rawData;
+    int newWidth = mWidth / 2;
+    int newHeight = mHeight / 2;
+    rawData = new int[newHeight * newWidth];
+
+    for (int y = 0; y < mHeight; ++y) {
+        for (int x = 0; x < mWidth; ++x) {
+            rawData[(newWidth * (y / 2)) + (x / 2)] = this->mRawData[(mWidth * y) + x];
+        }
+    }
+
+    return new NativeBitmap(newWidth, newHeight, rawData);
+}
