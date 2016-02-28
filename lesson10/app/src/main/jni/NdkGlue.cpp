@@ -266,14 +266,14 @@ Java_br_odb_nehe_lesson10_GL2JNILib_reset(JNIEnv *env, jclass type) {
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_moveForward(JNIEnv *env, jclass type) {
     if (gles2Lesson != nullptr) {
-        gles2Lesson->moveForward(3.0f);
+        gles2Lesson->moveForward(0.5f);
     }
 }
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_moveBackward(JNIEnv *env, jclass type) {
     if (gles2Lesson != nullptr) {
-        gles2Lesson->moveBackward(3.0f);
+        gles2Lesson->moveBackward(0.5f);
     }
 }
 
