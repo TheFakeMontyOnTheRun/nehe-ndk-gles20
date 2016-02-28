@@ -10,7 +10,7 @@
 #include <vector>
 #include <random>
 #include <android/log.h>
-
+#include "WalkBouncer.h"
 #include "Trig.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
@@ -257,11 +257,15 @@ namespace odb {
     }
 
     void GLES2Lesson::moveForward(float factor) {
+        mBouncer.tick(20);
         camera += cameraDirection * factor;
+        camera.y = mBouncer.getCurrentStep();
     }
 
     void GLES2Lesson::moveBackward(float factor) {
+        mBouncer.tick(-20);
         camera -= cameraDirection * factor;
+        camera.y = mBouncer.getCurrentStep();
     }
 
     void GLES2Lesson::turnRight(float factor) {

@@ -37,7 +37,7 @@ namespace odb {
         GLuint textureCoordinatesAttributePosition;
         GLuint projectionMatrixAttributePosition;
         GLuint gProgram;
-
+        WalkBouncer mBouncer;
         GLuint textureId;
 
         int *textureData;

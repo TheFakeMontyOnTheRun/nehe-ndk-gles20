@@ -32,6 +32,7 @@
 
 #include <map>
 #include "Trig.h"
+#include "WalkBouncer.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
