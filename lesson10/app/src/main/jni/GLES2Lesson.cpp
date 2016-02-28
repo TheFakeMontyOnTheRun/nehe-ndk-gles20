@@ -20,15 +20,20 @@ namespace odb {
 
     void buildMipMap(NativeBitmap *pBitmap) {
         NativeBitmap *bitmap = pBitmap;
+        NativeBitmap *old;
         int level = 1;
         while (bitmap->getWidth() > 1) {
-            bitmap = bitmap->makeBitmapWithHalfDimensions();
+            old = bitmap;
+            bitmap = old->makeBitmapWithHalfDimensions();
+            delete old;
             glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, bitmap->getWidth(), bitmap->getHeight(), 0,
                          GL_RGBA, GL_UNSIGNED_BYTE,
                          bitmap->getPixelData());
             ++level;
 
         }
+
+        delete bitmap;
     }
 
     GLuint uploadTextureData(NativeBitmap *texture) {
