@@ -25,7 +25,7 @@ namespace odb {
 
         GLuint loadShader(GLenum shaderType, const char *pSource);
 
-        void drawTrig(Trig &trig, const glm::mat4 &transform);
+        void drawTrig(Trig &trig);
 
         glm::mat4 projectionMatrix;
         glm::mat4 viewMatrix;

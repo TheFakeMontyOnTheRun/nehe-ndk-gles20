@@ -236,7 +236,7 @@ namespace odb {
         glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &glm::mat4(1.0f)[0][0]);
 
         for (auto &trig : mTrigs) {
-            drawTrig(trig, glm::mat4(1.0f));
+            drawTrig(trig);
         }
     }
 
@@ -259,12 +259,10 @@ namespace odb {
         mTrigs.insert(mTrigs.end(), newTrigs.begin(), newTrigs.end());
     }
 
-    void GLES2Lesson::drawTrig(Trig &trig, const glm::mat4 &transform) {
+    void GLES2Lesson::drawTrig(Trig &trig) {
         glEnableVertexAttribArray(vertexAttributePosition);
         glEnableVertexAttribArray(textureCoordinatesAttributePosition);
 
-        checkGlError("enable attribute");
-        glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
         checkGlError("upload model matrix");
         glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_TRUE, 0,
                               trig.getVertexData());
