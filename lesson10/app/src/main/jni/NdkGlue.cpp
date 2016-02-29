@@ -61,7 +61,7 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new odb::GLES2Lesson();
-    gles2Lesson->setTexture(texture );
+    gles2Lesson->setTexture(texture);
     texture = nullptr;
     gles2Lesson->addTrigs(trigs);
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
@@ -250,7 +250,7 @@ Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
     long size = info.width * info.height * info.format;
     int *pixels = new int[size];
     memcpy(pixels, addr, size * sizeof(int));
-    texture  = new NativeBitmap( 128, 128, pixels );
+    texture = new NativeBitmap(128, 128, pixels);
     if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
         LOGI("error %d", errorCode);
     }
@@ -296,6 +296,6 @@ Java_br_odb_nehe_lesson10_GL2JNILib_onTouchNormalized(JNIEnv *env, jclass type, 
                                                       jfloat y) {
 
     if (gles2Lesson != nullptr) {
-        gles2Lesson->onNormalizedTouch( (float)x, (float)y );
+        gles2Lesson->onNormalizedTouch((float) x, (float) y);
     }
 }

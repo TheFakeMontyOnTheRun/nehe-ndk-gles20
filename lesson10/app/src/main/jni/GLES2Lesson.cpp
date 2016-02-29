@@ -298,15 +298,15 @@ namespace odb {
     }
 
     void GLES2Lesson::onNormalizedTouch(float x, float y) {
-        if ( x < 0.25f ) {
+        if (x < 0.25f) {
             turnLeft(1.5f);
-        } else if ( x > 0.75f ){
+        } else if (x > 0.75f) {
             turnRight(1.5f);
         }
 
-        if ( y < 0.25f ) {
+        if (y < 0.25f) {
             moveForward(0.1f);
-        } else if ( y > 0.75f ){
+        } else if (y > 0.75f) {
             moveBackward(0.1f);
         }
     }
