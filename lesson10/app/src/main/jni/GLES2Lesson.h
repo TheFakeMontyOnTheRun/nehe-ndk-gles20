@@ -25,8 +25,6 @@ namespace odb {
 
         GLuint loadShader(GLenum shaderType, const char *pSource);
 
-        void drawTrig(Trig &trig);
-
         glm::mat4 projectionMatrix;
         glm::mat4 viewMatrix;
 
@@ -39,11 +37,8 @@ namespace odb {
         GLuint gProgram;
         WalkBouncer mBouncer;
         GLuint textureId;
-
         NativeBitmap *mTexture;
-        int textureWidth;
-        int textureHeight;
-        std::vector<Trig> mTrigs;
+        TrigBatch *mTrigBatch;
         glm::vec3 camera;
         glm::vec3 cameraDirection;
         float angleXzInDegress;

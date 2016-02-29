@@ -13,6 +13,7 @@
 #include "WalkBouncer.h"
 #include "NativeBitmap.h"
 #include "Trig.h"
+#include "TrigBatch.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
@@ -148,6 +149,7 @@ namespace odb {
         vertexAttributePosition = 0;
         modelMatrixAttributePosition = 0;
         projectionMatrixAttributePosition = 0;
+        mTrigBatch = nullptr;
         gProgram = 0;
         reset();
     }
@@ -234,10 +236,17 @@ namespace odb {
         resetTransformMatrices();
 
         glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &glm::mat4(1.0f)[0][0]);
+        checkGlError("before drawing");
 
-        for (auto &trig : mTrigs) {
-            drawTrig(trig);
+        if (mTrigBatch != nullptr) {
+            glEnableVertexAttribArray(vertexAttributePosition);
+            glEnableVertexAttribArray(textureCoordinatesAttributePosition);
+            mTrigBatch->draw(vertexAttributePosition, textureCoordinatesAttributePosition);
+            glDisableVertexAttribArray(vertexAttributePosition);
+            glDisableVertexAttribArray(textureCoordinatesAttributePosition);
         }
+
+        checkGlError("after drawing");
     }
 
     void GLES2Lesson::setTexture(NativeBitmap *texture) {
@@ -256,24 +265,7 @@ namespace odb {
     }
 
     void GLES2Lesson::addTrigs(std::vector<Trig> newTrigs) {
-        mTrigs.insert(mTrigs.end(), newTrigs.begin(), newTrigs.end());
-    }
-
-    void GLES2Lesson::drawTrig(Trig &trig) {
-        glEnableVertexAttribArray(vertexAttributePosition);
-        glEnableVertexAttribArray(textureCoordinatesAttributePosition);
-
-        checkGlError("upload model matrix");
-        glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_TRUE, 0,
-                              trig.getVertexData());
-        checkGlError("upload vertex data");
-        glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,
-                              0, trig.getUVData());
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        checkGlError("draw");
-        glDisableVertexAttribArray(vertexAttributePosition);
-        checkGlError("disable attribute");
-        glDisableVertexAttribArray(textureCoordinatesAttributePosition);
+        mTrigBatch = new TrigBatch(newTrigs);
     }
 
     void GLES2Lesson::moveForward(float factor) {

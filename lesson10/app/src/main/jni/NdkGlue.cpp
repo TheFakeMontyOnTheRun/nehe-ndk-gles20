@@ -34,6 +34,7 @@
 #include "NativeBitmap.h"
 #include "Trig.h"
 #include "WalkBouncer.h"
+#include "TrigBatch.h"
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
