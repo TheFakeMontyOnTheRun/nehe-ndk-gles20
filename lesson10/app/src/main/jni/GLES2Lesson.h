@@ -37,11 +37,12 @@ namespace odb {
         GLuint gProgram;
         WalkBouncer mBouncer;
         GLuint textureId;
-        NativeBitmap *mTexture;
-        TrigBatch *mTrigBatch;
+        std::map< GLuint, std::shared_ptr<TrigBatch> > mBatches;
         glm::vec3 camera;
         glm::vec3 cameraDirection;
         float angleXzInDegress;
+        std::vector< std::shared_ptr<NativeBitmap> > mTextures;
+        std::vector<int> mMaterials;
 
     public:
         explicit GLES2Lesson();
@@ -51,8 +52,6 @@ namespace odb {
         bool init(float w, float h, const std::string &vertexShader,
                   const std::string &fragmentShader);
 
-        void setTexture(NativeBitmap *texture);
-
         void render();
 
         void shutdown();
@@ -60,8 +59,6 @@ namespace odb {
         void tick();
 
         void reset();
-
-        void addTrigs(std::vector<Trig> vector);
 
         void moveForward(float d);
 
@@ -74,6 +71,10 @@ namespace odb {
         void updateDirectionVector();
 
         void onNormalizedTouch(float d, float d1);
+
+        void addTrigsForTexture(GLuint textureId, const std::vector<Trig>& newTrigs);
+
+        void setTextures(const std::vector<std::shared_ptr<NativeBitmap>>& vector);
     };
 }
 #endif //LESSON02_GLES2LESSON_H

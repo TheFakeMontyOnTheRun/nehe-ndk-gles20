@@ -44,9 +44,9 @@
 std::string gVertexShader;
 std::string gFragmentShader;
 std::string worldData;
-std::vector<Trig> trigs;
+std::map< GLuint, std::vector<Trig> > batches;
 odb::GLES2Lesson *gles2Lesson = nullptr;
-NativeBitmap *texture;
+std::vector< std::shared_ptr<NativeBitmap>> textures;
 
 void loadShaders(JNIEnv *env, jobject &obj) {
     AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
@@ -61,9 +61,11 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new odb::GLES2Lesson();
-    gles2Lesson->setTexture(texture);
-    texture = nullptr;
-    gles2Lesson->addTrigs(trigs);
+    gles2Lesson->setTextures(textures);
+
+    for ( auto& pair : batches ) {
+        gles2Lesson->addTrigsForTexture(pair.first, pair.second);
+    }
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
 
@@ -91,7 +93,7 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onCreate(JNIEnv *env,
                                                                     jobject assetManager);
 
 JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap);
+        Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobjectArray bitmap);
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
 
@@ -188,9 +190,17 @@ void readWorld(JNIEnv *env, void *reserved,
     int numPolies = atoi(it->c_str());
 
     it++;
+    int currentMaterial = 0;
+    int polyCount = 0;
 
-    while (trigs.size() < numPolies && it != end) {
+    while (polyCount < numPolies && it != end) {
         Trig trig;
+
+        if ( *it == "m" ) {
+            ++it;
+            currentMaterial = atoi( it->c_str() );
+            ++it;
+        }
 
         trig.p0 = readVertex(it);
         trig.t0 = readUv(it);
@@ -199,8 +209,8 @@ void readWorld(JNIEnv *env, void *reserved,
         trig.p2 = readVertex(it);
         trig.t2 = readUv(it);
 
-        trigs.push_back(trig);
-
+        batches[ currentMaterial ].push_back(trig);
+        ++polyCount;
     }
 
     LOGI("done loading\n");
@@ -229,8 +239,7 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onDestroy(JNIEnv *env
     shutdown();
 }
 
-JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap) {
+std::shared_ptr<NativeBitmap> makeNativeBitmapFromJObject(JNIEnv *env, jobject bitmap) {
 
     void *addr;
     AndroidBitmapInfo info;
@@ -250,10 +259,13 @@ Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
     long size = info.width * info.height * info.format;
     int *pixels = new int[size];
     memcpy(pixels, addr, size * sizeof(int));
-    texture = new NativeBitmap(128, 128, pixels);
+    auto toReturn = std::make_shared<NativeBitmap>(128, 128, pixels);
+    
     if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
         LOGI("error %d", errorCode);
     }
+    
+    return toReturn;
 }
 
 JNIEXPORT void JNICALL
@@ -297,5 +309,16 @@ Java_br_odb_nehe_lesson10_GL2JNILib_onTouchNormalized(JNIEnv *env, jclass type, 
 
     if (gles2Lesson != nullptr) {
         gles2Lesson->onNormalizedTouch((float) x, (float) y);
+    }
+}
+
+
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobjectArray bitmaps ) {
+
+    int length = env->GetArrayLength( bitmaps );
+    for ( int c = 0; c < length; ++c ) {
+        textures.push_back( makeNativeBitmapFromJObject( env, env->GetObjectArrayElement( bitmaps, c ) ) );
     }
 }

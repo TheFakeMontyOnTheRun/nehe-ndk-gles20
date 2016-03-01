@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 #include <random>
+#include <map>
 #include <android/log.h>
 #include "WalkBouncer.h"
 #include "NativeBitmap.h"
@@ -19,25 +20,22 @@
 
 namespace odb {
 
-    void buildMipMap(NativeBitmap *pBitmap) {
-        NativeBitmap *bitmap = pBitmap;
-        NativeBitmap *old;
+    void buildMipMap(const std::shared_ptr<NativeBitmap> &texture) {
+        auto bitmap = texture;
+        std::shared_ptr<NativeBitmap> old;
         int level = 1;
         while (bitmap->getWidth() > 1) {
             old = bitmap;
             bitmap = old->makeBitmapWithHalfDimensions();
-            delete old;
             glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, bitmap->getWidth(), bitmap->getHeight(), 0,
                          GL_RGBA, GL_UNSIGNED_BYTE,
                          bitmap->getPixelData());
             ++level;
 
         }
-
-        delete bitmap;
     }
 
-    GLuint uploadTextureData(NativeBitmap *texture) {
+    GLuint uploadTextureData(const std::shared_ptr<NativeBitmap> &texture) {
         // Texture object handle
         GLuint textureId = 0;
 
@@ -49,13 +47,13 @@ namespace odb {
 
         //upload the data
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->getWidth(), texture->getHeight(), 0,
                      GL_RGBA, GL_UNSIGNED_BYTE,
                      texture->getPixelData());
 
-        buildMipMap(texture);
+//        buildMipMap(texture);
 
         return textureId;
     }
@@ -145,11 +143,9 @@ namespace odb {
     GLES2Lesson::GLES2Lesson() {
 //start off as identity - later we will init it with proper values.
         projectionMatrix = glm::mat4(1.0f);
-        mTexture = nullptr;
         vertexAttributePosition = 0;
         modelMatrixAttributePosition = 0;
         projectionMatrixAttributePosition = 0;
-        mTrigBatch = nullptr;
         gProgram = 0;
         reset();
     }
@@ -178,9 +174,6 @@ namespace odb {
         projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f);
 
         camera = glm::vec3(0.0f, 0.25f, 0.0f);
-
-        glActiveTexture(GL_TEXTURE0);
-        textureId = uploadTextureData(mTexture);
 
         glFrontFace(GL_CW);
         glDepthMask(true);
@@ -238,34 +231,34 @@ namespace odb {
         glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &glm::mat4(1.0f)[0][0]);
         checkGlError("before drawing");
 
-        if (mTrigBatch != nullptr) {
-            glEnableVertexAttribArray(vertexAttributePosition);
-            glEnableVertexAttribArray(textureCoordinatesAttributePosition);
-            mTrigBatch->draw(vertexAttributePosition, textureCoordinatesAttributePosition);
-            glDisableVertexAttribArray(vertexAttributePosition);
-            glDisableVertexAttribArray(textureCoordinatesAttributePosition);
+
+        glEnableVertexAttribArray(vertexAttributePosition);
+        glEnableVertexAttribArray(textureCoordinatesAttributePosition);
+
+        for (auto &pair  : mBatches) {
+            glBindTexture(GL_TEXTURE_2D, pair.first);
+            pair.second->draw(vertexAttributePosition, textureCoordinatesAttributePosition);
         }
 
-        checkGlError("after drawing");
-    }
+        glDisableVertexAttribArray(vertexAttributePosition);
+        glDisableVertexAttribArray(textureCoordinatesAttributePosition);
 
-    void GLES2Lesson::setTexture(NativeBitmap *texture) {
-        mTexture = texture;
+
+        checkGlError("after drawing");
     }
 
     void GLES2Lesson::tick() {
     }
 
     void GLES2Lesson::shutdown() {
-        delete mTexture;
         LOGI("Shutdown!\n");
     }
 
     void GLES2Lesson::reset() {
     }
 
-    void GLES2Lesson::addTrigs(std::vector<Trig> newTrigs) {
-        mTrigBatch = new TrigBatch(newTrigs);
+    void GLES2Lesson::addTrigsForTexture(GLuint textureId, const std::vector<Trig>& newTrigs) {
+        this->mBatches[ mMaterials[ textureId ] ] = std::make_shared<TrigBatch>(newTrigs);
     }
 
     void GLES2Lesson::moveForward(float factor) {
@@ -308,6 +301,14 @@ namespace odb {
             moveForward(0.1f);
         } else if (y > 0.75f) {
             moveBackward(0.1f);
+        }
+    }
+
+    void GLES2Lesson::setTextures(const std::vector<std::shared_ptr<NativeBitmap>> &vector) {
+        mTextures.insert( mTextures.end(), vector.begin(), vector.end() );
+
+        for (auto& texture : mTextures ) {
+            mMaterials.push_back(uploadTextureData(texture));
         }
     }
 }

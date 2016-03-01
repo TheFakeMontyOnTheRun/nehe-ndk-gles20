@@ -13,7 +13,7 @@ class NativeBitmap {
 
 public:
     NativeBitmap(int aWidth, int aHeight, int *aRawData);
-    NativeBitmap *makeBitmapWithHalfDimensions();
+    std::shared_ptr<NativeBitmap> makeBitmapWithHalfDimensions();
     int getWidth();
 
     int getHeight();

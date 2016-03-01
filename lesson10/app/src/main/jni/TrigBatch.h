@@ -13,7 +13,7 @@ class TrigBatch {
     float *uv;
     int vertexCount;
 public:
-    TrigBatch( std::vector<Trig> triangles );
+    TrigBatch( const std::vector<Trig>& triangles );
     void draw(GLuint vertexAttributePosition, GLuint textureCoordinatesAttributePosition);
 };
 

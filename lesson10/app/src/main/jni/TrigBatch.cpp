@@ -23,7 +23,7 @@ void TrigBatch::draw(GLuint vertexAttributePosition, GLuint textureCoordinatesAt
     glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 }
 
-TrigBatch::TrigBatch(std::vector<Trig> triangles) {
+TrigBatch::TrigBatch(const std::vector<Trig>& triangles) {
     int size = triangles.size();
 
     vertex = new float[3 * 3 * size];

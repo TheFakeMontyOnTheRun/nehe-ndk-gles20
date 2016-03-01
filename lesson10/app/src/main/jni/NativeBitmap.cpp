@@ -1,7 +1,7 @@
 //
 // Created by monty on 28/02/16.
 //
-
+#include <memory>
 #include "NativeBitmap.h"
 
 int NativeBitmap::getWidth() {
@@ -30,7 +30,7 @@ NativeBitmap::~NativeBitmap() {
     delete mRawData;
 }
 
-NativeBitmap *NativeBitmap::makeBitmapWithHalfDimensions() {
+std::shared_ptr<NativeBitmap> NativeBitmap::makeBitmapWithHalfDimensions() {
     int *rawData;
     int newWidth = mWidth / 2;
     int newHeight = mHeight / 2;
@@ -42,5 +42,5 @@ NativeBitmap *NativeBitmap::makeBitmapWithHalfDimensions() {
         }
     }
 
-    return new NativeBitmap(newWidth, newHeight, rawData);
+    return std::make_shared<NativeBitmap>(newWidth, newHeight, rawData);
 }
