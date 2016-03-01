@@ -30,6 +30,7 @@ TrigBatch::TrigBatch(const std::vector<Trig>& triangles) {
     uv = new float[3 * 2 * size];
     int vertexIndex = 0;
     int uvIndex = 0;
+    vertexCount = 0;
     for (auto &trig : triangles) {
         vertex[vertexIndex++] = trig.p0.x;
         vertex[vertexIndex++] = trig.p0.y;
