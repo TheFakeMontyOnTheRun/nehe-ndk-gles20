@@ -124,24 +124,29 @@ JNIEXPORT void JNICALL
                                                               jfloat y);
 }
 
+float toFloat(const char *nptr)
+{
+    return (strtod(nptr, NULL));
+}
+
 glm::vec3 readVertex(std::vector<std::string>::iterator &it) {
-    float x = atof(it->c_str());
+    float x = toFloat(it->c_str());
     it++;
 
-    float y = atof(it->c_str());
+    float y = toFloat(it->c_str());
     it++;
 
-    float z = atof(it->c_str());
+    float z = toFloat(it->c_str());
     it++;
 
     return glm::vec3(x, y, z);
 }
 
 glm::vec2 readUv(std::vector<std::string>::iterator &it) {
-    float x = atof(it->c_str());
+    float x = toFloat(it->c_str());
     it++;
 
-    float y = atof(it->c_str());
+    float y = toFloat(it->c_str());
     it++;
 
     return glm::vec2(x, y);
