@@ -24,6 +24,7 @@ model {
         stl = "stlport_static"
 
         cppFlags  += "-I${file("./../../common_includes")}".toString()
+        cppFlags  += "-I${file("./../../common_includes/glm_0946") }".toString()
     }
 
     android.buildTypes {
