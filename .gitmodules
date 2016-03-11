@@ -1,0 +1,4 @@
+[submodule "common_includes/glm_0946"]
+	path = common_includes/glm_0946
+	url = https://github.com/g-truc/glm.git
+	branch = 15b19a10be774975aee34c1cb277178999261e5f
