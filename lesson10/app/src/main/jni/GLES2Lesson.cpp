@@ -3,7 +3,7 @@
 //
 
 #include <GLES2/gl2.h>
-
+#include <glm/gtc/type_ptr.hpp>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include <memory>
@@ -48,6 +48,10 @@ namespace odb {
         //upload the data
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->getWidth(), texture->getHeight(), 0,
                      GL_RGBA, GL_UNSIGNED_BYTE,
@@ -186,8 +190,8 @@ namespace odb {
     }
 
     void GLES2Lesson::resetTransformMatrices() {
-        viewMatrix = glm::lookAt(camera, camera + cameraDirection,
-                                 glm::vec3(0.0, 1.0f, 0.0f));
+//        viewMatrix = glm::lookAt(camera, camera + cameraDirection,
+//                                 glm::vec3(0.0, 1.0f, 0.0f));
         glUniformMatrix4fv(viewMatrixAttributePosition, 1, false, &viewMatrix[0][0]);
     }
 
@@ -310,5 +314,15 @@ namespace odb {
         for (auto& texture : mTextures ) {
             mMaterials.push_back(uploadTextureData(texture));
         }
+    }
+
+    void GLES2Lesson::setLookAtMatrix(float *lookAt) {
+        viewMatrix = glm::make_mat4( lookAt );
+        viewMatrix = glm::translate( viewMatrix, -camera );
+    }
+
+    void GLES2Lesson::setXZAngleInDegrees(float xz) {
+        angleXzInDegress = xz;
+	    updateDirectionVector();
     }
 }

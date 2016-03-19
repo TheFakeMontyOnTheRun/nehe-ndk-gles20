@@ -75,6 +75,10 @@ namespace odb {
         void addTrigsForTexture(GLuint textureId, const std::vector<Trig>& newTrigs);
 
         void setTextures(const std::vector<std::shared_ptr<NativeBitmap>>& vector);
+
+        void setLookAtMatrix(float *pDouble);
+
+        void setXZAngleInDegrees(float d);
     };
 }
 #endif //LESSON02_GLES2LESSON_H

@@ -56,4 +56,8 @@ public class GL2JNILib {
     public static native void turnLeft();
 
     public static native void onTouchNormalized(float x, float y);
+
+    public static native void setLookAtMatrix(float[] lookAt);
+
+    public static native void setXZAngle(float xz);
 }

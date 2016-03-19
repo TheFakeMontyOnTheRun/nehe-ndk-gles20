@@ -1,7 +1,6 @@
 //
 // Created by monty on 21/02/16.
 //
-#include <algorithm>
 #include <glm/glm.hpp>
 #include "Trig.h"
 

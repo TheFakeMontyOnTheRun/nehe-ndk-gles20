@@ -122,6 +122,12 @@ JNIEXPORT void JNICALL
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson10_GL2JNILib_onTouchNormalized(JNIEnv *env, jclass type, jfloat x,
                                                               jfloat y);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson10_GL2JNILib_setLookAtMatrix(JNIEnv *env, jclass type, jfloatArray lookAt_);
+
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson10_GL2JNILib_setXZAngle(JNIEnv *env, jclass type, jfloat xz);
 }
 
 float toFloat(const char *nptr)
@@ -326,4 +332,23 @@ Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject
     for ( int c = 0; c < length; ++c ) {
         textures.push_back( makeNativeBitmapFromJObject( env, env->GetObjectArrayElement( bitmaps, c ) ) );
     }
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_setLookAtMatrix(JNIEnv *env, jclass type, jfloatArray lookAt_) {
+    jfloat *lookAt = env->GetFloatArrayElements(lookAt_, NULL);
+
+    if (gles2Lesson != nullptr) {
+        gles2Lesson->setLookAtMatrix(lookAt);
+    }
+
+    env->ReleaseFloatArrayElements(lookAt_, lookAt, 0);
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_setXZAngle(JNIEnv *env, jclass type, jfloat xz) {
+
+	if (gles2Lesson != nullptr) {
+		gles2Lesson->setXZAngleInDegrees(xz);
+	}
 }

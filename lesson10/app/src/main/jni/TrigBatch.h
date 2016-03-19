@@ -5,9 +5,6 @@
 #ifndef LESSON10_TRIGBATCH_H
 #define LESSON10_TRIGBATCH_H
 
-
-#include <bits/stl_bvector.h>
-
 class TrigBatch {
     float *vertex;
     float *uv;

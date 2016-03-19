@@ -25,9 +25,11 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.google.vrtoolkit.cardboard.CardboardActivity;
+
 import java.io.IOException;
 
-public class GL2JNIActivity extends Activity {
+public class GL2JNIActivity extends CardboardActivity {
 
     GL2JNIView mView;
     boolean running = false;
@@ -53,7 +55,7 @@ public class GL2JNIActivity extends Activity {
         } catch (IOException e) {
         }
 
-        mView = new GL2JNIView(getApplication());
+        mView = new GL2JNIView(this);
         setContentView(mView);
         mView.setOnTouchListener(new View.OnTouchListener() {
             @Override
