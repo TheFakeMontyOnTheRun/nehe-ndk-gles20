@@ -82,7 +82,7 @@ namespace odb {
 
     const glm::vec4 GLES2Lesson::ambientLightOffColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
-    GLuint uploadTextureData(int *textureData, int width, int height) {
+    GLuint uploadTextureData(int *pixels, int width, int height) {
         // Texture object handle
         GLuint textureId = 0;
 
@@ -94,7 +94,7 @@ namespace odb {
 
         //upload the data
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                     textureData);
+                     pixels);
 
         return textureId;
     }
@@ -201,6 +201,7 @@ namespace odb {
     GLES2Lesson::~GLES2Lesson() {
         deleteVBOs();
         glDeleteTextures(1, &textureId);
+	    glDeleteTextures(1, &normalMapId);
     }
 
     bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
@@ -226,6 +227,8 @@ namespace odb {
 
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
+	    glActiveTexture(GL_TEXTURE1);
+	    normalMapId = uploadTextureData(normals, textureWidth, textureHeight);
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
@@ -326,9 +329,7 @@ namespace odb {
         glUniform4fv(diffuseLightDirectionShaderLocation, 1, &diffuseLightDirection[0]);
         glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
 
-        glUniform1i(samplerUniformPosition, 0);
-
-        glActiveTexture(GL_TEXTURE0);
+        glUniform1i(samplerUniformPosition, 1);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
     }
@@ -346,8 +347,9 @@ namespace odb {
         );
     }
 
-    void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format) {
+    void GLES2Lesson::setTexture(int *bitmapData, int *normalData, int width, int height, int format) {
         textureData = bitmapData;
+        normals = normalData;
         textureWidth = width;
         textureHeight = height;
     }

@@ -47,10 +47,8 @@ public class GL2JNIActivity extends Activity {
         assets = getAssets();
         GL2JNILib.onCreate(assets);
 
-        Bitmap bitmap = null;
         try {
-            bitmap = BitmapFactory.decodeStream(assets.open("crate0.png"));
-            GL2JNILib.setTexture(bitmap);
+            GL2JNILib.setTextures( BitmapFactory.decodeStream(assets.open("crate0.png")), BitmapFactory.decodeStream(assets.open("normal0.png")) );
         } catch (IOException e) {
         }
 

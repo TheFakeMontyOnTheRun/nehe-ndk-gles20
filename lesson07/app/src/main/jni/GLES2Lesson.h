@@ -51,12 +51,13 @@ namespace odb {
         GLuint gProgram;
 
         GLuint textureId;
-
+	    GLuint normalMapId;
         //VBO stuff
         GLuint vboCubeVertexDataIndex;
         GLuint vboCubeVertexIndicesIndex;
 
         int *textureData;
+        int *normals;
         int textureWidth;
         int textureHeight;
         GLuint currentFilter;
@@ -81,7 +82,7 @@ namespace odb {
         bool init(float w, float h, const std::string &vertexShader,
                   const std::string &fragmentShader);
 
-        void setTexture(int *bitmapData, int width, int height, int format);
+        void setTexture(int *bitmapData, int *normalData, int width, int height, int format);
 
         void render();
 

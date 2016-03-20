@@ -40,7 +40,8 @@
 std::string gVertexShader;
 std::string gFragmentShader;
 odb::GLES2Lesson *gles2Lesson = nullptr;
-int *pixels;
+int *texturePixels;
+int *normals;
 
 void loadShaders(JNIEnv *env, jobject &obj) {
     AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
@@ -55,8 +56,9 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new odb::GLES2Lesson();
-    gles2Lesson->setTexture(pixels, 128, 128, 1);
-    pixels = nullptr; //now, it belongs to gles2Lesson.
+    gles2Lesson->setTexture( texturePixels, normals, 128, 128, 1);
+	texturePixels = nullptr; //now, it belongs to gles2Lesson.
+	normals = nullptr;
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
 
@@ -84,8 +86,8 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_onCreate(JNIEnv *env,
                                                                     jobject assetManager);
 
 JNIEXPORT void JNICALL
-        Java_br_odb_nehe_lesson07_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap);
-
+        Java_br_odb_nehe_lesson07_GL2JNILib_setTextures(JNIEnv *env, jclass type, jobject texture,
+                                                        jobject normalMap);
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
 
@@ -145,30 +147,52 @@ JNIEXPORT void JNICALL Java_br_odb_nehe_lesson07_GL2JNILib_onDestroy(JNIEnv *env
 }
 
 JNIEXPORT void JNICALL
-Java_br_odb_nehe_lesson07_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap) {
+        Java_br_odb_nehe_lesson07_GL2JNILib_setTextures(JNIEnv *env, jclass type, jobject texture,
+                                                        jobject normalMap) {
 
     void *addr;
     AndroidBitmapInfo info;
     int errorCode;
+	long size;
 
-    if ((errorCode = AndroidBitmap_lockPixels(env, bitmap, &addr)) != 0) {
+    if ((errorCode = AndroidBitmap_lockPixels(env, texture, &addr)) != 0) {
         LOGI("error %d", errorCode);
     }
 
-    if ((errorCode = AndroidBitmap_getInfo(env, bitmap, &info)) != 0) {
+    if ((errorCode = AndroidBitmap_getInfo(env, texture, &info)) != 0) {
         LOGI("error %d", errorCode);
     }
 
     LOGI("bitmap info: %d wide, %d tall, %d ints per pixel", info.width, info.height, info.format);
 
 
-    long size = info.width * info.height * info.format;
-    pixels = new int[size];
-    memcpy(pixels, addr, size * sizeof(int));
+    size = info.width * info.height * info.format;
+    texturePixels = new int[size];
+    memcpy(texturePixels, addr, size * sizeof(int));
 
-    if ((errorCode = AndroidBitmap_unlockPixels(env, bitmap)) != 0) {
+    if ((errorCode = AndroidBitmap_unlockPixels(env, texture)) != 0) {
         LOGI("error %d", errorCode);
     }
+	////////
+
+	if ((errorCode = AndroidBitmap_lockPixels(env, normalMap, &addr)) != 0) {
+		LOGI("error %d", errorCode);
+	}
+
+	if ((errorCode = AndroidBitmap_getInfo(env, normalMap, &info)) != 0) {
+		LOGI("error %d", errorCode);
+	}
+
+	LOGI("bitmap info: %d wide, %d tall, %d ints per pixel", info.width, info.height, info.format);
+
+
+	size = info.width * info.height * info.format;
+	normals = new int[size];
+	memcpy(normals, addr, size * sizeof(int));
+
+	if ((errorCode = AndroidBitmap_unlockPixels(env, normalMap)) != 0) {
+		LOGI("error %d", errorCode);
+	}
 }
 
 JNIEXPORT void JNICALL

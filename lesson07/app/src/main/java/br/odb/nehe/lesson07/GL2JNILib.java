@@ -43,8 +43,6 @@ public class GL2JNILib {
 
     public static native void onCreate(AssetManager assetManager);
 
-    public static native void setTexture(Bitmap bitmap);
-
     public static native void toggleFiltering();
 
     public static native void toggleLightningMode();
@@ -60,4 +58,6 @@ public class GL2JNILib {
     public static native void reset();
 
     public static native void dragTo(float x, float y);
+
+    public static native void setTextures(Bitmap texture, Bitmap normalMap);
 }
