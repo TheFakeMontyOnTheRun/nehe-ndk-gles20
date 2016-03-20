@@ -44,6 +44,7 @@ namespace odb {
         GLuint vertexAttributePosition;
         GLuint modelMatrixAttributePosition;
         GLuint samplerUniformPosition;
+	    GLuint normalMapUniformPosition;
         GLuint textureCoordinatesAttributePosition;
         GLuint projectionMatrixAttributePosition;
         GLuint normalAttributePosition;

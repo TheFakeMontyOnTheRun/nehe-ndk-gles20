@@ -254,6 +254,7 @@ namespace odb {
         modelMatrixAttributePosition = glGetUniformLocation(gProgram, "uModel");
         projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
         samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
+	    normalMapUniformPosition = glGetUniformLocation(gProgram, "sNormalMap");
         textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
 
         ambientLightColorShaderLocation = glGetUniformLocation(gProgram, "uAmbientLightColor");
@@ -329,7 +330,13 @@ namespace odb {
         glUniform4fv(diffuseLightDirectionShaderLocation, 1, &diffuseLightDirection[0]);
         glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
 
-        glUniform1i(samplerUniformPosition, 1);
+	    glUniform1i(samplerUniformPosition, 0);
+	    glActiveTexture( GL_TEXTURE0 );
+	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
+	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
+
+        glUniform1i(normalMapUniformPosition, 1);
+	    glActiveTexture( GL_TEXTURE1 );
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
     }
