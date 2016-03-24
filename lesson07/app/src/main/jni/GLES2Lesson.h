@@ -48,7 +48,7 @@ namespace odb {
         GLuint textureCoordinatesAttributePosition;
         GLuint projectionMatrixAttributePosition;
         GLuint normalAttributePosition;
-
+        GLuint normalMatrixPosition;
         GLuint gProgram;
 
         GLuint textureId;
@@ -64,6 +64,8 @@ namespace odb {
         GLuint currentFilter;
         float cubeRotationAngleYZ;
         float cubeRotationAngleXZ;
+
+        glm::mat4 normalMatrix;
 
         glm::vec4 diffuseLightDirection;
         glm::vec4 diffuseLightColor;

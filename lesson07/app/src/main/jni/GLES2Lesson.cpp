@@ -78,7 +78,7 @@ namespace odb {
     };
 
 
-    const glm::vec4 GLES2Lesson::ambientLightFullColor = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+    const glm::vec4 GLES2Lesson::ambientLightFullColor = glm::vec4(0.15f, 0.15f, 0.15f, 1.0f);
 
     const glm::vec4 GLES2Lesson::ambientLightOffColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -262,6 +262,8 @@ namespace odb {
         diffuseLightDirectionShaderLocation = glGetUniformLocation(gProgram,
                                                                    "uDiffuseLightDirection");
         normalAttributePosition = glGetAttribLocation(gProgram, "aVertexNormal");
+
+	    normalMatrixPosition = glGetUniformLocation( gProgram, "uNormalMatrix" );
     }
 
     void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
@@ -329,6 +331,10 @@ namespace odb {
         glUniform4fv(diffuseLightColorShaderLocation, 1, &diffuseLightColor[0]);
         glUniform4fv(diffuseLightDirectionShaderLocation, 1, &diffuseLightDirection[0]);
         glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
+
+	    normalMatrix = glm::inverse( projectionMatrix * cubeTransformMatrix );
+
+	    glUniformMatrix4fv( normalMatrixPosition, 1, false, &normalMatrix[0][0]);
 
 	    glUniform1i(samplerUniformPosition, 0);
 	    glActiveTexture( GL_TEXTURE0 );
