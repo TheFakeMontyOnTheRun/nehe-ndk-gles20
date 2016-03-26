@@ -27,38 +27,38 @@ namespace odb {
 //  |  /    |  /
 //  | /     | /
 // 3|/______|/2
-//x, y, z, u, v, nx, ny, nz, nw
+//x, y, z, u, v, nx, ny, nz, nw, tangent1, tangent2
 
             //FLOOR
-            1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f,  //6 - 0
-            -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f,  //7 - 1
-            1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,  //2 - 2
-            -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, //3 - 3
+            1.0f, -1.0f, -1.0f, 1.0f,  1.0f, 1.0f,    0.0f, -1.0f, 0.0f,  0.0, 0.0, 1.0,   //6 - 0
+            -1.0f, -1.0f, -1.0f, 1.0f,  0.0f, 1.0f,   0.0f, -1.0f, 0.0f,  0.0, 0.0, 1.0, //7 - 1
+            1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f,      0.0f, -1.0f, 0.0f,  0.0, 0.0, 1.0, //2 - 2
+            -1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f,     0.0f, -1.0f, 0.0f,  0.0, 0.0, 1.0, //3 - 3
             //CEILING
-            -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,  //0 - 4
-            1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,   //1 - 5
-            -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //4 - 6
-            1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //5 - 7
+            -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,      0.0f, 1.0f, 0.0f,  0.0, 0.0, 1.0, //0 - 4
+            1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,       0.0f, 1.0f, 0.0f,  0.0, 0.0, 1.0, //1 - 5
+            -1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f,     0.0f, 1.0f, 0.0f,  0.0, 0.0, 1.0,//4 - 6
+            1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 0.0f,      0.0f, 1.0f, 0.0f,  0.0, 0.0, 1.0,//5 - 7
             //SOUTH
-            -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //0 - 8
-            1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,   //1 - 9
-            1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //2 - 10
-            -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, //3 - 11
+            -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,      0.0f, 0.0f, 1.0f,   1.0, 0.0, 0.0,  //0 - 8
+            1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,       0.0f, 0.0f, 1.0f,   1.0, 0.0, 0.0,   //1 - 9
+            1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f,      0.0f, 0.0f, 1.0f,   1.0, 0.0, 0.0,  //2 - 10
+            -1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f,     0.0f, 0.0f, 1.0f,   1.0, 0.0, 0.0, //3 - 11
             //NORTH
-            -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, //4 - 12
-            1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, //5 - 13
-            1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,  //6 - 14
-            -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,  //7 -15
+            -1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f,     0.0f, 0.0f, -1.0f,  1.0, 0.0, 0.0,//4 - 12
+            1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 0.0f,      0.0f, 0.0f, -1.0f,  1.0, 0.0, 0.0,//5 - 13
+            1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, -1.0f,  1.0, 0.0, 0.0,//6 - 14
+            -1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 1.0f,    0.0f, 0.0f, -1.0f,  1.0, 0.0, 0.0,//7 -15
             //EAST
-            1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,   //1 - 16
-            1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  //2 - 17
-            1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, //5 - 18
-            1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  //6 - 19
+            1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,        1.0f, 0.0f, 0.0f,  0.0, 1.0, 0.0, //1 - 16
+            1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f,       1.0f, 0.0f, 0.0f,  0.0, 1.0, 0.0, //2 - 17
+            1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f,       1.0f, 0.0f, 0.0f,  0.0, 1.0, 0.0,  //5 - 18
+            1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 0.0f,      1.0f, 0.0f, 0.0f,  0.0, 1.0, 0.0, //6 - 19
             //WEST
-            -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f,  //0 - 20
-            -1.0f, -1.0f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, //3 - 21
-            -1.0f, 1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, //4 - 22
-            -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f  //7 - 23
+            -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,      1.0f, 0.0f, 0.0f,  0.0, -1.0, 0.0,//0 - 20
+            -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f,     1.0f, 0.0f, 0.0f,  0.0, -1.0, 0.0,//3 - 21
+            -1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f,     1.0f, 0.0f, 0.0f,  0.0, -1.0, 0.0,//4 - 22
+            -1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f,    1.0f, 0.0f, 0.0f,  0.0, -1.0, 0.0//7 - 23
     };
 
 
@@ -237,15 +237,14 @@ namespace odb {
         return true;
     }
 
-    void GLES2Lesson::resetTransformMatrices() {
+    glm::mat4 GLES2Lesson::resetTransformMatrices( glm::vec3 translate ) {
         glm::mat4 identity = glm::mat4(1.0f);
-        glm::vec3 translate = glm::vec3(0.0f, 0.0f, -6.0f);
         glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
         glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
         glm::mat4 translated = glm::translate(identity, translate);
         glm::mat4 rotatedAroundXAxis = glm::rotate(translated, cubeRotationAngleYZ, xAxis);
         glm::mat4 rotatedAroundYAxis = glm::rotate(rotatedAroundXAxis, cubeRotationAngleXZ, yAxis);
-        cubeTransformMatrix = rotatedAroundYAxis;
+        return rotatedAroundYAxis;
     }
 
     void GLES2Lesson::fetchShaderLocations() {
@@ -263,7 +262,8 @@ namespace odb {
                                                                    "uDiffuseLightDirection");
         normalAttributePosition = glGetAttribLocation(gProgram, "aVertexNormal");
 
-	    normalMatrixPosition = glGetUniformLocation( gProgram, "uNormalMatrix" );
+	    checkGlError("all other positions");
+	    texelAxisXAttributePosition = glGetAttribLocation( gProgram, "axisX" );
     }
 
     void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
@@ -273,20 +273,23 @@ namespace odb {
         glEnableVertexAttribArray(vertexAttributePosition);
         glEnableVertexAttribArray(textureCoordinatesAttributePosition);
         glEnableVertexAttribArray(normalAttributePosition);
+        glEnableVertexAttribArray(texelAxisXAttributePosition);
+
 
         glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
 
         glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
 
-        glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9, 0);
-        glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,
-                              sizeof(float) * 9, (void *) (sizeof(float) * 3));
-        glVertexAttribPointer(normalAttributePosition, 4, GL_FLOAT, GL_TRUE,
-                              sizeof(float) * 9, (void *) (sizeof(float) * 5));
+        glVertexAttribPointer(vertexAttributePosition,             4, GL_FLOAT, GL_FALSE, sizeof(float) * 12, (void *) (sizeof(float) *  0));
+        glVertexAttribPointer(textureCoordinatesAttributePosition, 2, GL_FLOAT, GL_TRUE,  sizeof(float) * 12, (void *) (sizeof(float) *  4));
+        glVertexAttribPointer(normalAttributePosition,             3, GL_FLOAT, GL_TRUE,  sizeof(float) * 12, (void *) (sizeof(float) *  6));
+	    glVertexAttribPointer(texelAxisXAttributePosition,         3, GL_FLOAT, GL_FALSE, sizeof(float) * 12, (void *) (sizeof(float) *  9));
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
+
+	    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
         glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_SHORT, 0);
 
+        glDisableVertexAttribArray(texelAxisXAttributePosition);
         glDisableVertexAttribArray(vertexAttributePosition);
         glDisableVertexAttribArray(textureCoordinatesAttributePosition);
         glDisableVertexAttribArray(normalAttributePosition);
@@ -303,7 +306,7 @@ namespace odb {
     void GLES2Lesson::createVBOs() {
         glGenBuffers(1, &vboCubeVertexDataIndex);
         glBindBuffer(GL_ARRAY_BUFFER, vboCubeVertexDataIndex);
-        glBufferData(GL_ARRAY_BUFFER, 4 * 6 * sizeof(float) * 9, cubeVertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, 4 * 6 * sizeof(float) * 12, cubeVertices, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glGenBuffers(1, &vboCubeVertexIndicesIndex);
@@ -332,10 +335,6 @@ namespace odb {
         glUniform4fv(diffuseLightDirectionShaderLocation, 1, &diffuseLightDirection[0]);
         glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
 
-	    normalMatrix = glm::inverse( projectionMatrix * cubeTransformMatrix );
-
-	    glUniformMatrix4fv( normalMatrixPosition, 1, false, &normalMatrix[0][0]);
-
 	    glUniform1i(samplerUniformPosition, 0);
 	    glActiveTexture( GL_TEXTURE0 );
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
@@ -351,13 +350,39 @@ namespace odb {
         clearBuffers();
         prepareShaderProgram();
         setPerspective();
-        resetTransformMatrices();
 
         drawGeometry(vboCubeVertexDataIndex,
                      vboCubeVertexIndicesIndex,
                      36,
-                     cubeTransformMatrix
+                     resetTransformMatrices( glm::vec3( 2.0f, 0.0f, -6.0f ) )
         );
+
+
+        drawGeometry(vboCubeVertexDataIndex,
+                     vboCubeVertexIndicesIndex,
+                     36,
+                     glm::translate( glm::mat4( 1.0f ), glm::vec3( -2.0f, -2.0f, -10.0f ) )//cubeTransformMatrix
+        );
+
+	    drawGeometry(vboCubeVertexDataIndex,
+	                 vboCubeVertexIndicesIndex,
+	                 36,
+	                 glm::translate( glm::mat4( 1.0f ), glm::vec3( 2.0f, -2.0f, -10.0f ) )//cubeTransformMatrix
+	    );
+
+
+        drawGeometry(vboCubeVertexDataIndex,
+                     vboCubeVertexIndicesIndex,
+                     36,
+                     glm::translate( glm::mat4( 1.0f ), glm::vec3( 2.0f, -2.0f, -4.0f ) )//cubeTransformMatrix
+        );
+
+        drawGeometry(vboCubeVertexDataIndex,
+                     vboCubeVertexIndicesIndex,
+                     36,
+                     glm::translate( glm::mat4( 1.0f ), glm::vec3( -2.0f, 2.0f, -5.0f ) )//cubeTransformMatrix
+        );
+
     }
 
     void GLES2Lesson::setTexture(int *bitmapData, int *normalData, int width, int height, int format) {

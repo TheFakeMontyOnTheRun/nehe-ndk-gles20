@@ -48,7 +48,7 @@ public class GL2JNIActivity extends Activity {
         GL2JNILib.onCreate(assets);
 
         try {
-            GL2JNILib.setTextures( BitmapFactory.decodeStream(assets.open("crate0.png")), BitmapFactory.decodeStream(assets.open("normal0.png")) );
+            GL2JNILib.setTextures( BitmapFactory.decodeStream(assets.open("diffuse.png")), BitmapFactory.decodeStream(assets.open("hexa.png")) );
         } catch (IOException e) {
         }
 

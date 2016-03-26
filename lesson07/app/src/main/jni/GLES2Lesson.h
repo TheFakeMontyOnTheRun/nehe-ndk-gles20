@@ -17,7 +17,7 @@ namespace odb {
 
         void clearBuffers();
 
-        void resetTransformMatrices();
+        glm::mat4 resetTransformMatrices( glm::vec3 translate );
 
         void printVerboseDriverInformation();
 
@@ -32,7 +32,7 @@ namespace odb {
 
         GLuint loadShader(GLenum shaderType, const char *pSource);
 
-        const static float cubeVertices[6 * 4 * 9];
+        const static float cubeVertices[6 * 4 * 12];
         const static unsigned short cubeIndices[6 * 6];
 
         const static glm::vec4 ambientLightFullColor;
@@ -41,6 +41,8 @@ namespace odb {
         glm::mat4 cubeTransformMatrix;
         glm::mat4 projectionMatrix;
 
+        GLint texelAxisXAttributePosition;
+
         GLuint vertexAttributePosition;
         GLuint modelMatrixAttributePosition;
         GLuint samplerUniformPosition;
@@ -48,7 +50,6 @@ namespace odb {
         GLuint textureCoordinatesAttributePosition;
         GLuint projectionMatrixAttributePosition;
         GLuint normalAttributePosition;
-        GLuint normalMatrixPosition;
         GLuint gProgram;
 
         GLuint textureId;
@@ -64,8 +65,6 @@ namespace odb {
         GLuint currentFilter;
         float cubeRotationAngleYZ;
         float cubeRotationAngleXZ;
-
-        glm::mat4 normalMatrix;
 
         glm::vec4 diffuseLightDirection;
         glm::vec4 diffuseLightColor;
