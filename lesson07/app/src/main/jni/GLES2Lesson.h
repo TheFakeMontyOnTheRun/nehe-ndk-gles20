@@ -41,7 +41,7 @@ namespace odb {
         glm::mat4 cubeTransformMatrix;
         glm::mat4 projectionMatrix;
 
-        GLint texelAxisXAttributePosition;
+        GLint tangentVectorShaderPosition;
 
         GLuint vertexAttributePosition;
         GLuint modelMatrixAttributePosition;
@@ -50,6 +50,8 @@ namespace odb {
         GLuint textureCoordinatesAttributePosition;
         GLuint projectionMatrixAttributePosition;
         GLuint normalAttributePosition;
+
+	    GLint diffuseLightPosition;
         GLuint gProgram;
 
         GLuint textureId;
@@ -66,11 +68,10 @@ namespace odb {
         float cubeRotationAngleYZ;
         float cubeRotationAngleXZ;
 
-        glm::vec4 diffuseLightDirection;
+        glm::vec4 diffuseLightWorldPosition;
         glm::vec4 diffuseLightColor;
         glm::vec4 ambientLightColor;
 
-        GLuint diffuseLightDirectionShaderLocation;
         GLuint diffuseLightColorShaderLocation;
         GLuint ambientLightColorShaderLocation;
 
