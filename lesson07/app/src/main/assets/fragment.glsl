@@ -62,7 +62,6 @@ void main() {
    	float shininess = 2.0;
    	vec4 diffuseHighlight = vec4( 0.5, 0.5, 0.5, 1.0 );
    	vec4 specularHighlight = vec4( 1.0, 1.0, 1.0, 1.0 );
-//    texel = vec4( 0.5, 0.5, 0.5, 1.0 );
 
     N = getNormalFromMapInObjectSpace( sNormalMap, vTextureCoords, vObjectSpaceNormal,  vObjectSpaceTangent );
 
