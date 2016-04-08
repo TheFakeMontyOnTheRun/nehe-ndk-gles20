@@ -27,7 +27,7 @@ void main() {
     vec4 light0posn = vec4( 3.0, 0.0 , -6.0, 1.0 );
     vec4 light0color = uDiffuseLightColor;
 
-    vec4 normalFromTexel = vec4( texture2D( sNormalMap, vTextureCoords ).xyz, 0.0f );
+    vec4 normalFromTexel = vec4( texture2D( sNormalMap, vTextureCoords ).xyz, 0.0 );
     vec4 texel = texture2D( sTexture, vTextureCoords );
 
     vec4 interpolatedNormal = vNormal;
