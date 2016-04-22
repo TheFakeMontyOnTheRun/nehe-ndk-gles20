@@ -18,7 +18,7 @@ public class GL2JNIRenderer implements CardboardView.StereoRenderer {
 	@Override
 	public void onNewFrame(HeadTransform headTransform) {
 		headTransform.getEulerAngles(forwardVector, 0);
-		float xz = extractAngleXYFromHeadtransform(headTransform);
+		float xz = extractAngleXZFromHeadtransform(headTransform);
 		GL2JNILib.setXZAngle( xz );
 	}
 
@@ -60,6 +60,6 @@ public class GL2JNIRenderer implements CardboardView.StereoRenderer {
 	}
 
 	private float extractAngleXZFromHeadtransform(HeadTransform headTransform) {
-		return  360.0f - ((float)( forwardVector[ 1 ] * ( 180 / Math.PI ) ));
+		return   ((float)( forwardVector[ 1 ] * ( 180 / Math.PI ) ));
 	}
 }

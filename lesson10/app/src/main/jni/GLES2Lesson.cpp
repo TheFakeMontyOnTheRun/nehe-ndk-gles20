@@ -290,8 +290,9 @@ namespace odb {
     void GLES2Lesson::updateDirectionVector() {
 
         float angleInRadians = angleXzInDegress * (3.14159f / 180.0f);
+        float angleInRadiansXZ = angleXzInDegress * (3.14159f / 180.0f);
+        cameraDirection = -1.0f * glm::normalize( glm::vec3(sin(angleInRadiansXZ), 0.0f, cos(angleInRadiansXZ)));
 
-        cameraDirection = glm::vec3(sin(angleInRadians), 0.0f, cos(angleInRadians));
     }
 
     void GLES2Lesson::onNormalizedTouch(float x, float y) {
