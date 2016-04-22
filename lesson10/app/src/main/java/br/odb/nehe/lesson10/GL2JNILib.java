@@ -60,4 +60,6 @@ public class GL2JNILib {
     public static native void setLookAtMatrix(float[] lookAt);
 
     public static native void setXZAngle(float xz);
+
+    public static native void setPerspective(float[] perspective);
 }

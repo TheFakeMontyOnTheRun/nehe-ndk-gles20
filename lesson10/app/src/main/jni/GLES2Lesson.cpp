@@ -175,7 +175,7 @@ namespace odb {
         glViewport(0, 0, w, h);
         checkGlError("glViewport");
 
-        projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f);
+        projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 1000.0f);
 
         camera = glm::vec3(0.0f, 0.25f, 0.0f);
 
@@ -325,4 +325,8 @@ namespace odb {
         angleXzInDegress = xz;
 	    updateDirectionVector();
     }
+
+	void GLES2Lesson::setPerspectiveMatrix(float *perspective) {
+		projectionMatrix = glm::make_mat4( perspective );
+	}
 }

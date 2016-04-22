@@ -79,6 +79,8 @@ namespace odb {
         void setLookAtMatrix(float *pDouble);
 
         void setXZAngleInDegrees(float d);
+
+	    void setPerspectiveMatrix(float *pDouble);
     };
 }
 #endif //LESSON02_GLES2LESSON_H

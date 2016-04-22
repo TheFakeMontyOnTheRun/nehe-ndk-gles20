@@ -97,6 +97,10 @@ JNIEXPORT void JNICALL
 
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
 
+JNIEXPORT void JNICALL
+        Java_br_odb_nehe_lesson10_GL2JNILib_setPerspective(JNIEnv *env, jclass type,
+                                                           jfloatArray perspective_);
+
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_init(JNIEnv *env, jobject obj,
                                                                 jint width, jint height);
 JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_step(JNIEnv *env, jobject obj);
@@ -351,4 +355,14 @@ Java_br_odb_nehe_lesson10_GL2JNILib_setXZAngle(JNIEnv *env, jclass type, jfloat 
 	if (gles2Lesson != nullptr) {
 		gles2Lesson->setXZAngleInDegrees(xz);
 	}
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_setPerspective(JNIEnv *env, jclass type,
+                                                   jfloatArray perspective_) {
+    jfloat *perspective = env->GetFloatArrayElements(perspective_, NULL);
+
+    if (gles2Lesson != nullptr) {
+        gles2Lesson->setPerspectiveMatrix(perspective);
+    }
+
+    env->ReleaseFloatArrayElements(perspective_, perspective, 0);
 }

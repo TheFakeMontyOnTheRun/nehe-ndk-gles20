@@ -25,6 +25,7 @@ public class GL2JNIRenderer implements CardboardView.StereoRenderer {
 	@Override
 	public void onDrawEye(Eye eye) {
 		float[] lookAt = eye.getEyeView();
+		GL2JNILib.setPerspective( eye.getPerspective( 0.1f, 1000.0f ) );
 		GL2JNILib.setLookAtMatrix( lookAt );
 		GL2JNILib.step();
 	}
