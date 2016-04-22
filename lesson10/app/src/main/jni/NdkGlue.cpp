@@ -355,6 +355,8 @@ Java_br_odb_nehe_lesson10_GL2JNILib_setXZAngle(JNIEnv *env, jclass type, jfloat 
 	if (gles2Lesson != nullptr) {
 		gles2Lesson->setXZAngleInDegrees(xz);
 	}
+}
+
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_setPerspective(JNIEnv *env, jclass type,
                                                    jfloatArray perspective_) {
