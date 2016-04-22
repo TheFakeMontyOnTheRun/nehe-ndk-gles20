@@ -1,5 +1,7 @@
 package br.odb.nehe.lesson10;
 
+import android.opengl.GLES20;
+
 import com.google.vrtoolkit.cardboard.CardboardView;
 import com.google.vrtoolkit.cardboard.Eye;
 import com.google.vrtoolkit.cardboard.HeadTransform;
@@ -24,6 +26,7 @@ public class GL2JNIRenderer implements CardboardView.StereoRenderer {
 
 	@Override
 	public void onDrawEye(Eye eye) {
+		GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 		float[] lookAt = eye.getEyeView();
 		GL2JNILib.setPerspective( eye.getPerspective( 0.1f, 1000.0f ) );
 		GL2JNILib.setLookAtMatrix( lookAt );
