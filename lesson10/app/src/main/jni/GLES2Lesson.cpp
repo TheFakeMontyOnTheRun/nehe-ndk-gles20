@@ -57,7 +57,7 @@ namespace odb {
                      GL_RGBA, GL_UNSIGNED_BYTE,
                      texture->getPixelData());
 
-//        buildMipMap(texture);
+        buildMipMap(texture);
 
         return textureId;
     }
