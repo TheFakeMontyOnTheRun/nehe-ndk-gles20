@@ -16,14 +16,11 @@
 
 package br.odb.nehe.lesson10;
 
-import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.google.vrtoolkit.cardboard.CardboardActivity;
 
@@ -57,26 +54,12 @@ public class GL2JNIActivity extends CardboardActivity {
 
         mView = new GL2JNIView(this);
         setContentView(mView);
-        mView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                        touching = false;
-                        return true;
-                    case MotionEvent.ACTION_DOWN:
-                        touching = true;
-                    case MotionEvent.ACTION_MOVE:
-                        fingerX = event.getX() / v.getWidth();
-                        fingerY = event.getY() / v.getHeight();
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
     }
+
+	@Override
+	public void onCardboardTrigger() {
+		GL2JNILib.moveForward();
+	}
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
