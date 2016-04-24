@@ -177,7 +177,7 @@ namespace odb {
 
         projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 1000.0f);
 
-        camera = glm::vec3(0.0f, 0.25f, 0.0f);
+        camera = glm::vec3(0.0f, 0.5f, 0.0f);
 
         glFrontFace(GL_CW);
         glDepthMask(true);
@@ -268,13 +268,13 @@ namespace odb {
     void GLES2Lesson::moveForward(float factor) {
         mBouncer.tick(20);
         camera += cameraDirection * factor;
-        camera.y = mBouncer.getCurrentStep();
+        camera.y = 0.5f + mBouncer.getCurrentStep();
     }
 
     void GLES2Lesson::moveBackward(float factor) {
         mBouncer.tick(-20);
         camera -= cameraDirection * factor;
-        camera.y = mBouncer.getCurrentStep();
+        camera.y = 0.5f + mBouncer.getCurrentStep();
     }
 
     void GLES2Lesson::turnRight(float factor) {
