@@ -7,22 +7,24 @@
 
 
 class NativeBitmap {
-    int mWidth;
-    int mHeight;
-    int *mRawData;
+	int mWidth;
+	int mHeight;
+	int *mRawData;
 
 public:
-    NativeBitmap(int aWidth, int aHeight, int *aRawData);
-    std::shared_ptr<NativeBitmap> makeBitmapWithHalfDimensions();
-    int getWidth();
+	NativeBitmap(int aWidth, int aHeight, int *aRawData);
 
-    int getHeight();
+	std::shared_ptr<NativeBitmap> makeBitmapWithHalfDimensions();
 
-    int *getPixelData();
+	int getWidth();
 
-    void releaseTextureData();
+	int getHeight();
 
-    ~NativeBitmap();
+	int *getPixelData();
+
+	void releaseTextureData();
+
+	~NativeBitmap();
 };
 
 

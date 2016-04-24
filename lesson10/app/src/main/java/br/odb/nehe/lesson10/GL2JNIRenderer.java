@@ -15,21 +15,21 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class GL2JNIRenderer implements CardboardView.StereoRenderer {
 
-	float[] forwardVector = new float[ 3 ];
+	float[] forwardVector = new float[3];
 
 	@Override
 	public void onNewFrame(HeadTransform headTransform) {
 		headTransform.getEulerAngles(forwardVector, 0);
 		float xz = extractAngleXZFromHeadtransform(headTransform);
-		GL2JNILib.setXZAngle( xz );
+		GL2JNILib.setXZAngle(xz);
 	}
 
 	@Override
 	public void onDrawEye(Eye eye) {
 		GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 		float[] lookAt = eye.getEyeView();
-		GL2JNILib.setPerspective( eye.getPerspective( 0.1f, 1000.0f ) );
-		GL2JNILib.setLookAtMatrix( lookAt );
+		GL2JNILib.setPerspective(eye.getPerspective(0.1f, 1000.0f));
+		GL2JNILib.setLookAtMatrix(lookAt);
 		GL2JNILib.step();
 	}
 
@@ -55,14 +55,14 @@ public class GL2JNIRenderer implements CardboardView.StereoRenderer {
 	}
 
 	private float extractAngleXYFromHeadtransform(HeadTransform headTransform) {
-		return  360.0f - ((float)( forwardVector[ 2 ] * ( 180 / Math.PI ) ));
+		return 360.0f - ((float) (forwardVector[2] * (180 / Math.PI)));
 	}
 
 	private float extractAngleYZFromHeadtransform(HeadTransform headTransform) {
-		return  360.0f - ((float)( forwardVector[ 0 ] * ( 180 / Math.PI ) ));
+		return 360.0f - ((float) (forwardVector[0] * (180 / Math.PI)));
 	}
 
 	private float extractAngleXZFromHeadtransform(HeadTransform headTransform) {
-		return   ((float)( forwardVector[ 1 ] * ( 180 / Math.PI ) ));
+		return ((float) (forwardVector[1] * (180 / Math.PI)));
 	}
 }

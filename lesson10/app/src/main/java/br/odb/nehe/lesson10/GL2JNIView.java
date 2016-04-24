@@ -65,8 +65,8 @@ import javax.microedition.khronos.opengles.GL10;
  */
 class GL2JNIView extends CardboardView {
 
-    public GL2JNIView(Context context) {
-        super(context);
-        setRenderer(new GL2JNIRenderer());
-    }
+	public GL2JNIView(Context context) {
+		super(context);
+		setRenderer(new GL2JNIRenderer());
+	}
 }

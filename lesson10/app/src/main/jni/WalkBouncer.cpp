@@ -9,10 +9,10 @@ WalkBouncer::WalkBouncer() : step(0.0f) {
 }
 
 void WalkBouncer::tick(long ms) {
-    step += ms / 45.0f;
-    cached = sin(step) / 20.0f;
+	step += ms / 45.0f;
+	cached = sin(step) / 20.0f;
 }
 
 float WalkBouncer::getCurrentStep() {
-    return 0.25f + cached;
+	return 0.25f + cached;
 }

@@ -7,14 +7,14 @@
 
 
 class WalkBouncer {
-    float step;
-    float cached;
+	float step;
+	float cached;
 public:
-    WalkBouncer();
+	WalkBouncer();
 
-    void tick(long ms);
+	void tick(long ms);
 
-    float getCurrentStep();
+	float getCurrentStep();
 };
 
 

@@ -28,117 +28,117 @@ import java.io.IOException;
 
 public class GL2JNIActivity extends CardboardActivity {
 
-    GL2JNIView mView;
-    boolean running = false;
-    static AssetManager assets;
-    private float fingerX;
-    private float fingerY;
-    private boolean touching;
+	GL2JNIView mView;
+	boolean running = false;
+	static AssetManager assets;
+	private float fingerX;
+	private float fingerY;
+	private boolean touching;
 
-    @Override
-    protected void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
+	@Override
+	protected void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 
-        assets = getAssets();
-        GL2JNILib.onCreate(assets);
+		assets = getAssets();
+		GL2JNILib.onCreate(assets);
 
-        try {
-            GL2JNILib.setTexture(new Bitmap[]{
-                    BitmapFactory.decodeStream(assets.open("mud.png")),
-                    BitmapFactory.decodeStream(assets.open("bricks.png")),
-                    BitmapFactory.decodeStream(assets.open("grass.png"))
-            });
+		try {
+			GL2JNILib.setTexture(new Bitmap[]{
+					BitmapFactory.decodeStream(assets.open("mud.png")),
+					BitmapFactory.decodeStream(assets.open("bricks.png")),
+					BitmapFactory.decodeStream(assets.open("grass.png"))
+			});
 
-        } catch (IOException e) {
-        }
+		} catch (IOException e) {
+		}
 
-        mView = new GL2JNIView(this);
-        setContentView(mView);
-    }
+		mView = new GL2JNIView(this);
+		setContentView(mView);
+	}
 
 	@Override
 	public void onCardboardTrigger() {
 		GL2JNILib.moveForward();
 	}
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_T:
-                return true;
+		switch (keyCode) {
+			case KeyEvent.KEYCODE_T:
+				return true;
 
-            case KeyEvent.KEYCODE_DPAD_UP:
-                GL2JNILib.moveForward();
-                return true;
+			case KeyEvent.KEYCODE_DPAD_UP:
+				GL2JNILib.moveForward();
+				return true;
 
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                GL2JNILib.strafeRight();
-                return true;
+			case KeyEvent.KEYCODE_DPAD_RIGHT:
+				GL2JNILib.strafeRight();
+				return true;
 
-            case KeyEvent.KEYCODE_DPAD_DOWN:
-                GL2JNILib.moveBackward();
-                return true;
+			case KeyEvent.KEYCODE_DPAD_DOWN:
+				GL2JNILib.moveBackward();
+				return true;
 
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-                GL2JNILib.strafeLeft();
-                return true;
+			case KeyEvent.KEYCODE_DPAD_LEFT:
+				GL2JNILib.strafeLeft();
+				return true;
 
-            case KeyEvent.KEYCODE_BUTTON_L1:
-                GL2JNILib.strafeLeft();
-                break;
+			case KeyEvent.KEYCODE_BUTTON_L1:
+				GL2JNILib.strafeLeft();
+				break;
 
-            case KeyEvent.KEYCODE_BUTTON_R1:
-                GL2JNILib.strafeRight();
-                break;
+			case KeyEvent.KEYCODE_BUTTON_R1:
+				GL2JNILib.strafeRight();
+				break;
 
 
-            case KeyEvent.KEYCODE_R:
-                GL2JNILib.reset();
-                return true;
-        }
+			case KeyEvent.KEYCODE_R:
+				GL2JNILib.reset();
+				return true;
+		}
 
-        return super.onKeyDown(keyCode, event);
-    }
+		return super.onKeyDown(keyCode, event);
+	}
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+	@Override
+	protected void onPause() {
+		super.onPause();
 
-        running = false;
-        mView.onPause();
-    }
+		running = false;
+		mView.onPause();
+	}
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mView.onResume();
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mView.onResume();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                running = true;
-                while (running) {
-                    try {
-                        Thread.sleep(20);
-                        if (touching) {
-                            GL2JNILib.onTouchNormalized(fingerX, fingerY);
-                        }
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				running = true;
+				while (running) {
+					try {
+						Thread.sleep(20);
+						if (touching) {
+							GL2JNILib.onTouchNormalized(fingerX, fingerY);
+						}
 
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    GL2JNILib.tick();
-                }
-            }
-        }).start();
-    }
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					GL2JNILib.tick();
+				}
+			}
+		}).start();
+	}
 
-    @Override
-    protected void onDestroy() {
+	@Override
+	protected void onDestroy() {
 
-        GL2JNILib.onDestroy();
+		GL2JNILib.onDestroy();
 
-        super.onDestroy();
-    }
+		super.onDestroy();
+	}
 }

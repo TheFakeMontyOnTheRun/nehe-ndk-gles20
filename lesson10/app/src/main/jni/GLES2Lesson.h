@@ -7,84 +7,84 @@
 
 namespace odb {
 
-    class GLES2Lesson {
+	class GLES2Lesson {
 
-        void fetchShaderLocations();
+		void fetchShaderLocations();
 
-        void setPerspective();
+		void setPerspective();
 
-        void prepareShaderProgram();
+		void prepareShaderProgram();
 
-        void clearBuffers();
+		void clearBuffers();
 
-        void resetTransformMatrices();
+		void resetTransformMatrices();
 
-        void printVerboseDriverInformation();
+		void printVerboseDriverInformation();
 
-        GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
+		GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
 
-        GLuint loadShader(GLenum shaderType, const char *pSource);
+		GLuint loadShader(GLenum shaderType, const char *pSource);
 
-        glm::mat4 projectionMatrix;
-        glm::mat4 viewMatrix;
+		glm::mat4 projectionMatrix;
+		glm::mat4 viewMatrix;
 
-        GLuint vertexAttributePosition;
-        GLuint modelMatrixAttributePosition;
-        GLuint viewMatrixAttributePosition;
-        GLuint samplerUniformPosition;
-        GLuint textureCoordinatesAttributePosition;
-        GLuint projectionMatrixAttributePosition;
-        GLuint gProgram;
-        WalkBouncer mBouncer;
-        GLuint textureId;
-        std::map< GLuint, std::shared_ptr<TrigBatch> > mBatches;
-        glm::vec3 camera;
-        glm::vec3 cameraDirection;
-        float angleXzInDegress;
-        std::vector< std::shared_ptr<NativeBitmap> > mTextures;
-        std::vector<int> mMaterials;
+		GLuint vertexAttributePosition;
+		GLuint modelMatrixAttributePosition;
+		GLuint viewMatrixAttributePosition;
+		GLuint samplerUniformPosition;
+		GLuint textureCoordinatesAttributePosition;
+		GLuint projectionMatrixAttributePosition;
+		GLuint gProgram;
+		WalkBouncer mBouncer;
+		GLuint textureId;
+		std::map<GLuint, std::shared_ptr<TrigBatch> > mBatches;
+		glm::vec3 camera;
+		glm::vec3 cameraDirection;
+		float angleXzInDegress;
+		std::vector<std::shared_ptr<NativeBitmap> > mTextures;
+		std::vector<int> mMaterials;
 
-    public:
-        explicit GLES2Lesson();
+	public:
+		explicit GLES2Lesson();
 
-        ~GLES2Lesson();
+		~GLES2Lesson();
 
-        bool init(float w, float h, const std::string &vertexShader,
-                  const std::string &fragmentShader);
+		bool init(float w, float h, const std::string &vertexShader,
+		          const std::string &fragmentShader);
 
-        void render();
+		void render();
 
-        void shutdown();
+		void shutdown();
 
-        void tick();
+		void tick();
 
-        void reset();
+		void reset();
 
-        void moveForward(float d);
+		void moveForward(float d);
 
-        void moveBackward(float d);
+		void moveBackward(float d);
 
-        void turnRight(float d);
+		void turnRight(float d);
 
-        void turnLeft(float d);
+		void turnLeft(float d);
 
-        void updateDirectionVector();
+		void updateDirectionVector();
 
-        void onNormalizedTouch(float d, float d1);
+		void onNormalizedTouch(float d, float d1);
 
-        void addTrigsForTexture(GLuint textureId, const std::vector<Trig>& newTrigs);
+		void addTrigsForTexture(GLuint textureId, const std::vector<Trig> &newTrigs);
 
-        void setTextures(const std::vector<std::shared_ptr<NativeBitmap>>& vector);
+		void setTextures(const std::vector<std::shared_ptr<NativeBitmap>> &vector);
 
-        void setLookAtMatrix(float *pDouble);
+		void setLookAtMatrix(float *pDouble);
 
-        void setXZAngleInDegrees(float d);
+		void setXZAngleInDegrees(float d);
 
-	    void setPerspectiveMatrix(float *pDouble);
+		void setPerspectiveMatrix(float *pDouble);
 
-	    void strafeLeft(float d);
+		void strafeLeft(float d);
 
-	    void strafeRight(float d);
-    };
+		void strafeRight(float d);
+	};
 }
 #endif //LESSON02_GLES2LESSON_H
