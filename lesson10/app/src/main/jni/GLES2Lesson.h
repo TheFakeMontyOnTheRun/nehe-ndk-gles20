@@ -81,6 +81,10 @@ namespace odb {
         void setXZAngleInDegrees(float d);
 
 	    void setPerspectiveMatrix(float *pDouble);
+
+	    void strafeLeft(float d);
+
+	    void strafeRight(float d);
     };
 }
 #endif //LESSON02_GLES2LESSON_H

@@ -330,4 +330,20 @@ namespace odb {
 	void GLES2Lesson::setPerspectiveMatrix(float *perspective) {
 		projectionMatrix = glm::make_mat4( perspective );
 	}
+
+	void GLES2Lesson::strafeLeft(float d) {
+		angleXzInDegress += 90.0f;
+		updateDirectionVector();
+		moveForward(d);
+		angleXzInDegress -= 90.0f;
+		updateDirectionVector();
+	}
+
+	void GLES2Lesson::strafeRight(float d) {
+		angleXzInDegress -= 90.0f;
+		updateDirectionVector();
+		moveForward(d);
+		angleXzInDegress += 90.0f;
+		updateDirectionVector();
+	}
 }

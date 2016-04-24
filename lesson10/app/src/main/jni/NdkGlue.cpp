@@ -367,4 +367,19 @@ Java_br_odb_nehe_lesson10_GL2JNILib_setPerspective(JNIEnv *env, jclass type,
     }
 
     env->ReleaseFloatArrayElements(perspective_, perspective, 0);
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_strafeLeft(JNIEnv *env, jclass type) {
+
+	if (gles2Lesson != nullptr) {
+		gles2Lesson->strafeLeft(0.5f);
+	}
+}
+
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson10_GL2JNILib_strafeRight(JNIEnv *env, jclass type) {
+
+	if (gles2Lesson != nullptr) {
+		gles2Lesson->strafeRight(0.5f);
+	}
 }

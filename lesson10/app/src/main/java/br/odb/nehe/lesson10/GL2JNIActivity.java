@@ -73,7 +73,7 @@ public class GL2JNIActivity extends CardboardActivity {
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_RIGHT:
-                GL2JNILib.turnRight();
+                GL2JNILib.strafeRight();
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_DOWN:
@@ -81,8 +81,17 @@ public class GL2JNIActivity extends CardboardActivity {
                 return true;
 
             case KeyEvent.KEYCODE_DPAD_LEFT:
-                GL2JNILib.turnLeft();
+                GL2JNILib.strafeLeft();
                 return true;
+
+            case KeyEvent.KEYCODE_BUTTON_L1:
+                GL2JNILib.strafeLeft();
+                break;
+
+            case KeyEvent.KEYCODE_BUTTON_R1:
+                GL2JNILib.strafeRight();
+                break;
+
 
             case KeyEvent.KEYCODE_R:
                 GL2JNILib.reset();
