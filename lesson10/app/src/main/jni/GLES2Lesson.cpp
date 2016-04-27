@@ -74,7 +74,7 @@ namespace odb {
 		}
 	}
 
-	GLuint GLES2Lesson::loadShader(GLenum shaderType, const char *pSource) {
+	GLint GLES2Lesson::loadShader(GLenum shaderType, const char *pSource) {
 		GLuint shader = glCreateShader(shaderType);
 		if (shader) {
 			glShaderSource(shader, 1, &pSource, NULL);
@@ -99,7 +99,7 @@ namespace odb {
 		return shader;
 	}
 
-	GLuint GLES2Lesson::createProgram(const char *pVertexSource, const char *pFragmentSource) {
+	GLint GLES2Lesson::createProgram(const char *pVertexSource, const char *pFragmentSource) {
 		GLuint vertexShader = loadShader(GL_VERTEX_SHADER, pVertexSource);
 		if (!vertexShader) {
 			return 0;
@@ -110,7 +110,7 @@ namespace odb {
 			return 0;
 		}
 
-		GLuint program = glCreateProgram();
+		auto program = glCreateProgram();
 		if (program) {
 			glAttachShader(program, vertexShader);
 			checkGlError("glAttachShader");
