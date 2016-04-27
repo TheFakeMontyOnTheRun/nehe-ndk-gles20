@@ -21,20 +21,20 @@ namespace odb {
 
         void printVerboseDriverInformation();
 
-        GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
+        GLint createProgram(const char *pVertexSource, const char *pFragmentSource);
 
-        GLuint loadShader(GLenum shaderType, const char *pSource);
+        GLint loadShader(GLenum shaderType, const char *pSource);
 
         glm::mat4 projectionMatrix;
         glm::mat4 viewMatrix;
 
-        GLuint vertexAttributePosition;
-        GLuint modelMatrixAttributePosition;
-        GLuint viewMatrixAttributePosition;
-        GLuint samplerUniformPosition;
-        GLuint textureCoordinatesAttributePosition;
-        GLuint projectionMatrixAttributePosition;
-        GLuint gProgram;
+        GLint vertexAttributePosition;
+        GLint modelMatrixAttributePosition;
+        GLint viewMatrixAttributePosition;
+        GLint samplerUniformPosition;
+        GLint textureCoordinatesAttributePosition;
+        GLint projectionMatrixAttributePosition;
+        GLint gProgram;
         WalkBouncer mBouncer;
         GLuint textureId;
         std::map< GLuint, std::shared_ptr<TrigBatch> > mBatches;
@@ -42,7 +42,7 @@ namespace odb {
         glm::vec3 cameraDirection;
         float angleXzInDegress;
         std::vector< std::shared_ptr<NativeBitmap> > mTextures;
-        std::vector<int> mMaterials;
+        std::vector<GLuint> mMaterials;
 
     public:
         explicit GLES2Lesson();
