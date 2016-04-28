@@ -41,12 +41,12 @@ namespace odb {
         glm::mat4 cubeTransformMatrix;
         glm::mat4 projectionMatrix;
 
-        GLuint vertexAttributePosition;
-        GLuint modelMatrixAttributePosition;
-        GLuint samplerUniformPosition;
-        GLuint textureCoordinatesAttributePosition;
-        GLuint projectionMatrixAttributePosition;
-        GLuint normalAttributePosition;
+        GLint vertexAttributePosition;
+        GLint modelMatrixAttributePosition;
+        GLint samplerUniformPosition;
+        GLint textureCoordinatesAttributePosition;
+        GLint projectionMatrixAttributePosition;
+        GLint normalAttributePosition;
 
         GLuint gProgram;
 
@@ -59,7 +59,7 @@ namespace odb {
         int *textureData;
         int textureWidth;
         int textureHeight;
-        GLuint currentFilter;
+        GLint currentFilter;
         float cubeRotationAngleYZ;
         float cubeRotationAngleXZ;
 
@@ -67,9 +67,9 @@ namespace odb {
         glm::vec4 diffuseLightColor;
         glm::vec4 ambientLightColor;
 
-        GLuint diffuseLightDirectionShaderLocation;
-        GLuint diffuseLightColorShaderLocation;
-        GLuint ambientLightColorShaderLocation;
+        GLint diffuseLightDirectionShaderLocation;
+        GLint diffuseLightColorShaderLocation;
+        GLint ambientLightColorShaderLocation;
 
         float rotationXZSpeed;
         float rotationYZSpeed;

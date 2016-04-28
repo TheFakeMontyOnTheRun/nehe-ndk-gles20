@@ -43,12 +43,12 @@ namespace odb {
 
         glm::mat4 projectionMatrix;
 
-        GLuint vertexAttributePosition;
-        GLuint modelMatrixAttributePosition;
-        GLuint samplerUniformPosition;
-        GLuint textureCoordinatesAttributePosition;
-        GLuint projectionMatrixAttributePosition;
-        GLuint fragmentTintPosition;
+        GLint vertexAttributePosition;
+        GLint modelMatrixAttributePosition;
+        GLint samplerUniformPosition;
+        GLint textureCoordinatesAttributePosition;
+        GLint projectionMatrixAttributePosition;
+        GLint fragmentTintPosition;
         GLuint gProgram;
 
         GLuint textureId;

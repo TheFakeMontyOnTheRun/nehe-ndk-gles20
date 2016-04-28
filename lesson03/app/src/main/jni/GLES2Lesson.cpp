@@ -12,10 +12,10 @@
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
-GLuint GLES2Lesson::vertexAttributePosition = 0;
-GLuint GLES2Lesson::colourAttributePosition = 0;
-GLuint GLES2Lesson::modelMatrixAttributePosition = 0;
-GLuint GLES2Lesson::projectionMatrixAttributePosition = 0;
+GLint GLES2Lesson::vertexAttributePosition = 0;
+GLint GLES2Lesson::colourAttributePosition = 0;
+GLint GLES2Lesson::modelMatrixAttributePosition = 0;
+GLint GLES2Lesson::projectionMatrixAttributePosition = 0;
 GLuint GLES2Lesson::gProgram = 0;
 
 //Counter Clockwise
@@ -79,7 +79,7 @@ extern void checkGlError(const char *op) {
 }
 
 GLuint GLES2Lesson::loadShader(GLenum shaderType, const char *pSource) {
-    GLuint shader = glCreateShader(shaderType);
+    auto shader = glCreateShader(shaderType);
     if (shader) {
         glShaderSource(shader, 1, &pSource, NULL);
         glCompileShader(shader);
@@ -104,17 +104,17 @@ GLuint GLES2Lesson::loadShader(GLenum shaderType, const char *pSource) {
 }
 
 GLuint GLES2Lesson::createProgram(const char *pVertexSource, const char *pFragmentSource) {
-    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, pVertexSource);
+    auto vertexShader = loadShader(GL_VERTEX_SHADER, pVertexSource);
     if (!vertexShader) {
         return 0;
     }
 
-    GLuint pixelShader = loadShader(GL_FRAGMENT_SHADER, pFragmentSource);
+    auto pixelShader = loadShader(GL_FRAGMENT_SHADER, pFragmentSource);
     if (!pixelShader) {
         return 0;
     }
 
-    GLuint program = glCreateProgram();
+    auto program = glCreateProgram();
     if (program) {
         glAttachShader(program, vertexShader);
         checkGlError("glAttachShader");

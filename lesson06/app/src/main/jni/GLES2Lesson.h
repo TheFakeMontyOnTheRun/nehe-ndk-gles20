@@ -26,11 +26,11 @@ class GLES2Lesson {
     glm::mat4 cubeTransformMatrix;
     glm::mat4 projectionMatrix;
 
-    GLuint vertexAttributePosition;
-    GLuint modelMatrixAttributePosition;
-    GLuint samplerUniformPosition;
-    GLuint textureCoordinatesAttributePosition;
-    GLuint projectionMatrixAttributePosition;
+    GLint vertexAttributePosition;
+    GLint modelMatrixAttributePosition;
+    GLint samplerUniformPosition;
+    GLint textureCoordinatesAttributePosition;
+    GLint projectionMatrixAttributePosition;
     GLuint gProgram;
 
     GLuint textureId;

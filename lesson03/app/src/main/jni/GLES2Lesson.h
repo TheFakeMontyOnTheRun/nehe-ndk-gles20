@@ -30,10 +30,10 @@ public:
     static glm::mat4 squareTransformMatrix;
     static glm::mat4 projectionMatrix;
 
-    static GLuint vertexAttributePosition;
-    static GLuint colourAttributePosition;
-    static GLuint modelMatrixAttributePosition;
-    static GLuint projectionMatrixAttributePosition;
+    static GLint vertexAttributePosition;
+    static GLint colourAttributePosition;
+    static GLint modelMatrixAttributePosition;
+    static GLint projectionMatrixAttributePosition;
     static GLuint gProgram;
 
     static bool init( float w, float h, const std::string& vertexShader, const std::string& fragmentShader );

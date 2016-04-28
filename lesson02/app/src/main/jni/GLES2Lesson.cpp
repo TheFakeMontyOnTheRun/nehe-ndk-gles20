@@ -12,9 +12,9 @@
 #include "GLES2Lesson.h"
 #include "NdkGlue.h"
 
-GLuint GLES2Lesson::vertexAttributePosition = 0;
-GLuint GLES2Lesson::modelMatrixAttributePosition = 0;
-GLuint GLES2Lesson::projectionMatrixAttributePosition = 0;
+GLint GLES2Lesson::vertexAttributePosition = 0;
+GLint GLES2Lesson::modelMatrixAttributePosition = 0;
+GLint GLES2Lesson::projectionMatrixAttributePosition = 0;
 GLuint GLES2Lesson::gProgram = 0;
 
 

@@ -29,10 +29,10 @@ class GLES2Lesson {
     glm::mat4 cubeTransformMatrix;
     glm::mat4 projectionMatrix;
 
-    GLuint vertexAttributePosition;
-    GLuint colourAttributePosition;
-    GLuint modelMatrixAttributePosition;
-    GLuint projectionMatrixAttributePosition;
+    GLint vertexAttributePosition;
+    GLint colourAttributePosition;
+    GLint modelMatrixAttributePosition;
+    GLint projectionMatrixAttributePosition;
     GLuint gProgram;
 
     //VBO stuff
