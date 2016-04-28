@@ -43,13 +43,13 @@ namespace odb {
 
         GLint tangentVectorShaderPosition;
 
-        GLuint vertexAttributePosition;
-        GLuint modelMatrixAttributePosition;
-        GLuint samplerUniformPosition;
-	    GLuint normalMapUniformPosition;
-        GLuint textureCoordinatesAttributePosition;
-        GLuint projectionMatrixAttributePosition;
-        GLuint normalAttributePosition;
+		GLint vertexAttributePosition;
+		GLint modelMatrixAttributePosition;
+		GLint samplerUniformPosition;
+		GLint normalMapUniformPosition;
+		GLint textureCoordinatesAttributePosition;
+		GLint projectionMatrixAttributePosition;
+		GLint normalAttributePosition;
 
 	    GLint diffuseLightPosition;
         GLuint gProgram;
