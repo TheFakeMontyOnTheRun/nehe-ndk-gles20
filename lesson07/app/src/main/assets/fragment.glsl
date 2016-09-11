@@ -9,7 +9,6 @@ uniform vec4 uDiffuseLightPosition;
 varying vec4 vTransformedVertex;
 varying vec3 vObjectSpaceNormal;
 varying vec3 vObjectSpaceTangent;
-uniform mat4 uModel;
 
 vec4 ComputeLight (const in vec3 direction, const in vec4 lightColor, const in vec3 normal, const in vec3 halfVec, const in vec4 diffuse, const in vec4 specular, const in float shininess) {
 

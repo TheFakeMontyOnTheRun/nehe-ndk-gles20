@@ -9,7 +9,6 @@ varying vec3 vObjectSpaceNormal;
 uniform mat4 uModel;
 uniform mat4 uProjection;
 varying vec2 vTextureCoords;
-uniform vec4 uDiffuseLightPosition;
 varying vec4 vTransformedVertex;
 
 void main() {
