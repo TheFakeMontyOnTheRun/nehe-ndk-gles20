@@ -1,36 +1,4 @@
-/*
- * Copyright (C) 2009 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package br.odb.nehe.lesson01;
-/*
- * Copyright (C) 2008 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 
 import android.content.Context;
 import android.graphics.PixelFormat;
@@ -43,26 +11,9 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.opengles.GL10;
 
-/**
- * A simple GLSurfaceView sub-class that demonstrate how to perform
- * OpenGL ES 2.0 rendering into a GL Surface. Note the following important
- * details:
- *
- * - The class must use a custom context factory to enable 2.0 rendering.
- *   See ContextFactory class definition below.
- *
- * - The class must use a custom EGLConfigChooser to be able to select
- *   an EGLConfig that supports 2.0. This is done by providing a config
- *   specification to eglChooseConfig() that has the attribute
- *   EGL10.ELG_RENDERABLE_TYPE containing the EGL_OPENGL_ES2_BIT flag
- *   set. See ConfigChooser class definition below.
- *
- * - The class must select the surface's format, then choose an EGLConfig
- *   that matches it exactly (with regards to red/green/blue/alpha channels
- *   bit depths). Failure to do so would result in an EGL_BAD_MATCH error.
- */
 class GL2JNIView extends GLSurfaceView {
-    private static String TAG = "Lesson01_GLES2_View";
+
+    private static String TAG = "NeHe Lesson01_GLES2_View";
     private static final boolean DEBUG = false;
 
     public GL2JNIView(Context context) {
@@ -77,30 +28,16 @@ class GL2JNIView extends GLSurfaceView {
 
     private void init(boolean translucent, int depth, int stencil) {
 
-        /* By default, GLSurfaceView() creates a RGB_565 opaque surface.
-         * If we want a translucent one, we should change the surface's
-         * format here, using PixelFormat.TRANSLUCENT for GL Surfaces
-         * is interpreted as any 32-bit surface with alpha by SurfaceFlinger.
-         */
         if (translucent) {
             this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
         }
 
-        /* Setup the context factory for 2.0 rendering.
-         * See ContextFactory class definition below
-         */
         setEGLContextFactory(new ContextFactory());
 
-        /* We need to choose an EGLConfig that matches the format of
-         * our surface exactly. This is going to be done in our
-         * custom config chooser. See ConfigChooser class definition
-         * below.
-         */
         setEGLConfigChooser( translucent ?
                              new ConfigChooser(8, 8, 8, 8, depth, stencil) :
                              new ConfigChooser(5, 6, 5, 0, depth, stencil) );
 
-        /* Set the renderer responsible for frame rendering */
         setRenderer(new Renderer());
     }
 
@@ -138,10 +75,6 @@ class GL2JNIView extends GLSurfaceView {
             mStencilSize = stencil;
         }
 
-        /* This EGL config specification is used to specify 2.0 rendering.
-         * We use a minimum size of 4 bits for red/green/blue, but will
-         * perform actual matching in chooseConfig() below.
-         */
         private static int EGL_OPENGL_ES2_BIT = 4;
         private static int[] s_configAttribs2 =
         {
@@ -154,8 +87,6 @@ class GL2JNIView extends GLSurfaceView {
 
         public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) {
 
-            /* Get the number of minimally matching EGL configurations
-             */
             int[] num_config = new int[1];
             egl.eglChooseConfig(display, s_configAttribs2, null, 0, num_config);
 
@@ -165,16 +96,13 @@ class GL2JNIView extends GLSurfaceView {
                 throw new IllegalArgumentException("No configs match configSpec");
             }
 
-            /* Allocate then read the array of minimally matching EGL configs
-             */
             EGLConfig[] configs = new EGLConfig[numConfigs];
             egl.eglChooseConfig(display, s_configAttribs2, configs, numConfigs, num_config);
 
             if (DEBUG) {
                  printConfigs(egl, display, configs);
             }
-            /* Now return the "best" one
-             */
+
             return chooseConfig(egl, display, configs);
         }
 
