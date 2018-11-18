@@ -171,12 +171,8 @@ bool GLES2Lesson::init(float w, float h, const char* vertexShader,
 }
 
 void GLES2Lesson::resetTransformMatrices( float w, float h ) {
-    //glTranslatef( -1.5f, 0.0f, -6.0f);
     triangleTransformMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( -1.5f, 0.0f, -6.0f ) );
 
-    //glTranslatef( -1.5f, 0.0f, -6.0f);
-    //glTranslatef(3.0f, 0.0f, 0.0f );
-    //= glTranslate( 1.5f, 0.0, -6.0f );
     squareTransformMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( 1.5f, 0.0f, -6.0f ) );
     projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f );
 }
