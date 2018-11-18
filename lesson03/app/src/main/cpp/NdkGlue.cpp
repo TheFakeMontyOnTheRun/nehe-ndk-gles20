@@ -62,30 +62,30 @@ void shutdown() {
 }
 
 extern "C" {
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_onCreate(JNIEnv *env, jclass type,
                                                                     jobject assetManager);
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_onDestroy(JNIEnv *env, jclass type);
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_init(JNIEnv *env, jobject obj,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_init(JNIEnv *env, jclass type,
                                                                 jint width, jint height);
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_step(JNIEnv *env, jobject obj);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_step(JNIEnv *env, jclass type);
 };
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_onCreate(JNIEnv *env, jclass type,
                                                                     jobject assetManager) {
     loadShaders(env, assetManager);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_init(JNIEnv *env, jobject obj,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_init(JNIEnv *env, jclass type,
                                                                 jint width, jint height) {
     setupGraphics(width, height);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_step(JNIEnv *env, jobject obj) {
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_step(JNIEnv *env, jclass type) {
     renderFrame();
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_onDestroy(JNIEnv *env, jobject obj) {
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson03_GL2JNILib_onDestroy(JNIEnv *env, jclass type) {
     shutdown();
 }
 
