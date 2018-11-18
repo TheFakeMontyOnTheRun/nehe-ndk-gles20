@@ -32,15 +32,15 @@ float GLES2Lesson::triangleVertices[] = {
 
 float GLES2Lesson::squareVertices[]{
 //  2___1
-//  |   |
-//  |   |
+//  |\  |
+//  | \ |
 //  |___3
         1.0f, 1.0f, 0.0f,
         -1.0f, 1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
 //  2____
-//  |   |
-//  |   |
+//  |\  |
+//  | \ |
 //  3___1
         1.0f, -1.0f, 0.0f,
         -1.0f, 1.0f, 0.0f,
@@ -51,14 +51,6 @@ float GLES2Lesson::squareVertices[]{
 glm::mat4 GLES2Lesson::triangleTransformMatrix = glm::mat4( 1.0f );
 glm::mat4 GLES2Lesson::squareTransformMatrix = glm::mat4( 1.0f );
 glm::mat4 GLES2Lesson::projectionMatrix = glm::mat4( 1.0f );
-
-float radians(float degrees) {
-    return degrees * (3.14159f / 180.0f);
-}
-
-float cotangent(float angle) {
-    return 1.0f / tan(radians(angle));
-}
 
 extern void printGLString(const char *name, GLenum s) {
     const char *v = (const char *) glGetString(s);
@@ -148,9 +140,11 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
         LOGE("Could not create program.");
         return false;
     }
+
     GLES2Lesson::vertexAttributePosition = glGetAttribLocation(GLES2Lesson::gProgram, "aPosition");
     GLES2Lesson::modelMatrixAttributePosition = glGetUniformLocation(GLES2Lesson::gProgram,
                                                                      "uModel");
+
     GLES2Lesson::projectionMatrixAttributePosition = glGetUniformLocation(GLES2Lesson::gProgram,
                                                                           "uProjection");
     glEnableVertexAttribArray(vertexAttributePosition);
@@ -158,14 +152,10 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
 
-    //glTranslatef( -1.5f, 0.0f, -6.0f);
     GLES2Lesson::triangleTransformMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( -1.5f, 0.0f, -6.0f ) );
 
-    //glTranslatef( -1.5f, 0.0f, -6.0f);
-    //glTranslatef(3.0f, 0.0f, 0.0f );
-    //= glTranslate( 1.5f, 0.0, -6.0f );
     GLES2Lesson::squareTransformMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( 1.5f, 0.0f, -6.0f ) );
-    GLES2Lesson::projectionMatrix = glm::perspective(45.0f, ((float) w) / ((float) h), 0.1f, 100.0f );
+    GLES2Lesson::projectionMatrix = glm::perspective(45.0f, w / h, 0.1f, 100.0f );
 
     return true;
 }
