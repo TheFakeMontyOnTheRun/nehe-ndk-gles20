@@ -30,20 +30,20 @@ static void checkGlError(const char* op) {
 static std::string gVertexShader;
 static std::string gFragmentShader;
 
-static int android_read(void* cookie, char* buf, int size) {
-    return AAsset_read((AAsset*)cookie, buf, size);
+static int android_read(void* asset, char* buf, int size) {
+    return AAsset_read((AAsset*)asset, buf, size);
 }
 
-static int android_write(void* cookie, const char* buf, int size) {
+static int android_write(void* asset, const char* buf, int size) {
     return EACCES; // can't provide write access to the apk
 }
 
-static fpos_t android_seek(void* cookie, fpos_t offset, int whence) {
-    return AAsset_seek((AAsset*)cookie, offset, whence);
+static fpos_t android_seek(void* asset, fpos_t offset, int whence) {
+    return AAsset_seek((AAsset*)asset, offset, whence);
 }
 
-static int android_close(void* cookie) {
-    AAsset_close((AAsset*)cookie);
+static int android_close(void* asset) {
+    AAsset_close((AAsset*)asset);
     return 0;
 }
 
@@ -57,7 +57,7 @@ FILE* android_fopen(const char* fname, const char* mode, AAssetManager *assetMan
     return funopen(asset, android_read, android_write, android_seek, android_close);
 }
 
-
+//We will eventually improve this, but let's settle with a familar structure, for now.
 std::string readShaderToString( FILE* fileDescriptor ) {
     const unsigned N=1024;
     std::string total;
