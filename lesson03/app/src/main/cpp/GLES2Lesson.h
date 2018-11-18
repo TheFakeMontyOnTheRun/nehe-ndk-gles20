@@ -2,8 +2,8 @@
 // Created by monty on 23/11/15.
 //
 
-#ifndef LESSON02_GLES2LESSON_H
-#define LESSON02_GLES2LESSON_H
+#ifndef LESSON03_GLES2LESSON_H
+#define LESSON03_GLES2LESSON_H
 
 class GLES2Lesson {
 
@@ -42,4 +42,4 @@ public:
     static void drawGeometry( const float* vertexData, const float* colorData, const unsigned short* indexData, int vertexCount, const glm::mat4& transform );
 };
 
-#endif //LESSON02_GLES2LESSON_H
+#endif //LESSON03_GLES2LESSON_H
