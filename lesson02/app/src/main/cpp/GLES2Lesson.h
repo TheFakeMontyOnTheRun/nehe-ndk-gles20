@@ -20,7 +20,7 @@ public:
     static GLint projectionMatrixAttributePosition;
     static GLuint gProgram;
 
-    static bool init( float w, float h, const std::string& vertexShader, const std::string& fragmentShader );
+    static bool init( float w, float h, const char* vertexShader, const char* fragmentShader );
     static void render();
     static void shutdown();
 };

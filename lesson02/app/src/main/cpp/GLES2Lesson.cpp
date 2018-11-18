@@ -127,15 +127,16 @@ GLuint createProgram(const char *pVertexSource, const char *pFragmentSource) {
 }
 
 
-bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
-                       const std::string &fragmentShader) {
+bool GLES2Lesson::init(float w, float h, const char* vertexShader,
+                       const char* fragmentShader) {
     printGLString("Version", GL_VERSION);
     printGLString("Vendor", GL_VENDOR);
     printGLString("Renderer", GL_RENDERER);
     printGLString("Extensions", GL_EXTENSIONS);
 
     LOGI("setupGraphics(%d, %d)", w, h);
-    GLES2Lesson::gProgram = createProgram(vertexShader.c_str(), fragmentShader.c_str());
+    GLES2Lesson::gProgram = createProgram(vertexShader, fragmentShader);
+
     if (!GLES2Lesson::gProgram) {
         LOGE("Could not create program.");
         return false;
