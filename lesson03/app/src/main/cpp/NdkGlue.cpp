@@ -33,8 +33,8 @@
 
 #include "android_asset_operations.h"
 
-static std::string gVertexShader;
-static std::string gFragmentShader;
+char* gVertexShader;
+char* gFragmentShader;
 
 void loadShaders(JNIEnv *env, jobject &obj) {
     AAssetManager *asset_manager = AAssetManager_fromJava(env, obj);
@@ -48,7 +48,7 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 }
 
 bool setupGraphics(int w, int h) {
-    return GLES2Lesson::init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
+    return GLES2Lesson::init(w, h, gVertexShader, gFragmentShader);
 }
 
 void renderFrame() {
@@ -57,6 +57,8 @@ void renderFrame() {
 
 void shutdown() {
     GLES2Lesson::shutdown();
+    free(gVertexShader);
+    free(gFragmentShader);
 }
 
 extern "C" {

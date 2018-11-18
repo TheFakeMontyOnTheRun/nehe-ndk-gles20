@@ -148,12 +148,12 @@ void GLES2Lesson::printVerboseDriverInformation() {
     printGLString("Extensions", GL_EXTENSIONS);
 }
 
-bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
-                       const std::string &fragmentShader) {
+bool GLES2Lesson::init(float w, float h, const char* vertexShader,
+                       const char* fragmentShader) {
 
     printVerboseDriverInformation();
 
-    gProgram = createProgram(vertexShader.c_str(), fragmentShader.c_str());
+    gProgram = createProgram(vertexShader, fragmentShader);
 
     if (!gProgram) {
         LOGE("Could not create program.");
