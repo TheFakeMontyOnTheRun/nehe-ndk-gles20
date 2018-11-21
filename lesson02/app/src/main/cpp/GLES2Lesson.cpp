@@ -134,7 +134,7 @@ bool GLES2Lesson::init(float w, float h, const char* vertexShader,
     printGLString("Renderer", GL_RENDERER);
     printGLString("Extensions", GL_EXTENSIONS);
 
-    LOGI("setupGraphics(%d, %d)", w, h);
+    LOGI("setupGraphics(%f, %f)", w, h);
     GLES2Lesson::gProgram = createProgram(vertexShader, fragmentShader);
 
     if (!GLES2Lesson::gProgram) {
