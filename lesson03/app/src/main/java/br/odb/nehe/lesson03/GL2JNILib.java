@@ -1,7 +1,5 @@
 package br.odb.nehe.lesson03;
 
-// Wrapper for native library
-
 import android.content.res.AssetManager;
 
 public class GL2JNILib {
