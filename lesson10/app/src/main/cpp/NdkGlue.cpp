@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2009 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "GLES2/gl2.h"
@@ -41,9 +26,9 @@
 #include "android_asset_operations.h"
 
 
-std::string gVertexShader;
-std::string gFragmentShader;
-std::string worldData;
+char* gVertexShader;
+char* gFragmentShader;
+char* worldData;
 std::map< GLuint, std::vector<Trig> > batches;
 odb::GLES2Lesson *gles2Lesson = nullptr;
 std::vector< std::shared_ptr<NativeBitmap>> textures;
@@ -66,7 +51,7 @@ bool setupGraphics(int w, int h) {
     for ( auto& pair : batches ) {
         gles2Lesson->addTrigsForTexture(pair.first, pair.second);
     }
-    return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
+    return gles2Lesson->init(w, h, gVertexShader, gFragmentShader);
 }
 
 void renderFrame() {
@@ -80,6 +65,9 @@ void shutdown() {
     gles2Lesson = nullptr;
     local->shutdown();
     delete local;
+    free(gVertexShader);
+    free(gFragmentShader);
+    free(worldData);
 }
 
 void tick() {
@@ -89,19 +77,19 @@ void tick() {
 }
 
 extern "C" {
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onCreate(JNIEnv *env, jclass type,
                                                                     jobject assetManager);
 
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson10_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobjectArray bitmap);
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onDestroy(JNIEnv *env, jclass type);
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_init(JNIEnv *env, jobject obj,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_init(JNIEnv *env, jclass type,
                                                                 jint width, jint height);
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_step(JNIEnv *env, jobject obj);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_step(JNIEnv *env, jclass type);
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_tick(JNIEnv *env, jobject obj);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_tick(JNIEnv *env, jclass type);
 
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson10_GL2JNILib_reset(JNIEnv *env, jclass type);
@@ -172,7 +160,7 @@ std::string filterComments(std::string input) {
     return output.str();
 }
 
-void readWorld(JNIEnv *env, void *reserved,
+void readWorld(JNIEnv *env, jclass type,
                jobject assetManager) {
 
     AAssetManager *asset_manager = AAssetManager_fromJava(env, assetManager);
@@ -221,26 +209,26 @@ void readWorld(JNIEnv *env, void *reserved,
     LOGI("done loading\n");
 }
 
-void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
+void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onCreate(JNIEnv *env, jclass type,
                                                           jobject assetManager) {
     loadShaders(env, assetManager);
-    readWorld(env, reserved, assetManager);
+    readWorld(env, type, assetManager);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_init(JNIEnv *env, jobject obj,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_init(JNIEnv *env, jclass type,
                                                                 jint width, jint height) {
     setupGraphics(width, height);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_step(JNIEnv *env, jobject obj) {
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_step(JNIEnv *env, jclass type) {
     renderFrame();
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_tick(JNIEnv *env, jobject obj) {
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_tick(JNIEnv *env, jclass type) {
     tick();
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onDestroy(JNIEnv *env, jobject obj) {
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson10_GL2JNILib_onDestroy(JNIEnv *env, jclass type) {
     shutdown();
 }
 
@@ -283,14 +271,14 @@ Java_br_odb_nehe_lesson10_GL2JNILib_reset(JNIEnv *env, jclass type) {
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_moveForward(JNIEnv *env, jclass type) {
     if (gles2Lesson != nullptr) {
-        gles2Lesson->moveForward(0.5f);
+        gles2Lesson->moveForward(0.25f);
     }
 }
 
 JNIEXPORT void JNICALL
 Java_br_odb_nehe_lesson10_GL2JNILib_moveBackward(JNIEnv *env, jclass type) {
     if (gles2Lesson != nullptr) {
-        gles2Lesson->moveBackward(0.5f);
+        gles2Lesson->moveBackward(0.25f);
     }
 }
 

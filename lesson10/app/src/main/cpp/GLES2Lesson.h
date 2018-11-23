@@ -2,8 +2,8 @@
 // Created by monty on 23/11/15.
 //
 
-#ifndef LESSON02_GLES2LESSON_H
-#define LESSON02_GLES2LESSON_H
+#ifndef LESSON10_GLES2LESSON_H
+#define LESSON10_GLES2LESSON_H
 
 namespace odb {
 
@@ -77,4 +77,4 @@ namespace odb {
         void setTextures(const std::vector<std::shared_ptr<NativeBitmap>>& vector);
     };
 }
-#endif //LESSON02_GLES2LESSON_H
+#endif //LESSON10_GLES2LESSON_H
