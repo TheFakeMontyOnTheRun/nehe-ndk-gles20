@@ -2,8 +2,8 @@
 // Created by monty on 23/11/15.
 //
 
-#ifndef LESSON02_GLES2LESSON_H
-#define LESSON02_GLES2LESSON_H
+#ifndef LESSON09_GLES2LESSON_H
+#define LESSON09_GLES2LESSON_H
 
 namespace odb {
 
@@ -39,7 +39,7 @@ namespace odb {
 
         const static int PREFERED_NUMBER_OF_STARS;
 
-        std::vector <std::shared_ptr<Star>> mStars;
+        std::vector <std::shared_ptr<Star> > mStars;
 
         glm::mat4 projectionMatrix;
 
@@ -76,7 +76,7 @@ namespace odb {
         bool init(float w, float h, const std::string &vertexShader,
                   const std::string &fragmentShader);
 
-        void setTexture(int *bitmapData, int *detailData, int width, int height, int format);
+        void setTexture(int *bitmapData, int *detailData, int width, int height);
 
         void render();
 
@@ -97,4 +97,4 @@ namespace odb {
         void speedDownTwist();
     };
 }
-#endif //LESSON02_GLES2LESSON_H
+#endif //LESSON09_GLES2LESSON_H

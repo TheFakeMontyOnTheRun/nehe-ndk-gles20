@@ -89,8 +89,10 @@ namespace odb {
         return shader;
     }
 
-        auto vertexShader = loadShader(GL_VERTEX_SHADER, pVertexSource);
+
     GLuint GLES2Lesson::createProgram(const char *pVertexSource, const char *pFragmentSource) {
+        auto vertexShader = loadShader(GL_VERTEX_SHADER, pVertexSource);
+
         if (!vertexShader) {
             return 0;
         }
@@ -285,8 +287,7 @@ namespace odb {
         }
     }
 
-    void GLES2Lesson::setTexture(int *bitmapData, int *detailData, int width, int height,
-                                 int format) {
+    void GLES2Lesson::setTexture(int *bitmapData, int *detailData, int width, int height) {
         textureData = bitmapData;
         twinkleData = detailData;
         textureWidth = width;
@@ -299,13 +300,13 @@ namespace odb {
         rotationPosition += rotationDelta;
 
         float acc = 0.0f;
-
+        float rads = ( 2.0f * M_PI) / 180.0f;
         glm::mat4 transform(1.0f);
 
         for (auto &star: mStars) {
             acc += 1.0f;
             transform = glm::mat4(1.0f);
-            transform = glm::rotate(transform, acc * rotationPosition,
+            transform = glm::rotate(transform, acc * rotationPosition * rads,
                                     glm::vec3(0.0f, 0.0f, 1.0f));
             transform = glm::translate(transform,
                                        glm::vec3(acc, 0.0f,
