@@ -11,7 +11,7 @@ import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.opengles.GL10;
 
 class GL2JNIView extends GLSurfaceView {
-    private static String TAG = "Lesson04 NeHe View";
+    private static final String TAG = "Lesson04 NeHe View";
 
     public GL2JNIView(Context context) {
         super(context);
@@ -28,7 +28,7 @@ class GL2JNIView extends GLSurfaceView {
     }
 
     private static class ContextFactory implements GLSurfaceView.EGLContextFactory {
-        private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
+        private static final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
         public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
             Log.w(TAG, "creating OpenGL ES 2.0 context");
             checkEglError("Before eglCreateContext", egl);
@@ -52,14 +52,14 @@ class GL2JNIView extends GLSurfaceView {
 
     private static class ConfigChooser implements GLSurfaceView.EGLConfigChooser {
 
-        public ConfigChooser(int r, int g, int b) {
+        ConfigChooser(int r, int g, int b) {
             mRedSize = r;
             mGreenSize = g;
             mBlueSize = b;
         }
 
-        private static int EGL_OPENGL_ES2_BIT = 4;
-        private static int[] s_configAttribs2 =
+        private static final int EGL_OPENGL_ES2_BIT = 4;
+        private static final int[] s_configAttribs2 =
         {
             EGL10.EGL_RED_SIZE, 4,
             EGL10.EGL_GREEN_SIZE, 4,
@@ -85,8 +85,8 @@ class GL2JNIView extends GLSurfaceView {
             return chooseConfig(egl, display, configs);
         }
 
-        public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display,
-                EGLConfig[] configs) {
+        EGLConfig chooseConfig(EGL10 egl, EGLDisplay display,
+                               EGLConfig[] configs) {
             for(EGLConfig config : configs) {
 
                 int r = findConfigAttrib(egl, display, config,
@@ -111,10 +111,10 @@ class GL2JNIView extends GLSurfaceView {
             return defaultValue;
         }
 
-        protected int mRedSize;
-        protected int mGreenSize;
-        protected int mBlueSize;
-        private int[] mValue = new int[1];
+        final int mRedSize;
+        final int mGreenSize;
+        final int mBlueSize;
+        private final int[] mValue = new int[1];
     }
 
     private static class Renderer implements GLSurfaceView.Renderer {

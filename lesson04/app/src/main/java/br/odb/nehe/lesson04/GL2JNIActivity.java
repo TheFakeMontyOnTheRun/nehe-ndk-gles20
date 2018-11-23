@@ -7,9 +7,9 @@ import android.os.Bundle;
 
 public class GL2JNIActivity extends Activity {
 
-    GL2JNIView mView;
-    boolean running = false;
-    static AssetManager assets;
+    private GL2JNIView mView;
+    private boolean running = false;
+    private static AssetManager assets;
     @Override protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 

@@ -4,7 +4,7 @@ package br.odb.nehe.lesson04;
 
 import android.content.res.AssetManager;
 
-public class GL2JNILib {
+class GL2JNILib {
 
     public static AssetManager assetManager;
 
