@@ -192,7 +192,6 @@ namespace odb {
         gProgram = 0;
         currentFilter = GL_NEAREST;
         enableBlending = true;
-        ambientLightColor = ambientLightFullColor;
         diffuseLightDirection = glm::normalize(glm::vec4(0.0f, 0.0f, -1.0f, 0.0f));
         diffuseLightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
         reset();
@@ -238,8 +237,9 @@ namespace odb {
         glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
         glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
         glm::mat4 translated = glm::translate(identity, translate);
-        glm::mat4 rotatedAroundXAxis = glm::rotate(translated, cubeRotationAngleYZ, xAxis);
-        glm::mat4 rotatedAroundYAxis = glm::rotate(rotatedAroundXAxis, cubeRotationAngleXZ, yAxis);
+        float rads = ((2 * M_PI) / 180.0f);
+        glm::mat4 rotatedAroundXAxis = glm::rotate(translated, cubeRotationAngleYZ * rads, xAxis);
+        glm::mat4 rotatedAroundYAxis = glm::rotate(rotatedAroundXAxis, cubeRotationAngleXZ * rads, yAxis);
         cubeTransformMatrix = rotatedAroundYAxis;
     }
 
@@ -266,7 +266,7 @@ namespace odb {
         glEnableVertexAttribArray(textureCoordinatesAttributePosition);
         glEnableVertexAttribArray(normalAttributePosition);
 
-        glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
+        glUniform4fv(ambientLightColorShaderLocation, 1, mFullLight ? &ambientLightFullColor[0] : &ambientLightOffColor[0]);
 
         glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
 
@@ -322,7 +322,7 @@ namespace odb {
 
         glUniform4fv(diffuseLightColorShaderLocation, 1, &diffuseLightColor[0]);
         glUniform4fv(diffuseLightDirectionShaderLocation, 1, &diffuseLightDirection[0]);
-        glUniform4fv(ambientLightColorShaderLocation, 1, &ambientLightColor[0]);
+        glUniform4fv(ambientLightColorShaderLocation, 1, mFullLight ? &ambientLightFullColor[0] : &ambientLightOffColor[0]);
 
         glUniform1i(samplerUniformPosition, 0);
 
@@ -351,7 +351,7 @@ namespace odb {
         );
     }
 
-    void GLES2Lesson::setTexture(int *bitmapData, int width, int height, int format) {
+    void GLES2Lesson::setTexture(int *bitmapData, int width, int height) {
         textureData = bitmapData;
         textureWidth = width;
         textureHeight = height;
@@ -378,11 +378,7 @@ namespace odb {
     }
 
     void GLES2Lesson::toggleLightning() {
-        if (ambientLightColor == ambientLightFullColor) {
-            ambientLightColor = ambientLightOffColor;
-        } else {
-            ambientLightColor = ambientLightFullColor;
-        }
+        mFullLight = !mFullLight;
     }
 
     void GLES2Lesson::speedUpXZ() {

@@ -55,7 +55,7 @@ void loadShaders(JNIEnv *env, jobject &obj) {
 
 bool setupGraphics(int w, int h) {
     gles2Lesson = new odb::GLES2Lesson();
-    gles2Lesson->setTexture(pixels, 128, 128, 1);
+    gles2Lesson->setTexture(pixels, 128, 128);
     pixels = nullptr; //now, it belongs to gles2Lesson.
     return gles2Lesson->init(w, h, gVertexShader.c_str(), gFragmentShader.c_str());
 }
@@ -80,20 +80,20 @@ void tick() {
 }
 
 extern "C" {
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_onCreate(JNIEnv *env, jclass type,
                                                                     jobject assetManager);
 
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson08_GL2JNILib_setTexture(JNIEnv *env, jclass type, jobject bitmap);
 
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_onDestroy(JNIEnv *env, jobject obj);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_onDestroy(JNIEnv *env, jclass type);
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_init(JNIEnv *env, jobject obj,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_init(JNIEnv *env, jclass type,
                                                                 jint width, jint height);
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_step(JNIEnv *env, jobject obj);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_step(JNIEnv *env, jclass type);
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_tick(JNIEnv *env, jobject obj);
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_tick(JNIEnv *env, jclass type);
 
 JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson08_GL2JNILib_toggleFiltering(JNIEnv *env, jclass type);
@@ -124,25 +124,25 @@ JNIEXPORT void JNICALL
         Java_br_odb_nehe_lesson08_GL2JNILib_toggleBlending(JNIEnv *env, jclass type);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_onCreate(JNIEnv *env, void *reserved,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_onCreate(JNIEnv *env, jclass type,
                                                                     jobject assetManager) {
     loadShaders(env, assetManager);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_init(JNIEnv *env, jobject obj,
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_init(JNIEnv *env, jclass type,
                                                                 jint width, jint height) {
     setupGraphics(width, height);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_step(JNIEnv *env, jobject obj) {
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_step(JNIEnv *env, jclass type) {
     renderFrame();
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_tick(JNIEnv *env, jobject obj) {
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_tick(JNIEnv *env, jclass type) {
     tick();
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_onDestroy(JNIEnv *env, jobject obj) {
+JNIEXPORT void JNICALL Java_br_odb_nehe_lesson08_GL2JNILib_onDestroy(JNIEnv *env, jclass type) {
     shutdown();
 }
 

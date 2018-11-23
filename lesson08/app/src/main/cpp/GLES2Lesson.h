@@ -2,8 +2,8 @@
 // Created by monty on 23/11/15.
 //
 
-#ifndef LESSON02_GLES2LESSON_H
-#define LESSON02_GLES2LESSON_H
+#ifndef LESSON08_GLES2LESSON_H
+#define LESSON08_GLES2LESSON_H
 
 namespace odb {
 
@@ -66,6 +66,7 @@ namespace odb {
         glm::vec4 diffuseLightDirection;
         glm::vec4 diffuseLightColor;
         glm::vec4 ambientLightColor;
+        bool mFullLight = false;
 
         GLint diffuseLightDirectionShaderLocation;
         GLint diffuseLightColorShaderLocation;
@@ -83,7 +84,7 @@ namespace odb {
         bool init(float w, float h, const std::string &vertexShader,
                   const std::string &fragmentShader);
 
-        void setTexture(int *bitmapData, int width, int height, int format);
+        void setTexture(int *bitmapData, int width, int height);
 
         void render();
 
@@ -114,4 +115,4 @@ namespace odb {
         void disableAlfaBlending() const;
     };
 }
-#endif //LESSON02_GLES2LESSON_H
+#endif //LESSON08_GLES2LESSON_H
