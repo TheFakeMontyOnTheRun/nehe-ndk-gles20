@@ -2,8 +2,8 @@
 // Created by monty on 23/11/15.
 //
 
-#ifndef LESSON02_GLES2LESSON_H
-#define LESSON02_GLES2LESSON_H
+#ifndef LESSON07_GLES2LESSON_H
+#define LESSON07_GLES2LESSON_H
 
 namespace odb {
 
@@ -85,7 +85,7 @@ namespace odb {
         bool init(float w, float h, const std::string &vertexShader,
                   const std::string &fragmentShader);
 
-        void setTexture(int *bitmapData, int *normalData, int width, int height, int format);
+        void setTexture(int *bitmapData, int *normalData, int width, int height);
 
         void render();
 
@@ -110,4 +110,4 @@ namespace odb {
         void setSpeeds(const glm::vec2 &param);
     };
 }
-#endif //LESSON02_GLES2LESSON_H
+#endif //LESSON07_GLES2LESSON_H

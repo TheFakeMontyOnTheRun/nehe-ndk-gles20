@@ -242,8 +242,9 @@ namespace odb {
 	    glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
 	    glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
 	    glm::mat4 translated = glm::translate(identity, translate);
-	    glm::mat4 rotatedAroundXAxis = glm::rotate(translated, cubeRotationAngleYZ, xAxis);
-	    glm::mat4 rotatedAroundYAxis = glm::rotate(rotatedAroundXAxis, cubeRotationAngleXZ, yAxis);
+	    float rads = M_PI / 180.0f;
+	    glm::mat4 rotatedAroundXAxis = glm::rotate(translated, cubeRotationAngleYZ * rads, xAxis);
+	    glm::mat4 rotatedAroundYAxis = glm::rotate(rotatedAroundXAxis, cubeRotationAngleXZ * rads, yAxis);
 	    return rotatedAroundYAxis;
     }
 
@@ -367,14 +368,14 @@ namespace odb {
 	                 vboCubeVertexIndicesIndex,
 	                 36,
 	                 glm::translate(glm::mat4(1.0f),
-	                                glm::vec3(-2.0f, -2.0f, -10.0f))//cubeTransformMatrix
+	                                glm::vec3(-2.0f, -2.0f, -10.0f))
 	    );
 
 	    drawGeometry(vboCubeVertexDataIndex,
 	                 vboCubeVertexIndicesIndex,
 	                 36,
 	                 glm::translate(glm::mat4(1.0f),
-	                                glm::vec3(2.0f, -2.0f, -10.0f))//cubeTransformMatrix
+	                                glm::vec3(2.0f, -2.0f, -10.0f))
 	    );
 
 
@@ -382,20 +383,19 @@ namespace odb {
 	                 vboCubeVertexIndicesIndex,
 	                 36,
 	                 glm::translate(glm::mat4(1.0f),
-	                                glm::vec3(2.0f, -2.0f, -4.0f))//cubeTransformMatrix
+	                                glm::vec3(2.0f, -2.0f, -4.0f))
 	    );
 
 	    drawGeometry(vboCubeVertexDataIndex,
 	                 vboCubeVertexIndicesIndex,
 	                 36,
 	                 glm::translate(glm::mat4(1.0f),
-	                                glm::vec3(-2.0f, 2.0f, -5.0f))//cubeTransformMatrix
+	                                glm::vec3(-2.0f, 2.0f, -5.0f))
 	    );
 
     }
 
-    void GLES2Lesson::setTexture(int *bitmapData, int *normalData, int width, int height,
-                                 int format) {
+    void GLES2Lesson::setTexture(int *bitmapData, int *normalData, int width, int height) {
 	    textureData = bitmapData;
 	    normals = normalData;
 	    textureWidth = width;
@@ -413,21 +413,9 @@ namespace odb {
     }
 
     void GLES2Lesson::toggleFiltering() {
-//        if (currentFilter == GL_NEAREST) {
-//            currentFilter = GL_LINEAR;
-//            LOGI("Using GL_LINEAR\n");
-//        } else {
-//            currentFilter = GL_NEAREST;
-//            LOGI("Using GL_NEAREST\n");
-//        }
     }
 
     void GLES2Lesson::toggleLightning() {
-//        if (ambientLightColor == ambientLightFullColor) {
-//            ambientLightColor = ambientLightOffColor;
-//        } else {
-//            ambientLightColor = ambientLightFullColor;
-//        }
     }
 
     void GLES2Lesson::speedUpXZ() {
