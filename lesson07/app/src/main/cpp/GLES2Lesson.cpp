@@ -201,7 +201,6 @@ namespace odb {
     GLES2Lesson::~GLES2Lesson() {
         deleteVBOs();
         glDeleteTextures(1, &textureId);
-	    glDeleteTextures(1, &normalMapId);
     }
 
     bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
@@ -227,8 +226,6 @@ namespace odb {
 
         glActiveTexture(GL_TEXTURE0);
         textureId = uploadTextureData(textureData, textureWidth, textureHeight);
-	    glActiveTexture(GL_TEXTURE1);
-	    normalMapId = uploadTextureData(normals, textureWidth, textureHeight);
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
@@ -255,7 +252,6 @@ namespace odb {
         modelMatrixAttributePosition = glGetUniformLocation(gProgram, "uModel");
         projectionMatrixAttributePosition = glGetUniformLocation(gProgram, "uProjection");
         samplerUniformPosition = glGetUniformLocation(gProgram, "sTexture");
-	    normalMapUniformPosition = glGetUniformLocation(gProgram, "sNormalMap");
         textureCoordinatesAttributePosition = glGetAttribLocation(gProgram, "aTexCoord");
 
         ambientLightColorShaderLocation = glGetUniformLocation(gProgram, "uAmbientLightColor");
@@ -341,11 +337,6 @@ namespace odb {
 	    glActiveTexture( GL_TEXTURE0 );
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
-
-        glUniform1i(normalMapUniformPosition, 1);
-	    glActiveTexture( GL_TEXTURE1 );
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, currentFilter);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, currentFilter);
     }
 
     void GLES2Lesson::render() {
@@ -361,9 +352,8 @@ namespace odb {
         );
     }
 
-    void GLES2Lesson::setTexture(int *bitmapData, int *normalData, int width, int height, int format) {
+    void GLES2Lesson::setTexture(int *bitmapData, int width, int height) {
         textureData = bitmapData;
-        normals = normalData;
         textureWidth = width;
         textureHeight = height;
     }

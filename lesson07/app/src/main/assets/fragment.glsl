@@ -1,7 +1,6 @@
 precision mediump float;
 varying vec2 vTextureCoords;
 uniform sampler2D sTexture;
-uniform sampler2D sNormalMap;
 uniform vec4 uAmbientLightColor;
 uniform vec4 uDiffuseLightColor;
 uniform vec4 uDiffuseLightDirection;
@@ -23,11 +22,10 @@ vec4 ComputeLight (const in vec3 direction, const in vec4 lightColor, const in v
 
 
 void main() {
-    vec3 direction0 = vec3( -1.0, 0.0, 0.0 );
-    vec4 light0posn = vec4( 3.0, 0.0 , -6.0, 1.0 );
+    vec3 direction0 = vec3( 0.0, 0.0, -1.0 );
+    vec4 light0posn = vec4( 0.0, 0.0, 0.0, 1.0);
     vec4 light0color = uDiffuseLightColor;
 
-    vec4 normalFromTexel = vec4( texture2D( sNormalMap, vTextureCoords ).xyz, 0.0 );
     vec4 texel = texture2D( sTexture, vTextureCoords );
 
     vec4 interpolatedNormal = vNormal;
@@ -48,5 +46,5 @@ void main() {
    	vec3 eyedirn = normalize(origin - dehomogenizedPosition);
 
    	vec3 half0 = normalize (direction0 + eyedirn) ;
-    gl_FragColor = texel * ( uAmbientLightColor + ComputeLight(direction0, light0color, normal, half0, vec4( 0.5, 0.5, 0.5, 1.0), vec4( 1.0, 1.0, 1.0, 1.0 ), 1.0) );
+    gl_FragColor = texel * ( uAmbientLightColor + ComputeLight(direction0, light0color, normal, half0, vec4( 0.4, 0.8, 0.4, 1.0), vec4( 0.0, 0.4, 0.4, 1.0 ), 300.0) );
 }
