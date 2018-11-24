@@ -300,7 +300,7 @@ namespace odb {
         rotationPosition += rotationDelta;
 
         float acc = 0.0f;
-        float rads = ( 2.0f * M_PI) / 180.0f;
+        float rads = M_PI / 180.0f;
         glm::mat4 transform(1.0f);
 
         for (auto &star: mStars) {

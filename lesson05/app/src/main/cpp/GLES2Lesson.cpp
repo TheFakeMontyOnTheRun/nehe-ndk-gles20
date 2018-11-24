@@ -206,7 +206,7 @@ bool GLES2Lesson::init(float w, float h, const std::string &vertexShader,
 }
 
 void GLES2Lesson::resetTransformMatrices() {
-    float rads = ((2 * M_PI) / 180.0f);
+    float rads = (M_PI / 180.0f);
     pyramidTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( -1.5f, 0.0f, -6.0f ) ), pyramidRotationAngle * rads, glm::vec3( 0.0f, 1.0f, 0.0f ) );
     cubeTransformMatrix = glm::rotate( glm::translate( glm::mat4( 1.0f ), glm::vec3( 1.5f, 0.0f, -6.0f ) ), cubeRotationAngle * rads, glm::vec3( 1.0f, 0.0f, 0.0f ) );
 }

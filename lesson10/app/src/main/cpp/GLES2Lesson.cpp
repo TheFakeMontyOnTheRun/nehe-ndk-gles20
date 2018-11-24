@@ -20,21 +20,6 @@
 
 namespace odb {
 
-    void buildMipMap(const std::shared_ptr<NativeBitmap> &texture) {
-        auto bitmap = texture;
-        std::shared_ptr<NativeBitmap> old;
-        int level = 1;
-        while (bitmap->getWidth() > 1) {
-            old = bitmap;
-            bitmap = old->makeBitmapWithHalfDimensions();
-            glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, bitmap->getWidth(), bitmap->getHeight(), 0,
-                         GL_RGBA, GL_UNSIGNED_BYTE,
-                         bitmap->getPixelData());
-            ++level;
-
-        }
-    }
-
     GLuint uploadTextureData(const std::shared_ptr<NativeBitmap> &texture) {
         // Texture object handle
         GLuint textureId = 0;
@@ -52,8 +37,6 @@ namespace odb {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->getWidth(), texture->getHeight(), 0,
                      GL_RGBA, GL_UNSIGNED_BYTE,
                      texture->getPixelData());
-
-//        buildMipMap(texture);
 
         return textureId;
     }
@@ -285,7 +268,7 @@ namespace odb {
 
     void GLES2Lesson::updateDirectionVector() {
 
-        float angleInRadians = angleXzInDegress * (3.14159f / 180.0f);
+        float angleInRadians = angleXzInDegress * (M_PI / 180.0f);
 
         cameraDirection = glm::vec3(sin(angleInRadians), 0.0f, cos(angleInRadians));
     }

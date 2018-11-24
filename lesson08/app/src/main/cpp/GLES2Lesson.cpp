@@ -237,7 +237,7 @@ namespace odb {
         glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
         glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
         glm::mat4 translated = glm::translate(identity, translate);
-        float rads = ((2 * M_PI) / 180.0f);
+        float rads = (M_PI / 180.0f);
         glm::mat4 rotatedAroundXAxis = glm::rotate(translated, cubeRotationAngleYZ * rads, xAxis);
         glm::mat4 rotatedAroundYAxis = glm::rotate(rotatedAroundXAxis, cubeRotationAngleXZ * rads, yAxis);
         cubeTransformMatrix = rotatedAroundYAxis;
