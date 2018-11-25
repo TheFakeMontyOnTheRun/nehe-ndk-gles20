@@ -8,19 +8,15 @@ import com.google.vrtoolkit.cardboard.HeadTransform;
 import com.google.vrtoolkit.cardboard.Viewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
 
-/**
- * Created by monty on 17/03/16.
- */
-public class GL2JNIRenderer implements CardboardView.StereoRenderer {
+class GL2JNIRenderer implements CardboardView.StereoRenderer {
 
-	float[] forwardVector = new float[3];
+	private final float[] forwardVector = new float[3];
 
 	@Override
 	public void onNewFrame(HeadTransform headTransform) {
 		headTransform.getEulerAngles(forwardVector, 0);
-		float xz = extractAngleXZFromHeadtransform(headTransform);
+		float xz = extractAngleXZFromHeadtransform();
 		GL2JNILib.setXZAngle(xz);
 	}
 
@@ -34,9 +30,7 @@ public class GL2JNIRenderer implements CardboardView.StereoRenderer {
 	}
 
 	@Override
-	public void onFinishFrame(Viewport viewport) {
-
-	}
+	public void onFinishFrame(Viewport viewport) {}
 
 	@Override
 	public void onSurfaceChanged(int width, int height) {
@@ -44,25 +38,12 @@ public class GL2JNIRenderer implements CardboardView.StereoRenderer {
 	}
 
 	@Override
-	public void onSurfaceCreated(EGLConfig eglConfig) {
-
-	}
+	public void onSurfaceCreated(EGLConfig eglConfig) {}
 
 	@Override
-	public void onRendererShutdown() {
+	public void onRendererShutdown() {}
 
-
-	}
-
-	private float extractAngleXYFromHeadtransform(HeadTransform headTransform) {
-		return 360.0f - ((float) (forwardVector[2] * (180 / Math.PI)));
-	}
-
-	private float extractAngleYZFromHeadtransform(HeadTransform headTransform) {
-		return 360.0f - ((float) (forwardVector[0] * (180 / Math.PI)));
-	}
-
-	private float extractAngleXZFromHeadtransform(HeadTransform headTransform) {
+	private float extractAngleXZFromHeadtransform() {
 		return ((float) (forwardVector[1] * (180 / Math.PI)));
 	}
 }

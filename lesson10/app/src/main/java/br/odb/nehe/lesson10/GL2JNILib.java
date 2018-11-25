@@ -1,27 +1,9 @@
-/*
- * Copyright (C) 2007 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package br.odb.nehe.lesson10;
-
-// Wrapper for native library
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 
-public class GL2JNILib {
+class GL2JNILib {
 
 	public static AssetManager assetManager;
 
@@ -49,13 +31,7 @@ public class GL2JNILib {
 
 	public static native void moveForward();
 
-	public static native void turnRight();
-
 	public static native void moveBackward();
-
-	public static native void turnLeft();
-
-	public static native void onTouchNormalized(float x, float y);
 
 	public static native void setLookAtMatrix(float[] lookAt);
 
