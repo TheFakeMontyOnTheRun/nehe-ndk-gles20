@@ -13,4 +13,4 @@ Each of these steps require a few new additions.
 - Oh, and look out for texturing coordinates and shader compilation. Since we're not using the colours anymore, we MUST take everything related to it out, risking a GL error (since the shader position is optimized out and we don't to send useless data into the GPU).
 
 You must be thinking "Were do we say what texturing unit are we using?!".
-Well, since we never change it from default, we're implictly using GL_TEXTURE0.
+Well, since we never change it from default, we're implicitly using GL_TEXTURE0.

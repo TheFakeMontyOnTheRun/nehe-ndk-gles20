@@ -25,3 +25,7 @@ proguard/
 
 # Log Files
 *.log
+lesson06/app/.cxx
+lesson09/app/.cxx
+lesson06/.idea
+lesson09/.idea
