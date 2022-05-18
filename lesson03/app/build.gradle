@@ -5,7 +5,7 @@ android {
 	compileSdk 32
 	defaultConfig {
 		applicationId 'br.odb.nehe.lesson03'
-		minSdkVersion 14
+		minSdkVersion 19
 		targetSdkVersion 32
 		externalNativeBuild {
 			cmake {
