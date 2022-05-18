@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2006, The Android Open Source Project
@@ -22,8 +21,8 @@
      them to be changed based on the locale and options. -->
 
 <resources>
-    <!-- Simple strings. -->
-    <string name="gl2jni_activity">NeHe GLES2 NDK Lesson 2</string>
+	<!-- Simple strings. -->
+	<string name="gl2jni_activity">NeHe GLES2 NDK Lesson 2</string>
 
 </resources>
 

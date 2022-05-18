@@ -9,20 +9,22 @@
 class GLES2Lesson {
 public:
 
-    static float triangleVertices[ 9 ];
-    static float squareVertices[ 18 ];
-    static glm::mat4 triangleTransformMatrix;
-    static glm::mat4 squareTransformMatrix;
-    static glm::mat4 projectionMatrix;
+	static float triangleVertices[9];
+	static float squareVertices[18];
+	static glm::mat4 triangleTransformMatrix;
+	static glm::mat4 squareTransformMatrix;
+	static glm::mat4 projectionMatrix;
 
-    static GLint vertexAttributePosition;
-    static GLint modelMatrixAttributePosition;
-    static GLint projectionMatrixAttributePosition;
-    static GLuint gProgram;
+	static GLint vertexAttributePosition;
+	static GLint modelMatrixAttributePosition;
+	static GLint projectionMatrixAttributePosition;
+	static GLuint gProgram;
 
-    static bool init( float w, float h, const char* vertexShader, const char* fragmentShader );
-    static void render();
-    static void shutdown();
+	static bool init(float w, float h, const char *vertexShader, const char *fragmentShader);
+
+	static void render();
+
+	static void shutdown();
 };
 
 
