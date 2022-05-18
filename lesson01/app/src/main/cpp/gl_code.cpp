@@ -6,9 +6,9 @@
 #include <GLES2/gl2ext.h>
 #include <string>
 #include <vector>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
 #include <cerrno>
 
 #define  LOG_TAG    "libgl2jni"
@@ -49,10 +49,10 @@ static int android_close(void* asset) {
 
 
 FILE* android_fopen(const char* fname, const char* mode, AAssetManager *assetManager) {
-    if(mode[0] == 'w') return NULL;
+    if(mode[0] == 'w') return nullptr;
 
     AAsset* asset = AAssetManager_open( assetManager, fname, 0);
-    if(!asset) return NULL;
+    if(!asset) return nullptr;
 
     return funopen(asset, android_read, android_write, android_seek, android_close);
 }
@@ -91,7 +91,7 @@ void loadShaders( JNIEnv* env, jobject& obj ) {
 GLuint loadShader(GLenum shaderType, const char* pSource) {
     auto shader = glCreateShader(shaderType);
     if (shader) {
-        glShaderSource(shader, 1, &pSource, NULL);
+        glShaderSource(shader, 1, &pSource, nullptr);
         glCompileShader(shader);
         GLint compiled = 0;
         glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
@@ -101,7 +101,7 @@ GLuint loadShader(GLenum shaderType, const char* pSource) {
             if (infoLen) {
                 char* buf = (char*) malloc(infoLen);
                 if (buf) {
-                    glGetShaderInfoLog(shader, infoLen, NULL, buf);
+                    glGetShaderInfoLog(shader, infoLen, nullptr, buf);
                     LOGE("Could not compile shader %d:\n%s\n",
                             shaderType, buf);
                     free(buf);
@@ -140,7 +140,7 @@ GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
             if (bufLength) {
                 char* buf = (char*) malloc(bufLength);
                 if (buf) {
-                    glGetProgramInfoLog(program, bufLength, NULL, buf);
+                    glGetProgramInfoLog(program, bufLength, nullptr, buf);
                     LOGE("Could not link program:\n%s\n", buf);
                     free(buf);
                 }
@@ -182,20 +182,18 @@ void renderFrame() {
     checkGlError("glUseProgram");
 }
 
-extern "C" {
-    JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_onCreate(JNIEnv *env, jclass type, jobject assetManager);
-    JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_init(JNIEnv *env, jclass type, jint width, jint height);
-    JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_step(JNIEnv *env, jclass type);
-};
-
-extern "C" JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_onCreate(JNIEnv *env, jclass type, jobject assetManager) {
+extern "C"
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson01_GL2JNILib_onCreate(JNIEnv *env, jobject clazz, jobject assetManager) {
     loadShaders( env, assetManager );
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_init(JNIEnv *env, jclass type, jint width, jint height) {
+extern "C" JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_init(JNIEnv *env, jclass clazz, jint width, jint height) {
     setupGraphics(width, height);
 }
 
-JNIEXPORT void JNICALL Java_br_odb_nehe_lesson01_GL2JNILib_step(JNIEnv *env, jclass type) {
+extern "C"
+JNIEXPORT void JNICALL
+Java_br_odb_nehe_lesson01_GL2JNILib_step(JNIEnv *env, jclass clazz) {
     renderFrame();
 }
