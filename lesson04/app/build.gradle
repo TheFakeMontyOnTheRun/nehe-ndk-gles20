@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
-    defaultConfig {
+	compileSdk 32
+	defaultConfig {
         applicationId 'br.odb.nehe.lesson04'
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion 19
+        targetSdkVersion 32
         externalNativeBuild {
             cmake {
                 // Available arguments are inside ${SDK}/cmake/.../android.toolchain.cmake file
@@ -26,5 +27,11 @@ android {
             path 'src/main/cpp/CMakeLists.txt'
         }
     }
+}
+repositories {
+	mavenCentral()
+}
+dependencies {
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
