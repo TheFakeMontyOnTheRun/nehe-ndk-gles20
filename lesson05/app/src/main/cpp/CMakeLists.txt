@@ -7,13 +7,14 @@ include_directories("../../../../../common_includes/glm_0946")
 include_directories("../../../../../common_includes")
 
 add_library(NdkGlue SHARED
-            NdkGlue.cpp
-	    GLES2Lesson.cpp)
+        NdkGlue.cpp
+        GLES2Lesson.cpp)
 
 # add lib dependencies
-target_link_libraries(NdkGlue
-                      android
-                      log 
-                      EGL
-                      GLESv2)
+target_link_libraries(
+        NdkGlue
+        android
+        log
+        EGL
+        GLESv2)
 
