@@ -3,7 +3,7 @@ precision highp float;
 #endif
 
 #if __VERSION__ >= 140
-    int vec4 vColour;
+    in vec4 vColour;
 #else
     varying vec4 vColour;
 #endif
