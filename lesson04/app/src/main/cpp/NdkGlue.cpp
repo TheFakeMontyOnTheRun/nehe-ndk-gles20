@@ -1,9 +1,9 @@
 #include <GLES2/gl2.h>
 #include <string>
 #include <vector>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
 #include "glm/glm.hpp"
 #include <jni.h>
 #include <android/log.h>

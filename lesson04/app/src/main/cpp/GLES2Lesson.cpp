@@ -58,7 +58,7 @@ extern void checkGlError(const char *op) {
 GLuint GLES2Lesson::loadShader(GLenum shaderType, const char *pSource) {
 	auto shader = glCreateShader(shaderType);
 	if (shader) {
-		glShaderSource(shader, 1, &pSource, NULL);
+		glShaderSource(shader, 1, &pSource, nullptr);
 		glCompileShader(shader);
 		GLint compiled = 0;
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
@@ -68,7 +68,7 @@ GLuint GLES2Lesson::loadShader(GLenum shaderType, const char *pSource) {
 			if (infoLen) {
 				char *buf = (char *) malloc(infoLen);
 				if (buf) {
-					glGetShaderInfoLog(shader, infoLen, NULL, buf);
+					glGetShaderInfoLog(shader, infoLen, nullptr, buf);
 					LOGE("Could not compile shader %d:\n%s\n", shaderType, buf);
 					free(buf);
 				}
@@ -106,7 +106,7 @@ GLuint GLES2Lesson::createProgram(const char *pVertexSource, const char *pFragme
 			if (bufLength) {
 				char *buf = (char *) malloc(bufLength);
 				if (buf) {
-					glGetProgramInfoLog(program, bufLength, NULL, buf);
+					glGetProgramInfoLog(program, bufLength, nullptr, buf);
 					LOGE("Could not link program:\n%s\n", buf);
 					free(buf);
 				}
@@ -187,7 +187,7 @@ void GLES2Lesson::fetchShaderLocations() {
 }
 
 void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
-							   const glm::mat4 &transform) {
+							   const glm::mat4 &transform) const {
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexVbo);
 
@@ -195,12 +195,12 @@ void GLES2Lesson::drawGeometry(const int vertexVbo, const int indexVbo, int vert
 	glEnableVertexAttribArray(colourAttributePosition);
 
 	glUniformMatrix4fv(modelMatrixAttributePosition, 1, false, &transform[0][0]);
-	glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
+	glVertexAttribPointer(vertexAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, nullptr);
 	glVertexAttribPointer(colourAttributePosition, 3, GL_FLOAT, GL_TRUE, sizeof(float) * 6,
 						  (void *) (sizeof(float) * 3));
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
-	glDrawElements(GL_TRIANGLE_STRIP, vertexCount, GL_UNSIGNED_SHORT, 0);
+	glDrawElements(GL_TRIANGLE_STRIP, vertexCount, GL_UNSIGNED_SHORT, nullptr);
 
 	glDisableVertexAttribArray(vertexAttributePosition);
 	glDisableVertexAttribArray(colourAttributePosition);
@@ -250,7 +250,7 @@ void GLES2Lesson::setPerspective() {
 	glUniformMatrix4fv(projectionMatrixAttributePosition, 1, false, &projectionMatrix[0][0]);
 }
 
-void GLES2Lesson::prepareShaderProgram() {
+void GLES2Lesson::prepareShaderProgram() const {
 	glUseProgram(gProgram);
 	checkGlError("glUseProgram");
 }

@@ -11,24 +11,24 @@ class GLES2Lesson {
 
 	void setPerspective();
 
-	void prepareShaderProgram();
+	void prepareShaderProgram() const;
 
-	void clearBuffers();
+	static void clearBuffers();
 
 	void resetTransformMatrices();
 
-	void printVerboseDriverInformation();
+	static void printVerboseDriverInformation();
 
 	void createVBOs();
 
 	void deleteVBOs();
 
 	void drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
-					  const glm::mat4 &transform);
+					  const glm::mat4 &transform) const;
 
 	GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
 
-	GLuint loadShader(GLenum shaderType, const char *pSource);
+	static GLuint loadShader(GLenum shaderType, const char *pSource);
 
 	const static float triangleVertices[18];
 	const static unsigned short triangleIndices[3];
@@ -36,9 +36,9 @@ class GLES2Lesson {
 	const static float squareVertices[24];
 	const static unsigned short squareIndices[4];
 
-	glm::mat4 triangleTransformMatrix;
-	glm::mat4 squareTransformMatrix;
-	glm::mat4 projectionMatrix;
+	glm::mat4 triangleTransformMatrix{};
+	glm::mat4 squareTransformMatrix{};
+	glm::mat4 projectionMatrix{};
 
 	GLint vertexAttributePosition;
 	GLint colourAttributePosition;
@@ -47,10 +47,10 @@ class GLES2Lesson {
 	GLuint gProgram;
 
 	//VBO stuff
-	GLuint vboTriangleVertexDataIndex;
-	GLuint vboSquareVertexDataIndex;
-	GLuint vboTriangleVertexIndicesIndex;
-	GLuint vboSquareVertexIndicesIndex;
+	GLuint vboTriangleVertexDataIndex{};
+	GLuint vboSquareVertexDataIndex{};
+	GLuint vboTriangleVertexIndicesIndex{};
+	GLuint vboSquareVertexIndicesIndex{};
 
 	float triangleRotationAngle;
 	float squareRotationAngle;
@@ -63,7 +63,7 @@ public:
 
 	void render();
 
-	void shutdown();
+	static void shutdown();
 
 	void tick();
 };
