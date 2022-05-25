@@ -1,7 +1,6 @@
 package br.odb.nehe.lesson06
 
 import android.app.Activity
-import android.content.res.AssetManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import java.io.IOException
@@ -20,7 +19,6 @@ class GL2JNIActivity : Activity() {
 		super.onResume()
 		mView = GL2JNIView(application)
 		setContentView(mView)
-		val assets: AssetManager = getAssets()
 		GL2JNILib.onCreate(assets)
 		val bitmap: Bitmap
 		try {
