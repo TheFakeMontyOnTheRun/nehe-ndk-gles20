@@ -7,94 +7,94 @@
 
 namespace odb {
 
-    class GLES2Lesson {
+	class GLES2Lesson {
 
-        void fetchShaderLocations();
+		void fetchShaderLocations();
 
-        void setPerspective();
+		void setPerspective();
 
-        void prepareShaderProgram();
+		void prepareShaderProgram() const;
 
-        void clearBuffers();
+		static void clearBuffers();
 
-        void resetTransformMatrices();
+		void resetTransformMatrices();
 
-        void printVerboseDriverInformation();
+		static void printVerboseDriverInformation();
 
-        void createVBOs();
+		void createVBOs();
 
-        void deleteVBOs();
+		void deleteVBOs();
 
-        void initStars();
+		void initStars();
 
-        void drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
-                          const glm::mat4 &transform);
+		void drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
+						  const glm::mat4 &transform) const;
 
-        GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
+		GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
 
-        GLuint loadShader(GLenum shaderType, const char *pSource);
+		static GLuint loadShader(GLenum shaderType, const char *pSource);
 
-        const static std::array <float, 4 * 9> cubeVertices;
-        const static std::array <unsigned short, 4> cubeIndices;
+		const static std::array<float, 4 * 9> cubeVertices;
+		const static std::array<unsigned short, 4> cubeIndices;
 
-        const static int PREFERED_NUMBER_OF_STARS;
+		const static int PREFERED_NUMBER_OF_STARS;
 
-        std::vector <std::shared_ptr<Star> > mStars;
+		std::vector<std::shared_ptr<Star> > mStars;
 
-        glm::mat4 projectionMatrix;
+		glm::mat4 projectionMatrix{};
 
-        GLint vertexAttributePosition;
-        GLint modelMatrixAttributePosition;
-        GLint samplerUniformPosition;
-        GLint textureCoordinatesAttributePosition;
-        GLint projectionMatrixAttributePosition;
-        GLint fragmentTintPosition;
-        GLuint gProgram;
+		GLint vertexAttributePosition;
+		GLint modelMatrixAttributePosition;
+		GLint samplerUniformPosition{};
+		GLint textureCoordinatesAttributePosition{};
+		GLint projectionMatrixAttributePosition;
+		GLint fragmentTintPosition{};
+		GLuint gProgram;
 
-        GLuint textureId;
-        GLuint twinkleId;
+		GLuint textureId{};
+		GLuint twinkleId{};
 
-        //VBO stuff
-        GLuint vboCubeVertexDataIndex;
-        GLuint vboCubeVertexIndicesIndex;
+		//VBO stuff
+		GLuint vboCubeVertexDataIndex{};
+		GLuint vboCubeVertexIndicesIndex{};
 
-        int *textureData;
-        int *twinkleData;
-        int textureWidth;
-        int textureHeight;
+		int *textureData;
+		int *twinkleData{};
+		int textureWidth{};
+		int textureHeight{};
 
-        float movementPosition;
-        float movementDelta;
-        float rotationPosition;
-        float rotationDelta;
-        bool twinkling;
-    public:
-        GLES2Lesson();
+		float movementPosition{};
+		float movementDelta{};
+		float rotationPosition{};
+		float rotationDelta{};
+		bool twinkling{};
+	public:
+		GLES2Lesson();
 
-        ~GLES2Lesson();
+		~GLES2Lesson();
 
-        bool init(float w, float h, const std::string &vertexShader,
-                  const std::string &fragmentShader);
+		bool init(float w, float h, const std::string &vertexShader,
+				  const std::string &fragmentShader);
 
-        void setTexture(int *bitmapData, int *detailData, int width, int height);
+		void setTexture(int *bitmapData, int *detailData, int width, int height);
 
-        void render();
+		void render();
 
-        void shutdown();
+		void shutdown();
 
-        void tick();
+		void tick();
 
-        void reset();
+		void reset();
 
-        void toggleTwinkling();
+		void toggleTwinkling();
 
-        void zoomIn();
+		void zoomIn();
 
-        void speedUpTwist();
+		void speedUpTwist();
 
-        void zoomOut();
+		void zoomOut();
 
-        void speedDownTwist();
-    };
+		void speedDownTwist();
+	};
 }
 #endif //LESSON09_GLES2LESSON_H

@@ -7,112 +7,111 @@
 
 namespace odb {
 
-    class GLES2Lesson {
+	class GLES2Lesson {
 
-        void fetchShaderLocations();
+		void fetchShaderLocations();
 
-        void setPerspective();
+		void setPerspective();
 
-        void prepareShaderProgram();
+		void prepareShaderProgram();
 
-        void clearBuffers();
+		static void clearBuffers();
 
-        void resetTransformMatrices();
+		void resetTransformMatrices();
 
-        void printVerboseDriverInformation();
+		static void printVerboseDriverInformation();
 
-        void createVBOs();
+		void createVBOs();
 
-        void deleteVBOs();
+		void deleteVBOs();
 
-        void drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
-                          const glm::mat4 &transform);
+		void drawGeometry(const int vertexVbo, const int indexVbo, int vertexCount,
+						  const glm::mat4 &transform) const;
 
-        GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
+		static GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
 
-        GLuint loadShader(GLenum shaderType, const char *pSource);
+		static GLuint loadShader(GLenum shaderType, const char *pSource);
 
-        const static float cubeVertices[6 * 4 * 9];
-        const static unsigned short cubeIndices[6 * 6];
+		const static float cubeVertices[6 * 4 * 9];
+		const static unsigned short cubeIndices[6 * 6];
 
-        const static glm::vec4 ambientLightFullColor;
-        const static glm::vec4 ambientLightOffColor;
+		const static glm::vec4 ambientLightFullColor;
+		const static glm::vec4 ambientLightOffColor;
 
-        glm::mat4 cubeTransformMatrix;
-        glm::mat4 projectionMatrix;
+		glm::mat4 cubeTransformMatrix{};
+		glm::mat4 projectionMatrix{};
 
-        GLint vertexAttributePosition;
-        GLint modelMatrixAttributePosition;
-        GLint samplerUniformPosition;
-        GLint textureCoordinatesAttributePosition;
-        GLint projectionMatrixAttributePosition;
-        GLint normalAttributePosition;
+		GLint vertexAttributePosition;
+		GLint modelMatrixAttributePosition;
+		GLint samplerUniformPosition{};
+		GLint textureCoordinatesAttributePosition{};
+		GLint projectionMatrixAttributePosition;
+		GLint normalAttributePosition{};
 
-        GLuint gProgram;
+		GLuint gProgram;
 
-        GLuint textureId;
+		GLuint textureId{};
 
-        //VBO stuff
-        GLuint vboCubeVertexDataIndex;
-        GLuint vboCubeVertexIndicesIndex;
+		//VBO stuff
+		GLuint vboCubeVertexDataIndex{};
+		GLuint vboCubeVertexIndicesIndex{};
 
-        int *textureData;
-        int textureWidth;
-        int textureHeight;
-        GLint currentFilter;
-        float cubeRotationAngleYZ;
-        float cubeRotationAngleXZ;
+		int *textureData;
+		int textureWidth{};
+		int textureHeight{};
+		GLint currentFilter;
+		float cubeRotationAngleYZ{};
+		float cubeRotationAngleXZ{};
 
-        glm::vec4 diffuseLightDirection;
-        glm::vec4 diffuseLightColor;
-        glm::vec4 ambientLightColor;
-        bool mFullLight = false;
+		glm::vec4 diffuseLightDirection{};
+		glm::vec4 diffuseLightColor{};
+		bool mFullLight = true;
 
-        GLint diffuseLightDirectionShaderLocation;
-        GLint diffuseLightColorShaderLocation;
-        GLint ambientLightColorShaderLocation;
+		GLint diffuseLightDirectionShaderLocation{};
+		GLint diffuseLightColorShaderLocation{};
+		GLint ambientLightColorShaderLocation{};
 
-        bool enableBlending;
+		bool enableBlending = true;
 
-        float rotationXZSpeed;
-        float rotationYZSpeed;
-    public:
-        GLES2Lesson();
+		float rotationXZSpeed{};
+		float rotationYZSpeed{};
+	public:
+		GLES2Lesson();
 
-        ~GLES2Lesson();
+		~GLES2Lesson();
 
-        bool init(float w, float h, const std::string &vertexShader,
-                  const std::string &fragmentShader);
+		bool init(float w, float h, const std::string &vertexShader,
+				  const std::string &fragmentShader);
 
-        void setTexture(int *bitmapData, int width, int height);
+		void setTexture(int *bitmapData, int width, int height);
 
-        void render();
+		void render();
 
-        void shutdown();
+		void shutdown();
 
-        void tick();
+		void tick();
 
-        void toggleFiltering();
+		void toggleFiltering();
 
-        void toggleLightning();
+		void toggleLightning();
 
-        void speedUpXZ();
+		void speedUpXZ();
 
-        void speedDownXZ();
+		void speedDownXZ();
 
-        void speedUpYZ();
+		void speedUpYZ();
 
-        void speedDownYZ();
+		void speedDownYZ();
 
-        void reset();
+		void reset();
 
-        void setSpeeds(const glm::vec2 &param);
+		void setSpeeds(const glm::vec2 &param);
 
-        void toggleBlending();
+		void toggleBlending();
 
-        void enableAlphaBlending() const;
+		static void enableAlphaBlending() ;
 
-        void disableAlfaBlending() const;
-    };
+		static void disableAlfaBlending() ;
+	};
 }
 #endif //LESSON08_GLES2LESSON_H

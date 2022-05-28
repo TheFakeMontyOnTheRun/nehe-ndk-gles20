@@ -1,4 +1,4 @@
-package br.odb.nehe.lesson07
+package br.odb.nehe.lesson08
 
 import android.content.res.AssetManager
 import android.graphics.Bitmap
@@ -23,6 +23,7 @@ internal object GL2JNILib {
 	external fun speedDownXZRotation()
 	external fun reset()
 	external fun dragTo(x: Float, y: Float)
+	external fun toggleBlending()
 
 	init {
 		System.loadLibrary("NdkGlue")

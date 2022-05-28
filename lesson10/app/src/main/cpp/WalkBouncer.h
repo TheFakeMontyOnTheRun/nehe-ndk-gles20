@@ -5,17 +5,15 @@
 #ifndef LESSON10_WALKBOUNCER_H
 #define LESSON10_WALKBOUNCER_H
 
-
 class WalkBouncer {
-    float step;
-    float cached;
+	float step;
+	float cached{};
 public:
-    WalkBouncer();
+	WalkBouncer();
 
-    void tick(long ms);
+	void tick(long ms);
 
-    float getCurrentStep();
+	float getCurrentStep() const;
 };
-
 
 #endif //LESSON10_WALKBOUNCER_H
