@@ -66,7 +66,7 @@ extern void checkGlError(const char *op) {
 GLuint loadShader(GLenum shaderType, const char *pSource) {
 	GLuint shader = glCreateShader(shaderType);
 	if (shader) {
-		glShaderSource(shader, 1, &pSource, NULL);
+		glShaderSource(shader, 1, &pSource, nullptr);
 		glCompileShader(shader);
 		GLint compiled = 0;
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
@@ -76,7 +76,7 @@ GLuint loadShader(GLenum shaderType, const char *pSource) {
 			if (infoLen) {
 				char *buf = (char *) malloc(infoLen);
 				if (buf) {
-					glGetShaderInfoLog(shader, infoLen, NULL, buf);
+					glGetShaderInfoLog(shader, infoLen, nullptr, buf);
 					LOGE("Could not compile shader %d:\n%s\n", shaderType, buf);
 					free(buf);
 				}
@@ -114,7 +114,7 @@ GLuint createProgram(const char *pVertexSource, const char *pFragmentSource) {
 			if (bufLength) {
 				char *buf = (char *) malloc(bufLength);
 				if (buf) {
-					glGetProgramInfoLog(program, bufLength, NULL, buf);
+					glGetProgramInfoLog(program, bufLength, nullptr, buf);
 					LOGE("Could not link program:\n%s\n", buf);
 					free(buf);
 				}

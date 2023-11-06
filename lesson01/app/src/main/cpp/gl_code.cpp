@@ -57,7 +57,7 @@ FILE* android_fopen(const char* fname, const char* mode, AAssetManager *assetMan
     return funopen(asset, android_read, android_write, android_seek, android_close);
 }
 
-//We will eventually improve this, but let's settle with a familar structure, for now.
+//We will eventually improve this, but let's settle with a familiar structure, for now.
 std::string readShaderToString( FILE* fileDescriptor ) {
     const unsigned N=1024;
     std::string total;

@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-	compileSdk 32
+	compileSdk 33
 	defaultConfig {
 		applicationId 'br.odb.nehe.lesson03'
-		minSdkVersion 19
-		targetSdkVersion 32
+		minSdk 19
+		targetSdk 33
 		externalNativeBuild {
 			cmake {
 				// Available arguments are inside ${SDK}/cmake/.../android.toolchain.cmake file

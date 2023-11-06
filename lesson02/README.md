@@ -11,4 +11,4 @@ Lastly, I decided to split the OpenGL ES code from the NDK code, so it will be e
 Now, you ask me: what is a uniform? 
 It's a piece of data that's constant the whole time, for all the vertices and fragment work. Of course, you must upload the proper type.
 
-Next up: indexed geometry and atributes.
+Next up: indexed geometry and attributes.
