@@ -14,3 +14,5 @@ Each of these steps require a few new additions.
 
 You must be thinking "Were do we say what texturing unit are we using?!".
 Well, since we never change it from default, we're implicitly using GL_TEXTURE0.
+
+![](screenshot.png)

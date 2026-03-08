@@ -12,3 +12,5 @@ From the C++ side of things, I've extracted a lot of functionality into separate
 BTW, you might have noticed I changed the colours from the original demo quite a bit. This was done in favour of better illustrating what was done.
 
 Next up: Rotations & VBOs.
+
+![](screenshot.png)

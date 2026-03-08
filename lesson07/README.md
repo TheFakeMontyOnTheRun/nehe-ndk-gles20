@@ -1,7 +1,11 @@
 Lesson 7
 =========
-This lesson has a convoluted history, but the end result is pretty straightforward.
 
-I went on and back with different approaches but eventually came to the simplest option: per vertex directional lightning. I also decided to go full strength on a separate lesson, illustrating normal mapping and blinn-phong.
+Writing this 10 years in the future: sadly, despite being a major step in this series, I seem to
+have forgotten to write a README.md here. And I understand why - this was a very intense lesson to
+write.
 
-I also got to add interactive controls and segregated the OpenGL C++ code into a new namespace.
+This was also the basis for some other, alternative implementations, using Blinn-Phong and Normal
+Mapping techniques.
+
+![](screenshot.png)

@@ -56,7 +56,7 @@ class GL2JNIActivity : Activity() {
 				arrayOf(
 					BitmapFactory.decodeStream(assets.open("mud.png")),
 					BitmapFactory.decodeStream(assets.open("bricks.png")),
-					BitmapFactory.decodeStream(assets.open("grass.png"))
+					BitmapFactory.decodeStream(assets.open("stonefloor.png"))
 				)
 			)
 		} catch (ignored: IOException) {

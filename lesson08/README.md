@@ -1,9 +1,8 @@
 Lesson 8
 =========
-A quick'n'dirty lesson on blending.
 
-Gotta admit that, despite being a easy one, I expected this go smoothier. The fragment operations that happen on the pipeline, presently,are still quite clumsy and very "fixed-pipeline". That deserves a proper treatment in newer versions.
+Writing this 10 years in the future: I seem to have forgotten to write a README.md for this one.
+Thing is, unlike the previous lesson, this one I remember being a rather breezy one to write, for
+the most part.
 
-This is possibly the last lesson to employ this cube. Next lesson will probably still be based on this, radically changed.
-
-![ ](/lesson08/screenshot.png?raw=true)
+![](screenshot.png)
