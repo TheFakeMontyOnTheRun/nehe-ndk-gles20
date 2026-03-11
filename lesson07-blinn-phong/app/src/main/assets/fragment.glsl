@@ -46,5 +46,5 @@ void main() {
    	vec3 eyedirn = normalize(origin - dehomogenizedPosition);
 
    	vec3 half0 = normalize (direction0 + eyedirn) ;
-    gl_FragColor = texel * ( uAmbientLightColor + ComputeLight(direction0, light0color, normal, half0, vec4( 0.4, 0.8, 0.4, 1.0), vec4( 0.0, 0.4, 0.4, 1.0 ), 300.0) );
+    gl_FragColor = texel * ( uAmbientLightColor + ComputeLight(direction0, light0color, normal, half0, vec4( 0.4, 0.4, 0.4, 1.0), vec4( 0.4, 0.4, 0.4, 1.0 ), 300.0) );
 }
